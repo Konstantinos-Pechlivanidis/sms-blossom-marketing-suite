@@ -11,6 +11,7 @@ import CreateCampaign from "./pages/CreateCampaign";
 import Campaigns from "./pages/Campaigns";
 import Automations from "./pages/Automations";
 import Settings from "./pages/Settings";
+import Contacts from "./pages/Contacts";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="templates" element={<Templates />} />
             <Route path="create-campaign" element={<CreateCampaign />} />
             <Route path="campaigns" element={<Campaigns />} />
+            <Route path="contacts" element={<Contacts />} />
             <Route path="automations" element={<Automations />} />
             <Route path="settings" element={<Settings />} />
           </Route>
