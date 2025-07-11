@@ -4,42 +4,57 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { 
   Store, 
-  Phone, 
-  Globe, 
-  CreditCard, 
-  Key, 
+  Palette, 
+  MessageSquare, 
   Bell,
-  Users,
-  Shield,
-  Crown,
-  Copy
+  Upload,
+  Save
 } from "lucide-react";
 import { toast } from "sonner";
 
 const Settings = () => {
-  const [storeData, setStoreData] = useState({
+  const [businessData, setBusinessData] = useState({
     name: "Bella's Boutique",
     phone: "+1 (555) 123-4567",
     email: "hello@bellasboutique.com",
-    website: "www.bellasboutique.com",
-    language: "en",
-    timezone: "America/New_York"
+    address: "123 Fashion Ave, Style City, SC 12345"
   });
 
-  const [apiKey] = useState("sk_live_51H7zNkB2e1K8XxHpQqVv3mN9jR8yT4cL2fG6wE9");
+  const [brandingData, setBrandingData] = useState({
+    primaryColor: "#81D8D0"
+  });
+
+  const [smsData, setSmsData] = useState({
+    senderName: "Bella's Boutique",
+    signature: "Thanks for shopping with us! - Bella's Boutique"
+  });
+
+  const [notifications, setNotifications] = useState({
+    campaignPerformance: true,
+    billingUpdates: true,
+    automationActivity: false
+  });
+
+  const colorOptions = [
+    { name: "Tiffany Blue", value: "#81D8D0" },
+    { name: "Coral", value: "#FF6B6B" },
+    { name: "Lavender", value: "#A8E6CF" },
+    { name: "Gold", value: "#FFD93D" },
+    { name: "Rose", value: "#FF8B94" },
+    { name: "Mint", value: "#95E1D3" }
+  ];
 
   const handleSave = () => {
     toast.success("Settings saved successfully!");
   };
 
-  const handleCopyApiKey = () => {
-    navigator.clipboard.writeText(apiKey);
-    toast.success("API key copied to clipboard!");
+  const handleLogoUpload = () => {
+    toast.success("Logo uploaded successfully!");
   };
 
   return (
@@ -47,257 +62,216 @@ const Settings = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings</h1>
-        <p className="text-gray-600">Manage your store settings and preferences</p>
+        <p className="text-gray-600">Manage your business settings and preferences</p>
       </div>
 
-      {/* Store Information */}
+      {/* Business Information */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
             <Store className="mr-2 h-5 w-5 text-[#81D8D0]" />
-            Store Information
+            Business Information
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="storeName">Store Name</Label>
+              <Label htmlFor="businessName">Business Name</Label>
               <Input
-                id="storeName"
-                value={storeData.name}
-                onChange={(e) => setStoreData(prev => ({ ...prev, name: e.target.value }))}
+                id="businessName"
+                value={businessData.name}
+                onChange={(e) => setBusinessData(prev => ({ ...prev, name: e.target.value }))}
               />
             </div>
             
             <div>
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="businessPhone">Phone Number</Label>
               <Input
-                id="phone"
-                value={storeData.phone}
-                onChange={(e) => setStoreData(prev => ({ ...prev, phone: e.target.value }))}
+                id="businessPhone"
+                value={businessData.phone}
+                onChange={(e) => setBusinessData(prev => ({ ...prev, phone: e.target.value }))}
               />
             </div>
             
             <div>
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="businessEmail">Email Address</Label>
               <Input
-                id="email"
+                id="businessEmail"
                 type="email"
-                value={storeData.email}
-                onChange={(e) => setStoreData(prev => ({ ...prev, email: e.target.value }))}
+                value={businessData.email}
+                onChange={(e) => setBusinessData(prev => ({ ...prev, email: e.target.value }))}
               />
             </div>
             
             <div>
-              <Label htmlFor="website">Website</Label>
+              <Label htmlFor="businessAddress">Address</Label>
               <Input
-                id="website"
-                value={storeData.website}
-                onChange={(e) => setStoreData(prev => ({ ...prev, website: e.target.value }))}
+                id="businessAddress"
+                value={businessData.address}
+                onChange={(e) => setBusinessData(prev => ({ ...prev, address: e.target.value }))}
               />
             </div>
           </div>
-          
-          <Button onClick={handleSave} className="bg-[#81D8D0] hover:bg-[#5FBDB7]">
-            Save Store Information
-          </Button>
         </CardContent>
       </Card>
 
-      {/* Account & Billing */}
+      {/* Branding */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <CreditCard className="mr-2 h-5 w-5 text-blue-600" />
-            Account & Billing
+            <Palette className="mr-2 h-5 w-5 text-[#81D8D0]" />
+            Branding
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border">
-            <div className="flex items-center space-x-3">
-              <Crown className="h-8 w-8 text-purple-600" />
-              <div>
-                <h3 className="font-semibold text-gray-900">Pro Plan</h3>
-                <p className="text-sm text-gray-600">Unlimited campaigns, advanced analytics</p>
+        <CardContent className="space-y-6">
+          {/* Logo Upload */}
+          <div>
+            <Label>Business Logo</Label>
+            <div className="mt-2 flex items-center space-x-4">
+              <div className="w-16 h-16 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                <Store className="h-6 w-6 text-gray-400" />
               </div>
+              <Button variant="outline" onClick={handleLogoUpload}>
+                <Upload className="mr-2 h-4 w-4" />
+                Upload Logo
+              </Button>
             </div>
-            <Badge className="bg-purple-100 text-purple-800">Active</Badge>
+            <p className="text-xs text-gray-500 mt-1">
+              Recommended: 200x200px, PNG or JPG
+            </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">SMS Credits</p>
-                    <p className="text-2xl font-bold text-[#81D8D0]">2,847</p>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    Buy More
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Next Billing</p>
-                    <p className="text-lg font-semibold text-gray-900">Feb 15, 2024</p>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    Manage
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+
+          <Separator />
+
+          {/* Primary Color */}
+          <div>
+            <Label>Primary Brand Color</Label>
+            <div className="mt-2 grid grid-cols-3 md:grid-cols-6 gap-3">
+              {colorOptions.map((color) => (
+                <button
+                  key={color.value}
+                  onClick={() => setBrandingData(prev => ({ ...prev, primaryColor: color.value }))}
+                  className={`w-full h-12 rounded-lg border-2 transition-all ${
+                    brandingData.primaryColor === color.value 
+                      ? 'border-gray-900 scale-105' 
+                      : 'border-gray-200 hover:border-gray-400'
+                  }`}
+                  style={{ backgroundColor: color.value }}
+                  title={color.name}
+                />
+              ))}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              Selected: {colorOptions.find(c => c.value === brandingData.primaryColor)?.name}
+            </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Preferences */}
+      {/* SMS Sender Info */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <Globe className="mr-2 h-5 w-5 text-green-600" />
-            Preferences
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="language">Language</Label>
-              <Select value={storeData.language} onValueChange={(value) => setStoreData(prev => ({ ...prev, language: value }))}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="es">Español</SelectItem>
-                  <SelectItem value="fr">Français</SelectItem>
-                  <SelectItem value="de">Deutsch</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div>
-              <Label htmlFor="timezone">Timezone</Label>
-              <Select value={storeData.timezone} onValueChange={(value) => setStoreData(prev => ({ ...prev, timezone: value }))}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="America/New_York">Eastern Time</SelectItem>
-                  <SelectItem value="America/Chicago">Central Time</SelectItem>
-                  <SelectItem value="America/Denver">Mountain Time</SelectItem>
-                  <SelectItem value="America/Los_Angeles">Pacific Time</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* API Settings */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Key className="mr-2 h-5 w-5 text-orange-600" />
-            API Settings
+            <MessageSquare className="mr-2 h-5 w-5 text-[#81D8D0]" />
+            SMS Sender Information
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <Label htmlFor="apiKey">API Key</Label>
-            <div className="flex space-x-2">
-              <Input
-                id="apiKey"
-                value={apiKey}
-                readOnly
-                className="font-mono text-sm"
-              />
-              <Button variant="outline" onClick={handleCopyApiKey}>
-                <Copy className="h-4 w-4" />
-              </Button>
-            </div>
+            <Label htmlFor="senderName">Sender Name</Label>
+            <Input
+              id="senderName"
+              value={smsData.senderName}
+              onChange={(e) => setSmsData(prev => ({ ...prev, senderName: e.target.value }))}
+              placeholder="Your Business Name"
+            />
             <p className="text-xs text-gray-500 mt-1">
-              Use this key to integrate with our API. Keep it secure and don't share it.
+              This name will appear as the sender of your SMS messages
             </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Notification Settings */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Bell className="mr-2 h-5 w-5 text-yellow-600" />
-            Notifications
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium">Campaign Results</h4>
-                <p className="text-sm text-gray-600">Get notified when campaigns complete</p>
-              </div>
-              <input type="checkbox" defaultChecked className="h-4 w-4" />
-            </div>
-            
-            <Separator />
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium">Low SMS Credits</h4>
-                <p className="text-sm text-gray-600">Alert when credits are running low</p>
-              </div>
-              <input type="checkbox" defaultChecked className="h-4 w-4" />
-            </div>
-            
-            <Separator />
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium">Weekly Reports</h4>
-                <p className="text-sm text-gray-600">Receive weekly performance summaries</p>
-              </div>
-              <input type="checkbox" defaultChecked className="h-4 w-4" />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Security */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Shield className="mr-2 h-5 w-5 text-red-600" />
-            Security
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button variant="outline">
-              Change Password
-            </Button>
-            <Button variant="outline">
-              Enable 2FA
-            </Button>
           </div>
           
-          <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-            <h4 className="font-medium text-red-800 mb-2">Danger Zone</h4>
-            <p className="text-sm text-red-600 mb-3">
-              Permanently delete your account and all associated data.
+          <div>
+            <Label htmlFor="smsSignature">SMS Signature (Optional)</Label>
+            <Textarea
+              id="smsSignature"
+              value={smsData.signature}
+              onChange={(e) => setSmsData(prev => ({ ...prev, signature: e.target.value }))}
+              placeholder="Add a signature to appear at the end of your messages"
+              rows={3}
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              This will be automatically added to the end of your SMS messages
             </p>
-            <Button variant="destructive" size="sm">
-              Delete Account
-            </Button>
           </div>
         </CardContent>
       </Card>
+
+      {/* Notification Preferences */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <Bell className="mr-2 h-5 w-5 text-[#81D8D0]" />
+            Notification Preferences
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium">Campaign Performance</h4>
+                <p className="text-sm text-gray-600">Get notified about campaign results and analytics</p>
+              </div>
+              <Switch
+                checked={notifications.campaignPerformance}
+                onCheckedChange={(checked) => 
+                  setNotifications(prev => ({ ...prev, campaignPerformance: checked }))
+                }
+              />
+            </div>
+            
+            <Separator />
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium">Billing Updates</h4>
+                <p className="text-sm text-gray-600">Receive notifications about billing and payments</p>
+              </div>
+              <Switch
+                checked={notifications.billingUpdates}
+                onCheckedChange={(checked) => 
+                  setNotifications(prev => ({ ...prev, billingUpdates: checked }))
+                }
+              />
+            </div>
+            
+            <Separator />
+            
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium">Automation Activity</h4>
+                <p className="text-sm text-gray-600">Get alerts when automated campaigns are triggered</p>
+              </div>
+              <Switch
+                checked={notifications.automationActivity}
+                onCheckedChange={(checked) => 
+                  setNotifications(prev => ({ ...prev, automationActivity: checked }))
+                }
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Save Button */}
+      <div className="flex justify-end">
+        <Button 
+          onClick={handleSave} 
+          className="bg-[#81D8D0] hover:bg-[#5FBDB7] text-white px-8"
+        >
+          <Save className="mr-2 h-4 w-4" />
+          Save All Changes
+        </Button>
+      </div>
     </div>
   );
 };
