@@ -1,0 +1,510 @@
+
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { 
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { 
+  ChevronRight, 
+  ChevronDown, 
+  ChevronLeft,
+  Smartphone,
+  Clock,
+  Repeat,
+  Save,
+  MessageSquare,
+  Sparkles
+} from "lucide-react";
+import { toast } from "sonner";
+
+interface EditAutomationModalProps {
+  automation: {
+    id: number;
+    title: string;
+    description: string;
+    trigger: string;
+    message: string;
+    active: boolean;
+    icon: any;
+    color: string;
+    bgColor: string;
+    stats: { sent: number; converted: number };
+  } | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onSave: (updatedAutomation: any) => void;
+}
+
+const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutomationModalProps) => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [editData, setEditData] = useState({
+    message: automation?.message || "",
+    aiMessage: "",
+    useAiVersion: false,
+    isRecurring: true,
+    recurringDays: ["monday", "wednesday"] as string[],
+    recurringTime: "10:00",
+    recurringEndDate: ""
+  });
+
+  const weekDays = [
+    { id: "monday", label: "Mon" },
+    { id: "tuesday", label: "Tue" },
+    { id: "wednesday", label: "Wed" },
+    { id: "thursday", label: "Thu" },
+    { id: "friday", label: "Fri" },
+    { id: "saturday", label: "Sat" },
+    { id: "sunday", label: "Sun" }
+  ];
+
+  const steps = [
+    { id: 1, title: "Edit Message", completed: editData.message.length > 0 },
+    { id: 2, title: "Recurring Settings", completed: editData.recurringDays.length > 0 },
+    { id: 3, title: "Review & Save", completed: false }
+  ];
+
+  const handleAiImprove = () => {
+    const aiVersions = [
+      `🎉 Hey [Name]! ${automation?.title.toLowerCase()} - here's something special just for you! Use code SPECIAL20 for 20% off your next purchase! 🛍️`,
+      `✨ [Name], you're amazing! ${automation?.description.toLowerCase()} - enjoy this exclusive offer: SAVE25 for 25% off! Valid until midnight! ⏰`,
+      `💎 VIP Alert [Name]! ${automation?.trigger} detected - here's your personalized reward: 30% off with code VIP30! Don't miss out! 🎁`
+    ];
+    
+    const randomAiVersion = aiVersions[Math.floor(Math.random() * aiVersions.length)];
+    setEditData(prev => ({ ...prev, aiMessage: randomAiVersion }));
+    toast.success("Message improved with AI!");
+  };
+
+  const handleRecurringDayToggle = (dayId: string) => {
+    setEditData(prev => ({
+      ...prev,
+      recurringDays: prev.recurringDays.includes(dayId)
+        ? prev.recurringDays.filter(id => id !== dayId)
+        : [...prev.recurringDays, dayId]
+    }));
+  };
+
+  const handleSave = () => {
+    if (!automation) return;
+    
+    const updatedAutomation = {
+      ...automation,
+      message: editData.useAiVersion && editData.aiMessage ? editData.aiMessage : editData.message
+    };
+    
+    onSave(updatedAutomation);
+    toast.success(`"${automation.title}" automation updated successfully!`);
+    onClose();
+  };
+
+  const getCurrentTime = () => {
+    return new Date().toLocaleTimeString('en-US', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false 
+    });
+  };
+
+  const canProceedToStep = (stepId: number) => {
+    if (stepId <= currentStep) return true;
+    
+    switch (stepId) {
+      case 2: return editData.message.length > 0;
+      case 3: return editData.recurringDays.length > 0;
+      default: return false;
+    }
+  };
+
+  const goToStep = (stepId: number) => {
+    if (canProceedToStep(stepId)) {
+      setCurrentStep(stepId);
+    }
+  };
+
+  if (!automation) return null;
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-7xl max-h-[90vh] overflow-hidden p-0">
+        <DialogHeader className="p-6 pb-4">
+          <DialogTitle className="flex items-center space-x-3">
+            <div className={`p-2 rounded-lg ${automation.bgColor}`}>
+              <automation.icon className={`h-5 w-5 ${automation.color}`} />
+            </div>
+            <span>Edit {automation.title}</span>
+          </DialogTitle>
+        </DialogHeader>
+
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 p-6 pt-0 overflow-y-auto max-h-[calc(90vh-120px)]">
+          {/* Main Edit Form */}
+          <div className="xl:col-span-2 space-y-6">
+            {/* Steps Progress */}
+            <Card className="border-border">
+              <CardContent className="p-4">
+                <div className="flex flex-wrap gap-2">
+                  {steps.map((step, index) => (
+                    <div key={step.id} className="flex items-center">
+                      <button
+                        onClick={() => goToStep(step.id)}
+                        disabled={!canProceedToStep(step.id)}
+                        className={`flex items-center space-x-2 px-3 py-2 rounded-full text-sm transition-all ${
+                          step.id === currentStep 
+                            ? "bg-primary text-primary-foreground shadow-sm" 
+                            : step.completed 
+                              ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200 cursor-pointer"
+                              : canProceedToStep(step.id)
+                                ? "bg-muted text-muted-foreground hover:bg-muted/80 cursor-pointer"
+                                : "bg-muted/50 text-muted-foreground/50 cursor-not-allowed"
+                        }`}
+                      >
+                        <span className="font-medium">{step.id}</span>
+                        <span className="hidden sm:inline">{step.title}</span>
+                      </button>
+                      {index < steps.length - 1 && (
+                        <ChevronRight className="h-4 w-4 text-muted-foreground mx-2" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Step 1: Edit Message */}
+            <Card className={`border-border transition-all duration-300 ${currentStep === 1 ? "ring-2 ring-primary/20" : "opacity-60"}`}>
+              <CardHeader 
+                className="cursor-pointer" 
+                onClick={() => goToStep(1)}
+              >
+                <CardTitle className="flex items-center justify-between">
+                  <span>1. Edit Message</span>
+                  {currentStep === 1 ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
+                </CardTitle>
+              </CardHeader>
+              {currentStep === 1 && (
+                <CardContent className="space-y-4 animate-fade-in">
+                  <div className="bg-muted/50 p-4 rounded-lg">
+                    <div className="flex items-center space-x-2 mb-2">
+                      <Badge variant="secondary" className="text-xs">
+                        Trigger: {automation.trigger}
+                      </Badge>
+                      <Badge className="bg-blue-100 text-blue-800">
+                        Auto-Generated
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{automation.description}</p>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="message">SMS Message</Label>
+                    <Textarea
+                      id="message"
+                      placeholder="Customize your automation message..."
+                      value={editData.useAiVersion ? editData.aiMessage : editData.message}
+                      onChange={(e) => setEditData(prev => ({ 
+                        ...prev, 
+                        [editData.useAiVersion ? 'aiMessage' : 'message']: e.target.value 
+                      }))}
+                      rows={4}
+                      className="mt-1"
+                    />
+                    <div className="flex justify-between items-center mt-2">
+                      <p className="text-sm text-muted-foreground">
+                        {(editData.useAiVersion ? editData.aiMessage : editData.message).length}/160 characters
+                      </p>
+                      <div className={`text-xs px-2 py-1 rounded ${
+                        (editData.useAiVersion ? editData.aiMessage : editData.message).length > 160 
+                          ? "bg-red-100 text-red-800" 
+                          : "bg-green-100 text-green-800"
+                      }`}>
+                        {(editData.useAiVersion ? editData.aiMessage : editData.message).length <= 160 ? "✓ Single SMS" : "⚠ Multiple SMS"}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Button
+                      variant="outline"
+                      onClick={handleAiImprove}
+                      className="flex-1"
+                    >
+                      <Sparkles className="mr-2 h-4 w-4" />
+                      ✨ Improve with AI
+                    </Button>
+                    
+                    {editData.aiMessage && (
+                      <Button
+                        variant={editData.useAiVersion ? "default" : "outline"}
+                        onClick={() => setEditData(prev => ({ ...prev, useAiVersion: !prev.useAiVersion }))}
+                        className="flex-1"
+                      >
+                        {editData.useAiVersion ? "✅ Using AI Version" : "Use AI Version"}
+                      </Button>
+                    )}
+                  </div>
+
+                  <Button 
+                    onClick={() => setCurrentStep(2)}
+                    disabled={!editData.message}
+                    className="w-full"
+                  >
+                    Next: Recurring Settings
+                    <ChevronRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </CardContent>
+              )}
+            </Card>
+
+            {/* Step 2: Recurring Settings */}
+            <Card className={`border-border transition-all duration-300 ${currentStep === 2 ? "ring-2 ring-primary/20" : "opacity-60"}`}>
+              <CardHeader 
+                className="cursor-pointer" 
+                onClick={() => goToStep(2)}
+              >
+                <CardTitle className="flex items-center justify-between">
+                  <span>2. Recurring Settings</span>
+                  {currentStep === 2 ? <ChevronDown className="h-5 w-5" /> : <ChevronRight className="h-5 w-5" />}
+                </CardTitle>
+              </CardHeader>
+              {currentStep === 2 && (
+                <CardContent className="space-y-4 animate-fade-in">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="recurring"
+                      checked={editData.isRecurring}
+                      onCheckedChange={(checked) => setEditData(prev => ({ ...prev, isRecurring: !!checked }))}
+                    />
+                    <Label htmlFor="recurring" className="flex items-center space-x-2">
+                      <Repeat className="h-4 w-4" />
+                      <span>Enable recurring automation</span>
+                    </Label>
+                  </div>
+
+                  {editData.isRecurring && (
+                    <div className="ml-6 space-y-4 animate-fade-in">
+                      <div>
+                        <Label>Select Days</Label>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {weekDays.map((day) => (
+                            <Button
+                              key={day.id}
+                              variant={editData.recurringDays.includes(day.id) ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => handleRecurringDayToggle(day.id)}
+                              className="min-w-[44px]"
+                            >
+                              {day.label}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="recurringTime">Send Time</Label>
+                          <Input
+                            id="recurringTime"
+                            type="time"
+                            value={editData.recurringTime}
+                            onChange={(e) => setEditData(prev => ({ ...prev, recurringTime: e.target.value }))}
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="recurringEndDate">End Date (Optional)</Label>
+                          <Input
+                            id="recurringEndDate"
+                            type="date"
+                            value={editData.recurringEndDate}
+                            onChange={(e) => setEditData(prev => ({ ...prev, recurringEndDate: e.target.value }))}
+                            className="mt-1"
+                            min={new Date().toISOString().split('T')[0]}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex space-x-3">
+                    <Button 
+                      variant="outline"
+                      onClick={() => setCurrentStep(1)}
+                      className="flex-1 md:flex-none"
+                    >
+                      <ChevronLeft className="mr-2 h-4 w-4" />
+                      Back
+                    </Button>
+                    <Button 
+                      onClick={() => setCurrentStep(3)}
+                      disabled={editData.isRecurring && editData.recurringDays.length === 0}
+                      className="flex-1"
+                    >
+                      Next: Review & Save
+                      <ChevronRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              )}
+            </Card>
+
+            {/* Step 3: Review & Save */}
+            <Card className={`border-border transition-all duration-300 ${currentStep === 3 ? "ring-2 ring-primary/20" : "opacity-60"}`}>
+              <CardHeader>
+                <CardTitle>3. Review & Save</CardTitle>
+              </CardHeader>
+              {currentStep === 3 && (
+                <CardContent className="space-y-4 animate-fade-in">
+                  <div className="bg-muted/50 p-4 rounded-lg space-y-3">
+                    <div>
+                      <h4 className="font-medium mb-2">Message Preview:</h4>
+                      <div className="bg-white p-3 rounded border">
+                        <p className="text-sm">
+                          {editData.useAiVersion && editData.aiMessage 
+                            ? editData.aiMessage 
+                            : editData.message}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    {editData.isRecurring && editData.recurringDays.length > 0 && (
+                      <div>
+                        <h4 className="font-medium mb-2">Recurring Schedule:</h4>
+                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                          <Repeat className="h-4 w-4" />
+                          <span>
+                            Every {editData.recurringDays.join(', ')} at {editData.recurringTime}
+                            {editData.recurringEndDate && ` until ${editData.recurringEndDate}`}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex space-x-3">
+                    <Button 
+                      variant="outline"
+                      onClick={() => setCurrentStep(2)}
+                      className="flex-1 md:flex-none"
+                    >
+                      <ChevronLeft className="mr-2 h-4 w-4" />
+                      Back
+                    </Button>
+                    <Button 
+                      onClick={handleSave}
+                      className="flex-1"
+                    >
+                      <Save className="mr-2 h-4 w-4" />
+                      Save Changes
+                    </Button>
+                  </div>
+                </CardContent>
+              )}
+            </Card>
+          </div>
+
+          {/* Mobile Preview */}
+          <div className="xl:col-span-1">
+            <Card className="sticky top-6 border-border">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Smartphone className="mr-2 h-5 w-5" />
+                  Mobile Preview
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {/* Realistic Phone Frame */}
+                <div className="mx-auto w-72 bg-slate-900 rounded-[2.5rem] p-2 shadow-xl">
+                  {/* Phone Screen */}
+                  <div className="bg-white rounded-[2rem] p-4 h-[600px] overflow-hidden relative">
+                    {/* Status Bar */}
+                    <div className="flex justify-between items-center mb-4 text-xs font-medium text-slate-900">
+                      <span>{getCurrentTime()}</span>
+                      <div className="flex items-center space-x-1">
+                        <div className="flex space-x-1">
+                          <div className="w-1 h-1 bg-slate-900 rounded-full"></div>
+                          <div className="w-1 h-1 bg-slate-900 rounded-full"></div>
+                          <div className="w-1 h-1 bg-slate-400 rounded-full"></div>
+                        </div>
+                        <span className="ml-2">📶</span>
+                        <span>🔋</span>
+                      </div>
+                    </div>
+
+                    {/* SMS Header */}
+                    <div className="flex items-center space-x-3 mb-6 pb-3 border-b border-slate-100">
+                      <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg">
+                        B
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-semibold text-slate-900">Bella's Boutique</h3>
+                          <span className="text-xs text-slate-500">{getCurrentTime()}</span>
+                        </div>
+                        <p className="text-xs text-slate-500">Automation: {automation.title}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Message Bubble */}
+                    <div className="space-y-3">
+                      <div className="flex justify-start">
+                        <div className="bg-slate-100 rounded-2xl rounded-tl-md p-3 max-w-[85%] shadow-sm">
+                          <p className="text-sm text-slate-900 leading-relaxed">
+                            {editData.useAiVersion && editData.aiMessage 
+                              ? editData.aiMessage 
+                              : editData.message || automation.message}
+                          </p>
+                          <div className="flex justify-between items-center mt-2 pt-1">
+                            <span className="text-xs text-slate-500">
+                              {getCurrentTime()}
+                            </span>
+                            <span className="text-xs text-slate-400">Delivered</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Recurring Info */}
+                      {editData.isRecurring && editData.recurringDays.length > 0 && (
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-2 mt-4">
+                          <div className="flex items-center space-x-2 text-xs text-blue-700">
+                            <Repeat className="h-3 w-3" />
+                            <span>
+                              Repeats: {editData.recurringDays.join(', ')} at {editData.recurringTime}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Character Count Indicator */}
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="bg-slate-50 rounded-lg p-2 text-center">
+                        <span className={`text-xs font-medium ${
+                          (editData.useAiVersion ? editData.aiMessage : editData.message).length > 160 
+                            ? "text-red-600" 
+                            : "text-green-600"
+                        }`}>
+                          {(editData.useAiVersion ? editData.aiMessage : editData.message).length}/160 chars
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default EditAutomationModal;

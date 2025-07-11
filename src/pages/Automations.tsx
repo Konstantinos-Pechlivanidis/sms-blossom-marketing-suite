@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,9 +13,11 @@ import {
   TrendingUp,
   MessageSquare,
   Zap,
-  Settings
+  Settings,
+  Edit
 } from "lucide-react";
 import { toast } from "sonner";
+import EditAutomationModal from "@/components/EditAutomationModal";
 
 const Automations = () => {
   const [automations, setAutomations] = useState([
@@ -94,6 +95,9 @@ const Automations = () => {
     }
   ]);
 
+  const [editingAutomation, setEditingAutomation] = useState<typeof automations[0] | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const toggleAutomation = (id: number) => {
     setAutomations(prev => prev.map(automation => {
       if (automation.id === id) {
@@ -107,6 +111,19 @@ const Automations = () => {
       }
       return automation;
     }));
+  };
+
+  const handleEditAutomation = (automation: typeof automations[0]) => {
+    setEditingAutomation(automation);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveAutomation = (updatedAutomation: typeof automations[0]) => {
+    setAutomations(prev => prev.map(automation => 
+      automation.id === updatedAutomation.id ? updatedAutomation : automation
+    ));
+    setIsEditModalOpen(false);
+    setEditingAutomation(null);
   };
 
   const activeAutomations = automations.filter(a => a.active).length;
@@ -197,10 +214,21 @@ const Automations = () => {
                       <p className="text-sm text-gray-600 mt-1">{automation.description}</p>
                     </div>
                   </div>
-                  <Switch
-                    checked={automation.active}
-                    onCheckedChange={() => toggleAutomation(automation.id)}
-                  />
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleEditAutomation(automation)}
+                      className="shrink-0"
+                    >
+                      <Edit className="h-4 w-4 mr-1" />
+                      Edit
+                    </Button>
+                    <Switch
+                      checked={automation.active}
+                      onCheckedChange={() => toggleAutomation(automation.id)}
+                    />
+                  </div>
                 </div>
               </CardHeader>
 
@@ -279,6 +307,17 @@ const Automations = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Edit Automation Modal */}
+      <EditAutomationModal
+        automation={editingAutomation}
+        isOpen={isEditModalOpen}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setEditingAutomation(null);
+        }}
+        onSave={handleSaveAutomation}
+      />
     </div>
   );
 };
