@@ -12,6 +12,8 @@ import Campaigns from "./pages/Campaigns";
 import Automations from "./pages/Automations";
 import Settings from "./pages/Settings";
 import Contacts from "./pages/Contacts";
+import QRScan from "./pages/QRScan";
+import Unsubscribe from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +25,11 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Public routes - no layout wrapper */}
+          <Route path="/scan/:trackingId" element={<QRScan />} />
+          <Route path="/unsubscribe" element={<Unsubscribe />} />
+          
+          {/* Protected routes with layout */}
           <Route path="/" element={<Layout />}>
             <Route index element={<Dashboard />} />
             <Route path="templates" element={<Templates />} />
