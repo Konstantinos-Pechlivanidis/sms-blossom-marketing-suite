@@ -113,13 +113,6 @@
 }
 
 @layer utilities {
-  /* Mobile-specific utilities */
-  @screen max-sm {
-    .container {
-      @apply px-4;
-    }
-  }
-  
   /* Touch target sizing for mobile */
   .touch-target {
     @apply min-h-[44px] min-w-[44px];
