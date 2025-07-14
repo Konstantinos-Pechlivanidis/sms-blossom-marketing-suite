@@ -12,6 +12,7 @@ import Campaigns from "./pages/Campaigns";
 import Automations from "./pages/Automations";
 import Settings from "./pages/Settings";
 import Contacts from "./pages/Contacts";
+import BuyCredits from "./pages/BuyCredits";
 import QRScan from "./pages/QRScan";
 import Unsubscribe from "./pages/Unsubscribe";
 import NotFound from "./pages/NotFound";
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="campaigns" element={<Campaigns />} />
             <Route path="contacts" element={<Contacts />} />
             <Route path="automations" element={<Automations />} />
+            <Route path="buy-credits" element={<BuyCredits />} />
             <Route path="settings" element={<Settings />} />
           </Route>
           <Route path="*" element={<NotFound />} />

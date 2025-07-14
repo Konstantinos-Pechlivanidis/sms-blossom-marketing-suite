@@ -5,7 +5,8 @@ import {
   FileText, 
   Send, 
   Users, 
-  User
+  User,
+  CreditCard
 } from "lucide-react";
 
 const MobileNav = () => {
@@ -13,7 +14,7 @@ const MobileNav = () => {
     { name: "Home", href: "/", icon: LayoutDashboard },
     { name: "Templates", href: "/templates", icon: FileText },
     { name: "Campaigns", href: "/campaigns", icon: Send },
-    { name: "Contacts", href: "/contacts", icon: Users },
+    { name: "Credits", href: "/buy-credits", icon: CreditCard, highlight: true },
     { name: "Profile", href: "/settings", icon: User },
   ];
 
@@ -28,6 +29,8 @@ const MobileNav = () => {
               `flex flex-col items-center justify-center px-3 py-2 rounded-lg text-xs font-medium transition-colors min-h-[60px] ${
                 isActive
                   ? "text-[#81D8D0] bg-[#81D8D0]/10"
+                  : item.highlight
+                  ? "text-[#81D8D0] bg-[#81D8D0]/5"
                   : "text-gray-500 hover:text-gray-700"
               }`
             }

@@ -8,7 +8,8 @@ import {
   Users, 
   Settings, 
   Zap,
-  MessageSquare
+  MessageSquare,
+  CreditCard
 } from "lucide-react";
 
 interface SidebarProps {
@@ -23,6 +24,7 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
     { name: "Campaigns", href: "/campaigns", icon: Send },
     { name: "Contacts", href: "/contacts", icon: Users },
     { name: "Automations", href: "/automations", icon: Zap },
+    { name: "Buy Credits", href: "/buy-credits", icon: CreditCard, highlight: true },
     { name: "Settings", href: "/settings", icon: Settings },
   ];
 
@@ -50,6 +52,8 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
                 `flex items-center px-3 py-3 rounded-md text-sm font-medium transition-colors ${
                   isActive
                     ? "bg-primary text-white"
+                    : item.highlight
+                    ? "text-primary hover:bg-primary/10 border border-primary/20"
                     : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 }`
               }

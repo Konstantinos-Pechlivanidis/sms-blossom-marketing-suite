@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
@@ -9,11 +8,30 @@ import {
   PlusCircle,
   FileText,
   BarChart3,
-  ArrowUpRight
+  ArrowUpRight,
+  CreditCard
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Dashboard = () => {
+  const [smsCredits, setSmsCredits] = useState("2,847");
+
+  useEffect(() => {
+    // Get SMS credits from localStorage and update display
+    const credits = localStorage.getItem('smsCredits') || '2847';
+    setSmsCredits(parseInt(credits).toLocaleString());
+    
+    // Listen for storage changes to update credits in real-time
+    const handleStorageChange = () => {
+      const credits = localStorage.getItem('smsCredits') || '2847';
+      setSmsCredits(parseInt(credits).toLocaleString());
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
+
   const kpiData = [
     {
       title: "Total Campaigns Sent",
@@ -170,6 +188,21 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
+              {/* SMS Credits Display */}
+              <div className="p-4 bg-[#81D8D0]/10 rounded-lg border border-[#81D8D0]/20">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-medium text-gray-900">SMS Credits</h4>
+                  <CreditCard className="h-4 w-4 text-[#81D8D0]" />
+                </div>
+                <p className="text-2xl font-bold text-[#81D8D0] mb-2">{smsCredits}</p>
+                <Button asChild size="sm" className="w-full bg-[#81D8D0] hover:bg-[#5FBDB7]">
+                  <Link to="/buy-credits">
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Buy More Credits
+                  </Link>
+                </Button>
+              </div>
+              
               <div className="p-4 bg-[#81D8D0]/10 rounded-lg">
                 <h4 className="font-medium text-gray-900 mb-2">🏆 Best Performer</h4>
                 <p className="text-sm text-gray-600 mb-2">"Weekend Flash Sale" template</p>
