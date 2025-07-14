@@ -4,274 +4,270 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { 
-  Store, 
-  Palette, 
-  MessageSquare, 
-  Bell,
-  Upload,
-  Save
+  Lock, 
+  User,
+  Save,
+  Eye,
+  EyeOff
 } from "lucide-react";
 import { toast } from "sonner";
 
 const Settings = () => {
-  const [businessData, setBusinessData] = useState({
-    name: "Bella's Boutique",
-    phone: "+1 (555) 123-4567",
-    email: "hello@bellasboutique.com",
-    address: "123 Fashion Ave, Style City, SC 12345"
+  const [passwordData, setPasswordData] = useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: ""
   });
 
-  const [brandingData, setBrandingData] = useState({
-    primaryColor: "#81D8D0"
+  const [profileData, setProfileData] = useState({
+    fullName: "John Smith",
+    email: "john.smith@bellasboutique.com",
+    phone: "+1 (555) 123-4567"
   });
 
-  const [smsData, setSmsData] = useState({
-    senderName: "Bella's Boutique",
-    signature: "Thanks for shopping with us! - Bella's Boutique"
+  const [showPasswords, setShowPasswords] = useState({
+    old: false,
+    new: false,
+    confirm: false
   });
 
-  const [notifications, setNotifications] = useState({
-    campaignPerformance: true,
-    billingUpdates: true,
-    automationActivity: false
+  const [loading, setLoading] = useState({
+    password: false,
+    profile: false
   });
 
-  const colorOptions = [
-    { name: "Tiffany Blue", value: "#81D8D0" },
-    { name: "Coral", value: "#FF6B6B" },
-    { name: "Lavender", value: "#A8E6CF" },
-    { name: "Gold", value: "#FFD93D" },
-    { name: "Rose", value: "#FF8B94" },
-    { name: "Mint", value: "#95E1D3" }
-  ];
+  const handlePasswordUpdate = async () => {
+    // Basic validation
+    if (!passwordData.oldPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
+      toast.error("Please fill in all password fields");
+      return;
+    }
 
-  const handleSave = () => {
-    toast.success("Settings saved successfully!");
+    if (passwordData.newPassword.length < 6) {
+      toast.error("New password must be at least 6 characters");
+      return;
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      toast.error("New passwords do not match");
+      return;
+    }
+
+    setLoading(prev => ({ ...prev, password: true }));
+    
+    // Simulate API call
+    setTimeout(() => {
+      setLoading(prev => ({ ...prev, password: false }));
+      setPasswordData({ oldPassword: "", newPassword: "", confirmPassword: "" });
+      toast.success("Password updated successfully!");
+    }, 1500);
   };
 
-  const handleLogoUpload = () => {
-    toast.success("Logo uploaded successfully!");
+  const handleProfileUpdate = async () => {
+    // Basic validation
+    if (!profileData.fullName || !profileData.email) {
+      toast.error("Please fill in required fields");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(profileData.email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setLoading(prev => ({ ...prev, profile: true }));
+    
+    // Simulate API call
+    setTimeout(() => {
+      setLoading(prev => ({ ...prev, profile: false }));
+      toast.success("Profile updated successfully!");
+    }, 1500);
+  };
+
+  const togglePasswordVisibility = (field: 'old' | 'new' | 'confirm') => {
+    setShowPasswords(prev => ({ ...prev, [field]: !prev[field] }));
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-2xl mx-auto space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings</h1>
-        <p className="text-gray-600">Manage your business settings and preferences</p>
+        <p className="text-gray-600">Manage your account settings and preferences</p>
       </div>
 
-      {/* Business Information */}
+      {/* Change Password Section */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <Store className="mr-2 h-5 w-5 text-[#81D8D0]" />
-            Business Information
+            <Lock className="mr-2 h-5 w-5 text-[#81D8D0]" />
+            Change Password
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="businessName">Business Name</Label>
-              <Input
-                id="businessName"
-                value={businessData.name}
-                onChange={(e) => setBusinessData(prev => ({ ...prev, name: e.target.value }))}
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="businessPhone">Phone Number</Label>
-              <Input
-                id="businessPhone"
-                value={businessData.phone}
-                onChange={(e) => setBusinessData(prev => ({ ...prev, phone: e.target.value }))}
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="businessEmail">Email Address</Label>
-              <Input
-                id="businessEmail"
-                type="email"
-                value={businessData.email}
-                onChange={(e) => setBusinessData(prev => ({ ...prev, email: e.target.value }))}
-              />
-            </div>
-            
-            <div>
-              <Label htmlFor="businessAddress">Address</Label>
-              <Input
-                id="businessAddress"
-                value={businessData.address}
-                onChange={(e) => setBusinessData(prev => ({ ...prev, address: e.target.value }))}
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Branding */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Palette className="mr-2 h-5 w-5 text-[#81D8D0]" />
-            Branding
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Logo Upload */}
           <div>
-            <Label>Business Logo</Label>
-            <div className="mt-2 flex items-center space-x-4">
-              <div className="w-16 h-16 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
-                <Store className="h-6 w-6 text-gray-400" />
-              </div>
-              <Button variant="outline" onClick={handleLogoUpload}>
-                <Upload className="mr-2 h-4 w-4" />
-                Upload Logo
+            <Label htmlFor="oldPassword">Current Password</Label>
+            <div className="relative">
+              <Input
+                id="oldPassword"
+                type={showPasswords.old ? "text" : "password"}
+                value={passwordData.oldPassword}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, oldPassword: e.target.value }))}
+                placeholder="Enter your current password"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={() => togglePasswordVisibility('old')}
+              >
+                {showPasswords.old ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
               </Button>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
-              Recommended: 200x200px, PNG or JPG
-            </p>
           </div>
 
-          <Separator />
-
-          {/* Primary Color */}
           <div>
-            <Label>Primary Brand Color</Label>
-            <div className="mt-2 grid grid-cols-3 md:grid-cols-6 gap-3">
-              {colorOptions.map((color) => (
-                <button
-                  key={color.value}
-                  onClick={() => setBrandingData(prev => ({ ...prev, primaryColor: color.value }))}
-                  className={`w-full h-12 rounded-lg border-2 transition-all ${
-                    brandingData.primaryColor === color.value 
-                      ? 'border-gray-900 scale-105' 
-                      : 'border-gray-200 hover:border-gray-400'
-                  }`}
-                  style={{ backgroundColor: color.value }}
-                  title={color.name}
-                />
-              ))}
+            <Label htmlFor="newPassword">New Password</Label>
+            <div className="relative">
+              <Input
+                id="newPassword"
+                type={showPasswords.new ? "text" : "password"}
+                value={passwordData.newPassword}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                placeholder="Enter new password (min. 6 characters)"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={() => togglePasswordVisibility('new')}
+              >
+                {showPasswords.new ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </Button>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
-              Selected: {colorOptions.find(c => c.value === brandingData.primaryColor)?.name}
-            </p>
           </div>
+
+          <div>
+            <Label htmlFor="confirmPassword">Confirm New Password</Label>
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                type={showPasswords.confirm ? "text" : "password"}
+                value={passwordData.confirmPassword}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                placeholder="Confirm your new password"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={() => togglePasswordVisibility('confirm')}
+              >
+                {showPasswords.confirm ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+          </div>
+
+          <Button 
+            onClick={handlePasswordUpdate}
+            disabled={loading.password}
+            className="bg-[#81D8D0] hover:bg-[#5FBDB7] text-white w-full sm:w-auto"
+          >
+            {loading.password ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                Updating...
+              </>
+            ) : (
+              <>
+                <Lock className="mr-2 h-4 w-4" />
+                Update Password
+              </>
+            )}
+          </Button>
         </CardContent>
       </Card>
 
-      {/* SMS Sender Info */}
+      <Separator />
+
+      {/* Edit Personal Info Section */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center">
-            <MessageSquare className="mr-2 h-5 w-5 text-[#81D8D0]" />
-            SMS Sender Information
+            <User className="mr-2 h-5 w-5 text-[#81D8D0]" />
+            Edit Personal Information
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <Label htmlFor="senderName">Sender Name</Label>
+            <Label htmlFor="fullName">Full Name *</Label>
             <Input
-              id="senderName"
-              value={smsData.senderName}
-              onChange={(e) => setSmsData(prev => ({ ...prev, senderName: e.target.value }))}
-              placeholder="Your Business Name"
+              id="fullName"
+              value={profileData.fullName}
+              onChange={(e) => setProfileData(prev => ({ ...prev, fullName: e.target.value }))}
+              placeholder="Enter your full name"
             />
-            <p className="text-xs text-gray-500 mt-1">
-              This name will appear as the sender of your SMS messages
-            </p>
           </div>
-          
+
           <div>
-            <Label htmlFor="smsSignature">SMS Signature (Optional)</Label>
-            <Textarea
-              id="smsSignature"
-              value={smsData.signature}
-              onChange={(e) => setSmsData(prev => ({ ...prev, signature: e.target.value }))}
-              placeholder="Add a signature to appear at the end of your messages"
-              rows={3}
+            <Label htmlFor="email">Email Address *</Label>
+            <Input
+              id="email"
+              type="email"
+              value={profileData.email}
+              onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
+              placeholder="Enter your email address"
             />
-            <p className="text-xs text-gray-500 mt-1">
-              This will be automatically added to the end of your SMS messages
-            </p>
           </div>
+
+          <div>
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input
+              id="phone"
+              type="tel"
+              value={profileData.phone}
+              onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
+              placeholder="Enter your phone number"
+            />
+          </div>
+
+          <Button 
+            onClick={handleProfileUpdate}
+            disabled={loading.profile}
+            className="bg-[#81D8D0] hover:bg-[#5FBDB7] text-white w-full sm:w-auto"
+          >
+            {loading.profile ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                Saving...
+              </>
+            ) : (
+              <>
+                <Save className="mr-2 h-4 w-4" />
+                Save Changes
+              </>
+            )}
+          </Button>
         </CardContent>
       </Card>
-
-      {/* Notification Preferences */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Bell className="mr-2 h-5 w-5 text-[#81D8D0]" />
-            Notification Preferences
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium">Campaign Performance</h4>
-                <p className="text-sm text-gray-600">Get notified about campaign results and analytics</p>
-              </div>
-              <Switch
-                checked={notifications.campaignPerformance}
-                onCheckedChange={(checked) => 
-                  setNotifications(prev => ({ ...prev, campaignPerformance: checked }))
-                }
-              />
-            </div>
-            
-            <Separator />
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium">Billing Updates</h4>
-                <p className="text-sm text-gray-600">Receive notifications about billing and payments</p>
-              </div>
-              <Switch
-                checked={notifications.billingUpdates}
-                onCheckedChange={(checked) => 
-                  setNotifications(prev => ({ ...prev, billingUpdates: checked }))
-                }
-              />
-            </div>
-            
-            <Separator />
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium">Automation Activity</h4>
-                <p className="text-sm text-gray-600">Get alerts when automated campaigns are triggered</p>
-              </div>
-              <Switch
-                checked={notifications.automationActivity}
-                onCheckedChange={(checked) => 
-                  setNotifications(prev => ({ ...prev, automationActivity: checked }))
-                }
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Save Button */}
-      <div className="flex justify-end">
-        <Button 
-          onClick={handleSave} 
-          className="bg-[#81D8D0] hover:bg-[#5FBDB7] text-white px-8"
-        >
-          <Save className="mr-2 h-4 w-4" />
-          Save All Changes
-        </Button>
-      </div>
     </div>
   );
 };
