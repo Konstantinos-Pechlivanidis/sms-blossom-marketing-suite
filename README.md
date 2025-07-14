@@ -1,73 +1,109 @@
-# Welcome to your Lovable project
+# 📲 Retail Marketing Web App
 
-## Project info
+A modern, responsive, and AI-enhanced marketing platform built for retailers to create and manage SMS campaigns, automate communications, and track engagement. This application is designed to be intuitive, mobile-first, and fully self-managed.
 
-**URL**: https://lovable.dev/projects/8442b449-c1b9-407a-aff2-2e2c4c7107a2
+---
 
-## How can I edit this code?
+## 🚀 Features
 
-There are several ways of editing your application.
+### 📨 Campaigns
+- Step-by-step **Create Campaign** flow
+- Always-visible **mobile preview** of the SMS message
+- Audience targeting: All contacts, Men, Women, VIP, or custom views
+- **AI Assistant** for message optimization
+- Message scheduling: Send now, schedule later, or save as draft
+- **Recurring sending** (e.g., every Monday and Tuesday)
+- Campaigns list view with filters, actions (edit, view, delete, resend), and draft management
 
-**Use Lovable**
+### 🔁 Automations
+- Predefined automation types (e.g., Birthday, Conversion, 10 Purchases)
+- Users can **edit message content** before activation
+- **Recurring automation control**
+- Drag & Drop-inspired flow layout
+- Inline preview of SMS
+- Full responsiveness and UI consistency with Campaigns module
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8442b449-c1b9-407a-aff2-2e2c4c7107a2) and start prompting.
+### 📇 Contacts
+- List view of contacts
+- Filtering by tag, gender, and source
+- Functional buttons for **view**, **edit**, and **delete**
 
-Changes made via Lovable will be committed automatically to this repo.
+### ⚙️ Settings
+- Minimal design
+- **Change password** functionality (primary)
+- Edit personal account information
+- Fully mobile-friendly layout
 
-**Use your preferred IDE**
+### 📱 QR Scan & Tracking Page
+- Each campaign message contains a **unique backend-generated link**
+- Redirects to a **QR Scan Page** with:
+  - Campaign branding
+  - Visible QR Code
+  - Unsubscribe button
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 🛒 Message Purchase Page
+- Allows user to easily **buy more messages**
+- Credits appear in the **Dashboard**
+- Premium, clean layout with unique **Navbar integration**
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🎨 Design System
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- **Fully responsive** (Mobile, Tablet, Desktop)
+- UI built around a **Tiffany Blue accent palette**
+- Consistent layout structure across all pages
+- Realistic mobile device previews for better UX
+- Modern font sizes, padding, card-based design
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## 🧪 Data
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+- All data is **dummy-based** — no real API integration
+- Buttons, transitions, and flows are **fully functional** and simulate realistic UX
+- User feedback, toasts, and error states are included
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📂 Pages Overview
 
-**Use GitHub Codespaces**
+| Page                | Description                                      |
+|---------------------|--------------------------------------------------|
+| `/dashboard`        | Main stats and credit display                    |
+| `/campaigns`        | View all campaigns, filter, edit, resend         |
+| `/campaigns/create` | Step-by-step campaign builder with AI & preview  |
+| `/automations`      | View, edit, activate predefined workflows        |
+| `/contacts`         | View and manage contacts                         |
+| `/settings`         | Change password and update user info            |
+| `/messages`         | Purchase credits (messages)                      |
+| `/qr/:campaignId`   | QR scan landing page with unsubscribe option     |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## 🛠 Tech Stack
 
-This project is built with:
+- **Frontend:** React.js + Tailwind CSS + ShadCN UI
+- **State Management:** React Hooks
+- **Design Focus:** Mobile-first, Accessibility, UI Transitions
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+## 💡 Notes
 
-Simply open [Lovable](https://lovable.dev/projects/8442b449-c1b9-407a-aff2-2e2c4c7107a2) and click on Share -> Publish.
+- All backend integrations (e.g., message sending, credit deduction, unsubscribe logic) are **mocked**
+- The mobile preview component mimics **real phone dimensions**
+- Recurring logic and QR generation are **simulated** for demo purposes
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## 📸 Preview
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+> Insert screenshots or Loom demo video links here if available.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
+
+## 📬 Contact
+
+For questions, support, or collaboration, contact the creator.
+
