@@ -1,4 +1,3 @@
-
 import { NavLink } from "react-router-dom";
 import { 
   LayoutDashboard, 
@@ -16,7 +15,7 @@ interface SidebarProps {
   onNavigate?: () => void;
 }
 
-const Sidebar = ({ onNavigate }: SidebarProps) => {
+export const Sidebar = ({ onNavigate }: SidebarProps) => {
   const navItems = [
     { name: "Dashboard", href: "/", icon: LayoutDashboard },
     { name: "Templates", href: "/templates", icon: FileText },
@@ -29,16 +28,16 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
   ];
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 h-full lg:h-screen lg:fixed lg:top-0 lg:left-0 lg:z-30">
+    <div className="w-64 bg-card border-r border-border h-full lg:h-screen lg:fixed lg:top-0 lg:left-0 lg:z-30">
       <div className="flex flex-col h-full">
         {/* Logo Section - only show on desktop sidebar */}
-        <div className="hidden lg:flex p-6 border-b border-gray-200 items-center space-x-2">
-          <MessageSquare className="h-8 w-8 text-[#81D8D0]" />
-          <span className="text-xl font-bold text-gray-900">SMSify</span>
+        <div className="hidden lg:flex p-6 border-b border-border items-center space-x-2">
+          <MessageSquare className="h-8 w-8 text-primary" />
+          <span className="text-xl font-bold text-foreground">SMSify</span>
         </div>
         
         {/* Mobile Header */}
-        <div className="lg:hidden p-6 border-b border-gray-200">
+        <div className="lg:hidden p-6 border-b border-border">
           <h2 className="text-xl font-bold text-primary">SMS Marketing</h2>
         </div>
         
@@ -51,10 +50,10 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
               className={({ isActive }) =>
                 `flex items-center px-3 py-3 rounded-md text-sm font-medium transition-colors ${
                   isActive
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-primary-foreground"
                     : item.highlight
                     ? "text-primary hover:bg-primary/10 border border-primary/20"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                 }`
               }
               onClick={onNavigate}
@@ -68,5 +67,3 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
     </div>
   );
 };
-
-export default Sidebar;

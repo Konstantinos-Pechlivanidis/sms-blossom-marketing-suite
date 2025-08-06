@@ -4,7 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
+import { AppLayout } from "./components/layout/AppLayout";
 import Dashboard from "./pages/Dashboard";
 import Templates from "./pages/Templates";
 import CreateCampaign from "./pages/CreateCampaign";
@@ -31,7 +31,7 @@ const App = () => (
           <Route path="/unsubscribe" element={<Unsubscribe />} />
           
           {/* Protected routes with layout */}
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<AppLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="templates" element={<Templates />} />
             <Route path="create-campaign" element={<CreateCampaign />} />

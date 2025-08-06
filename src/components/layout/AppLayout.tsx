@@ -1,12 +1,11 @@
-
 import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar";
-import Header from "./Header";
-import MobileNav from "./MobileNav";
+import { Sidebar } from "./Sidebar";
+import { Header } from "./Header";
+import { MobileNav } from "./MobileNav";
 
-const Layout = () => {
+export const AppLayout = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Desktop Header - hidden on mobile */}
       <div className="hidden lg:block">
         <Header />
@@ -41,5 +40,3 @@ const Layout = () => {
     </div>
   );
 };
-
-export default Layout;

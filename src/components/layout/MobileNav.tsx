@@ -1,4 +1,3 @@
-
 import { NavLink } from "react-router-dom";
 import { 
   LayoutDashboard, 
@@ -9,7 +8,7 @@ import {
   CreditCard
 } from "lucide-react";
 
-const MobileNav = () => {
+export const MobileNav = () => {
   const navItems = [
     { name: "Home", href: "/", icon: LayoutDashboard },
     { name: "Templates", href: "/templates", icon: FileText },
@@ -19,7 +18,7 @@ const MobileNav = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 safe-bottom">
+    <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50 safe-bottom">
       <div className="flex items-center justify-around px-2 py-2">
         {navItems.map((item) => (
           <NavLink
@@ -28,10 +27,10 @@ const MobileNav = () => {
             className={({ isActive }) =>
               `flex flex-col items-center justify-center px-3 py-2 rounded-lg text-xs font-medium transition-colors min-h-[60px] ${
                 isActive
-                  ? "text-[#81D8D0] bg-[#81D8D0]/10"
+                  ? "text-primary bg-primary/10"
                   : item.highlight
-                  ? "text-[#81D8D0] bg-[#81D8D0]/5"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "text-primary bg-primary/5"
+                  : "text-muted-foreground hover:text-foreground"
               }`
             }
           >
@@ -43,5 +42,3 @@ const MobileNav = () => {
     </nav>
   );
 };
-
-export default MobileNav;
