@@ -1,14 +1,16 @@
 
-import { useState } from "react";
 import { MessageSquare } from "lucide-react";
 import { PageHeader } from "@/components/common/PageHeader";
 import { TemplateFilters } from "@/components/templates/TemplateFilters";
 import { TemplateCard } from "@/components/templates/TemplateCard";
 import { templates } from "@/data/mockData";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { setFilter, setSearchTerm } from "@/store/slices/uiSlice";
 
 const Templates = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const dispatch = useAppDispatch();
+  const searchTerm = useAppSelector((state) => state.ui.searchTerms.templates);
+  const selectedCategory = useAppSelector((state) => state.ui.activeFilters.templateCategory);
 
   const categories = ["All", "Coffee Shops", "Gyms", "Fashion Stores", "Beauty", "Restaurants"];
 
@@ -41,9 +43,9 @@ const Templates = () => {
 
       <TemplateFilters
         searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
+        onSearchChange={(term) => dispatch(setSearchTerm({ type: 'templates', term }))}
         selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
+        onCategoryChange={(category) => dispatch(setFilter({ type: 'templateCategory', value: category }))}
         categories={categories}
       />
 

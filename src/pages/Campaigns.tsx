@@ -1,9 +1,12 @@
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { setFilter, setSearchTerm } from "@/store/slices/uiSlice";
+import { deleteCampaign, updateCampaign } from "@/store/slices/campaignSlice";
 import { 
   Search, 
   Filter, 
@@ -27,77 +30,10 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 const Campaigns = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
-
-  const campaigns = [
-    {
-      id: 1,
-      name: "Weekend Flash Sale",
-      status: "Sent",
-      date: "2024-01-15",
-      time: "10:30 AM",
-      recipients: 1247,
-      conversions: 23,
-      conversionRate: "18.4%",
-      message: "🎉 FLASH SALE! 50% off everything this weekend only!"
-    },
-    {
-      id: 2,
-      name: "New Arrivals Alert",
-      status: "Scheduled",
-      date: "2024-01-16",
-      time: "9:00 AM",
-      recipients: 2108,
-      conversions: 0,
-      conversionRate: "0%",
-      message: "✨ New arrivals just dropped! Check out our latest collection"
-    },
-    {
-      id: 3,
-      name: "Birthday Rewards",
-      status: "Sent",
-      date: "2024-01-14",
-      time: "2:15 PM",
-      recipients: 89,
-      conversions: 12,
-      conversionRate: "13.5%",
-      message: "🎂 Happy Birthday! Enjoy 30% off as our gift to you!"
-    },
-    {
-      id: 4,
-      name: "Loyalty Program Update",
-      status: "Draft",
-      date: "",
-      time: "",
-      recipients: 284,
-      conversions: 0,
-      conversionRate: "0%",
-      message: "💎 You're now a VIP member! Enjoy exclusive benefits"
-    },
-    {
-      id: 5,
-      name: "Back in Stock",
-      status: "Sent",
-      date: "2024-01-13",
-      time: "11:45 AM",
-      recipients: 156,
-      conversions: 8,
-      conversionRate: "5.1%",
-      message: "📦 Good news! Your favorite item is back in stock"
-    },
-    {
-      id: 6,
-      name: "Winter Collection",
-      status: "Scheduled",
-      date: "2024-01-18",
-      time: "3:00 PM",
-      recipients: 1890,
-      conversions: 0,
-      conversionRate: "0%",
-      message: "❄️ Winter Collection: Stay warm and stylish! 40% off"
-    }
-  ];
+  const dispatch = useAppDispatch();
+  const campaigns = useAppSelector((state) => state.campaigns.campaigns);
+  const searchTerm = useAppSelector((state) => state.ui.searchTerms.campaigns);
+  const statusFilter = useAppSelector((state) => state.ui.activeFilters.campaignStatus);
 
   const statuses = ["All", "Sent", "Scheduled", "Draft"];
 
@@ -126,10 +62,19 @@ const Campaigns = () => {
   };
 
   const handleResend = (campaign: any) => {
+    dispatch(updateCampaign({
+      id: campaign.id,
+      updates: {
+        status: 'Sent' as const,
+        date: new Date().toISOString().split('T')[0],
+        time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+      }
+    }));
     toast.success(`"${campaign.name}" has been resent to ${campaign.recipients} recipients`);
   };
 
   const handleDelete = (campaign: any) => {
+    dispatch(deleteCampaign(campaign.id));
     toast.success(`"${campaign.name}" has been deleted`);
   };
 
@@ -212,7 +157,7 @@ const Campaigns = () => {
           <Input
             placeholder="Search campaigns..."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => dispatch(setSearchTerm({ type: 'campaigns', term: e.target.value }))}
             className="pl-10"
           />
         </div>
@@ -223,7 +168,7 @@ const Campaigns = () => {
               key={status}
               variant={statusFilter === status ? "default" : "outline"}
               size="sm"
-              onClick={() => setStatusFilter(status)}
+              onClick={() => dispatch(setFilter({ type: 'campaignStatus', value: status }))}
               className={statusFilter === status ? "bg-[#81D8D0] hover:bg-[#5FBDB7]" : ""}
             >
               {status}

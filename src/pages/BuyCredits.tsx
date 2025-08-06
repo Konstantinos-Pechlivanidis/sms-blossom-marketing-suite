@@ -1,28 +1,25 @@
 
-import { useState } from "react";
 import { Check, Zap, CreditCard } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { PageHeader } from "@/components/common/PageHeader";
 import { CreditPackCard } from "@/components/credits/CreditPackCard";
-import { creditPacks } from "@/data/mockData";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { purchaseCreditsStart, purchaseCreditsSuccess } from "@/store/slices/smsSlice";
 
 const BuyCredits = () => {
-  const [isLoading, setIsLoading] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const { packages: creditPacks, loading } = useAppSelector((state) => state.sms);
   const { toast } = useToast();
 
 
   const handlePurchase = async (pack: typeof creditPacks[0]) => {
-    setIsLoading(pack.id);
+    dispatch(purchaseCreditsStart());
     
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     // Simulate successful purchase
-    const currentCredits = parseInt(localStorage.getItem('smsCredits') || '2847');
-    const newCredits = currentCredits + pack.credits;
-    localStorage.setItem('smsCredits', newCredits.toString());
-    
-    setIsLoading(null);
+    dispatch(purchaseCreditsSuccess(pack.credits));
     
     toast({
       title: "✅ Purchase Successful!",
@@ -45,7 +42,7 @@ const BuyCredits = () => {
           <CreditPackCard
             key={pack.id}
             pack={pack}
-            isLoading={isLoading === pack.id}
+            isLoading={loading}
             onPurchase={handlePurchase}
           />
         ))}

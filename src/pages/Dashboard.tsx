@@ -9,11 +9,11 @@ import { StatsCard } from "@/components/common/StatsCard";
 import { WelcomeSection } from "@/components/dashboard/WelcomeSection";
 import { RecentCampaigns } from "@/components/dashboard/RecentCampaigns";
 import { InsightsWidget } from "@/components/dashboard/InsightsWidget";
-import { useSMSCredits } from "@/hooks/useSMSCredits";
+import { useAppSelector } from "@/store/hooks";
 import { kpiData, recentCampaigns } from "@/data/mockData";
 
 const Dashboard = () => {
-  const { smsCredits } = useSMSCredits();
+  const smsCredits = useAppSelector((state) => state.sms.credits);
 
   const iconMap = {
     Send,
@@ -46,7 +46,7 @@ const Dashboard = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <RecentCampaigns campaigns={recentCampaigns} />
-        <InsightsWidget smsCredits={smsCredits} />
+        <InsightsWidget smsCredits={smsCredits.toLocaleString()} />
       </div>
     </div>
   );
