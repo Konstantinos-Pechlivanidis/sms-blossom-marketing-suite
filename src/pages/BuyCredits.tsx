@@ -1,32 +1,12 @@
 
 import { Check, Zap, CreditCard } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 import { PageHeader } from "@/components/common/PageHeader";
 import { CreditPackCard } from "@/components/credits/CreditPackCard";
-import { useAppSelector, useAppDispatch } from "@/store/hooks";
-import { purchaseCreditsStart, purchaseCreditsSuccess } from "@/store/slices/smsSlice";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useCreditPacks } from "@/hooks/api/useCredits";
 
 const BuyCredits = () => {
-  const dispatch = useAppDispatch();
-  const { packages: creditPacks, loading } = useAppSelector((state) => state.sms);
-  const { toast } = useToast();
-
-
-  const handlePurchase = async (pack: typeof creditPacks[0]) => {
-    dispatch(purchaseCreditsStart());
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // Simulate successful purchase
-    dispatch(purchaseCreditsSuccess(pack.credits));
-    
-    toast({
-      title: "✅ Purchase Successful!",
-      description: `${pack.credits} SMS credits have been added to your account.`,
-      duration: 5000,
-    });
-  };
+  const { data: creditPacks, isLoading } = useCreditPacks();
 
   return (
     <div className="space-y-6">
@@ -38,14 +18,15 @@ const BuyCredits = () => {
 
       {/* Credit Packs Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        {creditPacks.map((pack) => (
-          <CreditPackCard
-            key={pack.id}
-            pack={pack}
-            isLoading={loading}
-            onPurchase={handlePurchase}
-          />
-        ))}
+        {isLoading ? (
+          Array.from({ length: 3 }).map((_, index) => (
+            <Skeleton key={index} className="h-80" />
+          ))
+        ) : (
+          creditPacks?.map((pack) => (
+            <CreditPackCard key={pack.id} pack={pack} />
+          ))
+        )}
       </div>
 
       {/* Additional Info */}

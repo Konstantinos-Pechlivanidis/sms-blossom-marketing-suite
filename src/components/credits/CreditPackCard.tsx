@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Zap, CreditCard, Loader2 } from "lucide-react";
+import { usePurchaseCredits } from "@/hooks/api/useCredits";
 
 interface CreditPack {
   id: string;
@@ -16,11 +17,14 @@ interface CreditPack {
 
 interface CreditPackCardProps {
   pack: CreditPack;
-  isLoading: boolean;
-  onPurchase: (pack: CreditPack) => void;
 }
 
-export const CreditPackCard = ({ pack, isLoading, onPurchase }: CreditPackCardProps) => {
+export const CreditPackCard = ({ pack }: CreditPackCardProps) => {
+  const purchaseCreditsMutation = usePurchaseCredits();
+
+  const handlePurchase = () => {
+    purchaseCreditsMutation.mutate(pack.id);
+  };
   return (
     <Card 
       className={`relative transition-all duration-300 hover:shadow-lg ${
@@ -72,15 +76,15 @@ export const CreditPackCard = ({ pack, isLoading, onPurchase }: CreditPackCardPr
 
         {/* Purchase Button */}
         <Button
-          onClick={() => onPurchase(pack)}
-          disabled={isLoading}
+          onClick={handlePurchase}
+          disabled={purchaseCreditsMutation.isPending}
           className={`w-full mt-6 ${
             pack.popular 
               ? 'bg-primary hover:bg-primary/90' 
               : 'bg-foreground hover:bg-foreground/90'
           } text-primary-foreground font-medium py-3`}
         >
-          {isLoading ? (
+          {purchaseCreditsMutation.isPending ? (
             <div className="flex items-center space-x-2">
               <Loader2 className="h-4 w-4 animate-spin" />
               <span>Processing...</span>

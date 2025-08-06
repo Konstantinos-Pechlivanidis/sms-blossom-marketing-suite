@@ -1,10 +1,11 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { 
   Lock, 
   User,
@@ -13,8 +14,13 @@ import {
   EyeOff
 } from "lucide-react";
 import { toast } from "sonner";
+import { useCurrentUser, useUpdateUser, useUpdatePassword } from "@/hooks/api/useUser";
 
 const Settings = () => {
+  const { data: user, isLoading: userLoading } = useCurrentUser();
+  const updateUserMutation = useUpdateUser();
+  const updatePasswordMutation = useUpdatePassword();
+
   const [passwordData, setPasswordData] = useState({
     oldPassword: "",
     newPassword: "",
@@ -22,9 +28,9 @@ const Settings = () => {
   });
 
   const [profileData, setProfileData] = useState({
-    fullName: "John Smith",
-    email: "john.smith@bellasboutique.com",
-    phone: "+1 (555) 123-4567"
+    fullName: "",
+    email: "",
+    phone: ""
   });
 
   const [showPasswords, setShowPasswords] = useState({
@@ -33,10 +39,16 @@ const Settings = () => {
     confirm: false
   });
 
-  const [loading, setLoading] = useState({
-    password: false,
-    profile: false
-  });
+  // Update profile data when user data loads
+  useEffect(() => {
+    if (user) {
+      setProfileData({
+        fullName: user.name,
+        email: user.email,
+        phone: user.phone
+      });
+    }
+  }, [user]);
 
   const handlePasswordUpdate = async () => {
     // Basic validation
@@ -55,14 +67,14 @@ const Settings = () => {
       return;
     }
 
-    setLoading(prev => ({ ...prev, password: true }));
-    
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(prev => ({ ...prev, password: false }));
-      setPasswordData({ oldPassword: "", newPassword: "", confirmPassword: "" });
-      toast.success("Password updated successfully!");
-    }, 1500);
+    updatePasswordMutation.mutate({
+      oldPassword: passwordData.oldPassword,
+      newPassword: passwordData.newPassword
+    }, {
+      onSuccess: () => {
+        setPasswordData({ oldPassword: "", newPassword: "", confirmPassword: "" });
+      }
+    });
   };
 
   const handleProfileUpdate = async () => {
@@ -78,13 +90,11 @@ const Settings = () => {
       return;
     }
 
-    setLoading(prev => ({ ...prev, profile: true }));
-    
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(prev => ({ ...prev, profile: false }));
-      toast.success("Profile updated successfully!");
-    }, 1500);
+    updateUserMutation.mutate({
+      name: profileData.fullName,
+      email: profileData.email,
+      phone: profileData.phone
+    });
   };
 
   const togglePasswordVisibility = (field: 'old' | 'new' | 'confirm') => {
@@ -188,10 +198,10 @@ const Settings = () => {
 
           <Button 
             onClick={handlePasswordUpdate}
-            disabled={loading.password}
+            disabled={updatePasswordMutation.isPending}
             className="bg-[#81D8D0] hover:bg-[#5FBDB7] text-white w-full sm:w-auto"
           >
-            {loading.password ? (
+            {updatePasswordMutation.isPending ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                 Updating...
@@ -217,55 +227,66 @@ const Settings = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div>
-            <Label htmlFor="fullName">Full Name *</Label>
-            <Input
-              id="fullName"
-              value={profileData.fullName}
-              onChange={(e) => setProfileData(prev => ({ ...prev, fullName: e.target.value }))}
-              placeholder="Enter your full name"
-            />
-          </div>
+          {userLoading ? (
+            <div className="space-y-4">
+              <Skeleton className="h-10" />
+              <Skeleton className="h-10" />
+              <Skeleton className="h-10" />
+              <Skeleton className="h-10 w-32" />
+            </div>
+          ) : (
+            <>
+              <div>
+                <Label htmlFor="fullName">Full Name *</Label>
+                <Input
+                  id="fullName"
+                  value={profileData.fullName}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, fullName: e.target.value }))}
+                  placeholder="Enter your full name"
+                />
+              </div>
 
-          <div>
-            <Label htmlFor="email">Email Address *</Label>
-            <Input
-              id="email"
-              type="email"
-              value={profileData.email}
-              onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
-              placeholder="Enter your email address"
-            />
-          </div>
+              <div>
+                <Label htmlFor="email">Email Address *</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={profileData.email}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
+                  placeholder="Enter your email address"
+                />
+              </div>
 
-          <div>
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              type="tel"
-              value={profileData.phone}
-              onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
-              placeholder="Enter your phone number"
-            />
-          </div>
+              <div>
+                <Label htmlFor="phone">Phone Number</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  value={profileData.phone}
+                  onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
+                  placeholder="Enter your phone number"
+                />
+              </div>
 
-          <Button 
-            onClick={handleProfileUpdate}
-            disabled={loading.profile}
-            className="bg-[#81D8D0] hover:bg-[#5FBDB7] text-white w-full sm:w-auto"
-          >
-            {loading.profile ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Saving...
-              </>
-            ) : (
-              <>
-                <Save className="mr-2 h-4 w-4" />
-                Save Changes
-              </>
-            )}
-          </Button>
+              <Button 
+                onClick={handleProfileUpdate}
+                disabled={updateUserMutation.isPending}
+                className="bg-[#81D8D0] hover:bg-[#5FBDB7] text-white w-full sm:w-auto"
+              >
+                {updateUserMutation.isPending ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="mr-2 h-4 w-4" />
+                    Save Changes
+                  </>
+                )}
+              </Button>
+            </>
+          )}
         </CardContent>
       </Card>
     </div>

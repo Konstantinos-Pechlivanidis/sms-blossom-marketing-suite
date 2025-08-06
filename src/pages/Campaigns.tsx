@@ -1,12 +1,12 @@
 
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setFilter, setSearchTerm } from "@/store/slices/uiSlice";
-import { deleteCampaign, updateCampaign } from "@/store/slices/campaignSlice";
+import { useCampaigns, useUpdateCampaign, useDeleteCampaign } from "@/hooks/api/useCampaigns";
 import { 
   Search, 
   Filter, 
@@ -31,18 +31,20 @@ import { toast } from "sonner";
 
 const Campaigns = () => {
   const dispatch = useAppDispatch();
-  const campaigns = useAppSelector((state) => state.campaigns.campaigns);
+  const { data: campaigns, isLoading } = useCampaigns();
+  const updateCampaignMutation = useUpdateCampaign();
+  const deleteCampaignMutation = useDeleteCampaign();
   const searchTerm = useAppSelector((state) => state.ui.searchTerms.campaigns);
   const statusFilter = useAppSelector((state) => state.ui.activeFilters.campaignStatus);
 
   const statuses = ["All", "Sent", "Scheduled", "Draft"];
 
-  const filteredCampaigns = campaigns.filter(campaign => {
+  const filteredCampaigns = campaigns?.filter(campaign => {
     const matchesSearch = campaign.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          campaign.message.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === "All" || campaign.status === statusFilter;
     return matchesSearch && matchesStatus;
-  });
+  }) || [];
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -62,26 +64,26 @@ const Campaigns = () => {
   };
 
   const handleResend = (campaign: any) => {
-    dispatch(updateCampaign({
+    updateCampaignMutation.mutate({
       id: campaign.id,
       updates: {
         status: 'Sent' as const,
         date: new Date().toISOString().split('T')[0],
         time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
       }
-    }));
+    });
     toast.success(`"${campaign.name}" has been resent to ${campaign.recipients} recipients`);
   };
 
   const handleDelete = (campaign: any) => {
-    dispatch(deleteCampaign(campaign.id));
+    deleteCampaignMutation.mutate(campaign.id);
     toast.success(`"${campaign.name}" has been deleted`);
   };
 
-  const totalCampaigns = campaigns.length;
-  const sentCampaigns = campaigns.filter(c => c.status === "Sent").length;
-  const scheduledCampaigns = campaigns.filter(c => c.status === "Scheduled").length;
-  const draftCampaigns = campaigns.filter(c => c.status === "Draft").length;
+  const totalCampaigns = campaigns?.length || 0;
+  const sentCampaigns = campaigns?.filter(c => c.status === "Sent").length || 0;
+  const scheduledCampaigns = campaigns?.filter(c => c.status === "Scheduled").length || 0;
+  const draftCampaigns = campaigns?.filter(c => c.status === "Draft").length || 0;
 
   return (
     <div className="space-y-6">
@@ -101,53 +103,61 @@ const Campaigns = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Campaigns</p>
-                <p className="text-2xl font-bold text-gray-900">{totalCampaigns}</p>
-              </div>
-              <Send className="h-8 w-8 text-[#81D8D0]" />
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Sent</p>
-                <p className="text-2xl font-bold text-green-600">{sentCampaigns}</p>
-              </div>
-              <BarChart3 className="h-8 w-8 text-green-600" />
-            </div>
-          </CardContent>
-        </Card>
+        {isLoading ? (
+          Array.from({ length: 4 }).map((_, index) => (
+            <Skeleton key={index} className="h-24" />
+          ))
+        ) : (
+          <>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Total Campaigns</p>
+                    <p className="text-2xl font-bold text-gray-900">{totalCampaigns}</p>
+                  </div>
+                  <Send className="h-8 w-8 text-[#81D8D0]" />
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Sent</p>
+                    <p className="text-2xl font-bold text-green-600">{sentCampaigns}</p>
+                  </div>
+                  <BarChart3 className="h-8 w-8 text-green-600" />
+                </div>
+              </CardContent>
+            </Card>
 
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Scheduled</p>
-                <p className="text-2xl font-bold text-blue-600">{scheduledCampaigns}</p>
-              </div>
-              <Calendar className="h-8 w-8 text-blue-600" />
-            </div>
-          </CardContent>
-        </Card>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Scheduled</p>
+                    <p className="text-2xl font-bold text-blue-600">{scheduledCampaigns}</p>
+                  </div>
+                  <Calendar className="h-8 w-8 text-blue-600" />
+                </div>
+              </CardContent>
+            </Card>
 
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Drafts</p>
-                <p className="text-2xl font-bold text-gray-600">{draftCampaigns}</p>
-              </div>
-              <Edit className="h-8 w-8 text-gray-600" />
-            </div>
-          </CardContent>
-        </Card>
+            <Card>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">Drafts</p>
+                    <p className="text-2xl font-bold text-gray-600">{draftCampaigns}</p>
+                  </div>
+                  <Edit className="h-8 w-8 text-gray-600" />
+                </div>
+              </CardContent>
+            </Card>
+          </>
+        )}
       </div>
 
       {/* Filters */}
@@ -179,7 +189,12 @@ const Campaigns = () => {
 
       {/* Campaigns List */}
       <div className="space-y-4">
-        {filteredCampaigns.map((campaign) => (
+        {isLoading ? (
+          Array.from({ length: 3 }).map((_, index) => (
+            <Skeleton key={index} className="h-48" />
+          ))
+        ) : (
+          filteredCampaigns.map((campaign) => (
           <Card key={campaign.id} className="hover:shadow-md transition-shadow">
             <CardContent className="p-6">
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -259,7 +274,8 @@ const Campaigns = () => {
               </div>
             </CardContent>
           </Card>
-        ))}
+          ))
+        )}
       </div>
 
       {filteredCampaigns.length === 0 && (

@@ -9,11 +9,15 @@ import { StatsCard } from "@/components/common/StatsCard";
 import { WelcomeSection } from "@/components/dashboard/WelcomeSection";
 import { RecentCampaigns } from "@/components/dashboard/RecentCampaigns";
 import { InsightsWidget } from "@/components/dashboard/InsightsWidget";
-import { useAppSelector } from "@/store/hooks";
-import { kpiData, recentCampaigns } from "@/data/mockData";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useKPIData } from "@/hooks/api/useKPIData";
+import { useRecentCampaigns } from "@/hooks/api/useCampaigns";
+import { useSMSCredits } from "@/hooks/api/useCredits";
 
 const Dashboard = () => {
-  const smsCredits = useAppSelector((state) => state.sms.credits);
+  const { data: kpiData, isLoading: kpiLoading } = useKPIData();
+  const { data: recentCampaigns, isLoading: campaignsLoading } = useRecentCampaigns();
+  const { data: smsCredits, isLoading: creditsLoading } = useSMSCredits();
 
   const iconMap = {
     Send,
@@ -28,25 +32,41 @@ const Dashboard = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {kpiData.map((kpi, index) => {
-          const IconComponent = iconMap[kpi.icon as keyof typeof iconMap];
-          return (
-            <StatsCard
-              key={index}
-              title={kpi.title}
-              value={kpi.value}
-              change={kpi.change}
-              changeType={kpi.changeType}
-              icon={IconComponent}
-              iconColor={kpi.color}
-            />
-          );
-        })}
+        {kpiLoading ? (
+          // Loading skeletons
+          Array.from({ length: 4 }).map((_, index) => (
+            <Skeleton key={index} className="h-32" />
+          ))
+        ) : (
+          kpiData?.map((kpi, index) => {
+            const IconComponent = iconMap[kpi.icon as keyof typeof iconMap];
+            return (
+              <StatsCard
+                key={index}
+                title={kpi.title}
+                value={kpi.value}
+                change={kpi.change}
+                changeType={kpi.changeType}
+                icon={IconComponent}
+                iconColor={kpi.color}
+              />
+            );
+          })
+        )}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <RecentCampaigns campaigns={recentCampaigns} />
-        <InsightsWidget smsCredits={smsCredits.toLocaleString()} />
+        {campaignsLoading ? (
+          <Skeleton className="lg:col-span-2 h-64" />
+        ) : (
+          <RecentCampaigns campaigns={recentCampaigns || []} />
+        )}
+        
+        {creditsLoading ? (
+          <Skeleton className="h-64" />
+        ) : (
+          <InsightsWidget smsCredits={smsCredits?.toLocaleString() || '0'} />
+        )}
       </div>
     </div>
   );

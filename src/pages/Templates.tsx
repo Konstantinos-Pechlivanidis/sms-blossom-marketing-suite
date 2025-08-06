@@ -3,7 +3,8 @@ import { MessageSquare } from "lucide-react";
 import { PageHeader } from "@/components/common/PageHeader";
 import { TemplateFilters } from "@/components/templates/TemplateFilters";
 import { TemplateCard } from "@/components/templates/TemplateCard";
-import { templates } from "@/data/mockData";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useTemplates } from "@/hooks/api/useTemplates";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setFilter, setSearchTerm } from "@/store/slices/uiSlice";
 
@@ -11,16 +12,16 @@ const Templates = () => {
   const dispatch = useAppDispatch();
   const searchTerm = useAppSelector((state) => state.ui.searchTerms.templates);
   const selectedCategory = useAppSelector((state) => state.ui.activeFilters.templateCategory);
+  const { data: templates, isLoading } = useTemplates();
 
   const categories = ["All", "Coffee Shops", "Gyms", "Fashion Stores", "Beauty", "Restaurants"];
 
-
-  const filteredTemplates = templates.filter(template => {
+  const filteredTemplates = templates?.filter(template => {
     const matchesSearch = template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          template.message.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "All" || template.category === selectedCategory;
     return matchesSearch && matchesCategory;
-  });
+  }) || [];
 
   const getCategoryColor = (category: string) => {
     const colors = {
@@ -51,13 +52,20 @@ const Templates = () => {
 
       {/* Templates Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredTemplates.map((template) => (
-          <TemplateCard
-            key={template.id}
-            template={template}
-            getCategoryColor={getCategoryColor}
-          />
-        ))}
+        {isLoading ? (
+          // Loading skeletons
+          Array.from({ length: 6 }).map((_, index) => (
+            <Skeleton key={index} className="h-64" />
+          ))
+        ) : (
+          filteredTemplates.map((template) => (
+            <TemplateCard
+              key={template.id}
+              template={template}
+              getCategoryColor={getCategoryColor}
+            />
+          ))
+        )}
       </div>
 
       {filteredTemplates.length === 0 && (
