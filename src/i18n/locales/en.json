@@ -1,0 +1,117 @@
+{
+  "app": {
+    "name": "SMSify",
+    "title": "SMS Marketing"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "templates": "Templates",
+    "createCampaign": "Create Campaign",
+    "campaigns": "Campaigns",
+    "contacts": "Contacts",
+    "automations": "Automations",
+    "buyCredits": "Buy Credits",
+    "settings": "Settings",
+    "home": "Home",
+    "credits": "Credits",
+    "profile": "Profile"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "overview": "Here's what's happening with your SMS campaigns today",
+    "kpi": {
+      "messagesSent": "Messages Sent",
+      "openRate": "Open Rate",
+      "totalContacts": "Total Contacts",
+      "scheduledCampaigns": "Scheduled Campaigns"
+    },
+    "recentCampaigns": "Recent Campaigns",
+    "insights": "Insights",
+    "smsCredits": "SMS Credits"
+  },
+  "header": {
+    "smsCredits": "SMS Credits",
+    "notifications": "Notifications"
+  },
+  "templates": {
+    "title": "SMS Templates",
+    "description": "Manage your SMS message templates",
+    "search": "Search templates...",
+    "categories": {
+      "all": "All",
+      "marketing": "Marketing",
+      "transactional": "Transactional",
+      "promotional": "Promotional"
+    },
+    "actions": {
+      "create": "Create Template",
+      "edit": "Edit",
+      "delete": "Delete",
+      "use": "Use Template"
+    }
+  },
+  "campaigns": {
+    "title": "SMS Campaigns",
+    "description": "Manage your SMS marketing campaigns",
+    "search": "Search campaigns...",
+    "status": {
+      "draft": "Draft",
+      "scheduled": "Scheduled",
+      "sent": "Sent",
+      "failed": "Failed"
+    },
+    "actions": {
+      "create": "Create Campaign",
+      "edit": "Edit",
+      "delete": "Delete",
+      "view": "View Details"
+    }
+  },
+  "credits": {
+    "title": "Buy SMS Credits",
+    "description": "Choose a credit package that fits your needs",
+    "current": "Current Credits",
+    "packages": {
+      "starter": "Starter",
+      "professional": "Professional",
+      "enterprise": "Enterprise"
+    },
+    "actions": {
+      "buy": "Buy Now",
+      "mostPopular": "Most Popular"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage your account settings and preferences",
+    "profile": "Profile",
+    "account": "Account",
+    "preferences": "Preferences",
+    "security": "Security"
+  },
+  "common": {
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search...",
+    "back": "Back",
+    "actions": "Actions",
+    "status": "Status",
+    "date": "Date",
+    "name": "Name",
+    "description": "Description"
+  },
+  "errors": {
+    "pageNotFound": "Oops! Page not found",
+    "returnHome": "Return to Home",
+    "genericError": "Something went wrong"
+  },
+  "language": {
+    "english": "English",
+    "greek": "Ελληνικά",
+    "selectLanguage": "Select Language"
+  }
+}

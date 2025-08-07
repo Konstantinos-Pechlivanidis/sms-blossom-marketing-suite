@@ -1,18 +1,20 @@
 
 import { Check, Zap, CreditCard } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { PageHeader } from "@/components/common/PageHeader";
 import { CreditPackCard } from "@/components/credits/CreditPackCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCreditPacks } from "@/hooks/api/useCredits";
 
 const BuyCredits = () => {
+  const { t } = useTranslation();
   const { data: creditPacks, isLoading } = useCreditPacks();
 
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Buy SMS Credits"
-        description="Choose the package that suits your business needs. All credits never expire and include premium features."
+        title={t('credits.title')}
+        description={t('credits.description')}
         backTo="/"
       />
 

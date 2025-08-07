@@ -1,9 +1,12 @@
 import { Bell, MessageSquare, User, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Sidebar } from "./Sidebar";
+import { LanguageSwitcher } from "@/components/common/LanguageSwitcher";
 
 export const Header = () => {
+  const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -24,16 +27,18 @@ export const Header = () => {
             {/* Logo */}
             <div className="flex items-center space-x-2">
               <MessageSquare className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold text-foreground hidden sm:block">SMSify</span>
+              <span className="text-xl font-bold text-foreground hidden sm:block">{t('app.name')}</span>
             </div>
           </div>
           
           <div className="flex items-center space-x-2 md:space-x-4">
             {/* SMS Credits - hidden on small mobile */}
             <div className="hidden sm:flex items-center space-x-2 bg-primary/10 px-3 py-1 rounded-full">
-              <span className="text-sm font-medium text-primary">SMS Credits:</span>
+              <span className="text-sm font-medium text-primary">{t('header.smsCredits')}:</span>
               <span className="text-sm font-bold text-foreground">2,847</span>
             </div>
+            
+            <LanguageSwitcher />
             
             <Button variant="ghost" size="sm" className="relative">
               <Bell className="h-5 w-5" />

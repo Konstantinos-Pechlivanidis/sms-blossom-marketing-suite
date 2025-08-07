@@ -1,5 +1,6 @@
 
 import { MessageSquare } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { PageHeader } from "@/components/common/PageHeader";
 import { TemplateFilters } from "@/components/templates/TemplateFilters";
 import { TemplateCard } from "@/components/templates/TemplateCard";
@@ -9,17 +10,25 @@ import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setFilter, setSearchTerm } from "@/store/slices/uiSlice";
 
 const Templates = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const searchTerm = useAppSelector((state) => state.ui.searchTerms.templates);
   const selectedCategory = useAppSelector((state) => state.ui.activeFilters.templateCategory);
   const { data: templates, isLoading } = useTemplates();
 
-  const categories = ["All", "Coffee Shops", "Gyms", "Fashion Stores", "Beauty", "Restaurants"];
+  const categories = [
+    t('templates.categories.all'), 
+    "Coffee Shops", 
+    "Gyms", 
+    "Fashion Stores", 
+    "Beauty", 
+    "Restaurants"
+  ];
 
   const filteredTemplates = templates?.filter(template => {
     const matchesSearch = template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          template.message.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "All" || template.category === selectedCategory;
+    const matchesCategory = selectedCategory === t('templates.categories.all') || template.category === selectedCategory;
     return matchesSearch && matchesCategory;
   }) || [];
 
@@ -38,8 +47,8 @@ const Templates = () => {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="SMS Templates"
-        description="High-converting SMS templates proven by successful businesses"
+        title={t('templates.title')}
+        description={t('templates.description')}
       />
 
       <TemplateFilters
@@ -71,8 +80,8 @@ const Templates = () => {
       {filteredTemplates.length === 0 && (
         <div className="text-center py-12">
           <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-foreground mb-2">No templates found</h3>
-          <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
+          <h3 className="text-lg font-medium text-foreground mb-2">{t('errors.pageNotFound')}</h3>
+          <p className="text-muted-foreground">{t('templates.search')}</p>
         </div>
       )}
     </div>

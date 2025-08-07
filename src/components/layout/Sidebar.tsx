@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { 
   LayoutDashboard, 
   FileText, 
@@ -16,15 +17,17 @@ interface SidebarProps {
 }
 
 export const Sidebar = ({ onNavigate }: SidebarProps) => {
+  const { t } = useTranslation();
+  
   const navItems = [
-    { name: "Dashboard", href: "/", icon: LayoutDashboard },
-    { name: "Templates", href: "/templates", icon: FileText },
-    { name: "Create Campaign", href: "/create-campaign", icon: PlusCircle },
-    { name: "Campaigns", href: "/campaigns", icon: Send },
-    { name: "Contacts", href: "/contacts", icon: Users },
-    { name: "Automations", href: "/automations", icon: Zap },
-    { name: "Buy Credits", href: "/buy-credits", icon: CreditCard, highlight: true },
-    { name: "Settings", href: "/settings", icon: Settings },
+    { name: t('navigation.dashboard'), href: "/", icon: LayoutDashboard },
+    { name: t('navigation.templates'), href: "/templates", icon: FileText },
+    { name: t('navigation.createCampaign'), href: "/create-campaign", icon: PlusCircle },
+    { name: t('navigation.campaigns'), href: "/campaigns", icon: Send },
+    { name: t('navigation.contacts'), href: "/contacts", icon: Users },
+    { name: t('navigation.automations'), href: "/automations", icon: Zap },
+    { name: t('navigation.buyCredits'), href: "/buy-credits", icon: CreditCard, highlight: true },
+    { name: t('navigation.settings'), href: "/settings", icon: Settings },
   ];
 
   return (
@@ -33,12 +36,12 @@ export const Sidebar = ({ onNavigate }: SidebarProps) => {
         {/* Logo Section - only show on desktop sidebar */}
         <div className="hidden lg:flex p-6 border-b border-border items-center space-x-2">
           <MessageSquare className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold text-foreground">SMSify</span>
+          <span className="text-xl font-bold text-foreground">{t('app.name')}</span>
         </div>
         
         {/* Mobile Header */}
         <div className="lg:hidden p-6 border-b border-border">
-          <h2 className="text-xl font-bold text-primary">SMS Marketing</h2>
+          <h2 className="text-xl font-bold text-primary">{t('app.title')}</h2>
         </div>
         
         {/* Navigation */}

@@ -1,0 +1,117 @@
+{
+  "app": {
+    "name": "SMSify",
+    "title": "SMS Μάρκετινγκ"
+  },
+  "navigation": {
+    "dashboard": "Πίνακας Ελέγχου",
+    "templates": "Πρότυπα",
+    "createCampaign": "Δημιουργία Καμπάνιας",
+    "campaigns": "Καμπάνιες",
+    "contacts": "Επαφές",
+    "automations": "Αυτοματισμοί",
+    "buyCredits": "Αγορά Πιστώσεων",
+    "settings": "Ρυθμίσεις",
+    "home": "Αρχική",
+    "credits": "Πιστώσεις",
+    "profile": "Προφίλ"
+  },
+  "dashboard": {
+    "welcome": "Καλώς ήρθες πίσω",
+    "overview": "Εδώ είναι τι συμβαίνει με τις SMS καμπάνιες σας σήμερα",
+    "kpi": {
+      "messagesSent": "Μηνύματα που Στάλθηκαν",
+      "openRate": "Ποσοστό Ανοίγματος",
+      "totalContacts": "Συνολικές Επαφές",
+      "scheduledCampaigns": "Προγραμματισμένες Καμπάνιες"
+    },
+    "recentCampaigns": "Πρόσφατες Καμπάνιες",
+    "insights": "Αναλύσεις",
+    "smsCredits": "Πιστώσεις SMS"
+  },
+  "header": {
+    "smsCredits": "Πιστώσεις SMS",
+    "notifications": "Ειδοποιήσεις"
+  },
+  "templates": {
+    "title": "Πρότυπα SMS",
+    "description": "Διαχειριστείτε τα πρότυπα μηνυμάτων SMS",
+    "search": "Αναζήτηση προτύπων...",
+    "categories": {
+      "all": "Όλα",
+      "marketing": "Μάρκετινγκ",
+      "transactional": "Συναλλακτικά",
+      "promotional": "Προωθητικά"
+    },
+    "actions": {
+      "create": "Δημιουργία Προτύπου",
+      "edit": "Επεξεργασία",
+      "delete": "Διαγραφή",
+      "use": "Χρήση Προτύπου"
+    }
+  },
+  "campaigns": {
+    "title": "Καμπάνιες SMS",
+    "description": "Διαχειριστείτε τις καμπάνιες SMS μάρκετινγκ",
+    "search": "Αναζήτηση καμπανιών...",
+    "status": {
+      "draft": "Πρόχειρο",
+      "scheduled": "Προγραμματισμένο",
+      "sent": "Στάλθηκε",
+      "failed": "Αποτυχία"
+    },
+    "actions": {
+      "create": "Δημιουργία Καμπάνιας",
+      "edit": "Επεξεργασία",
+      "delete": "Διαγραφή",
+      "view": "Προβολή Λεπτομερειών"
+    }
+  },
+  "credits": {
+    "title": "Αγορά Πιστώσεων SMS",
+    "description": "Επιλέξτε ένα πακέτο πιστώσεων που ταιριάζει στις ανάγκες σας",
+    "current": "Τρέχουσες Πιστώσεις",
+    "packages": {
+      "starter": "Αρχάριος",
+      "professional": "Επαγγελματικό",
+      "enterprise": "Επιχειρηματικό"
+    },
+    "actions": {
+      "buy": "Αγορά Τώρα",
+      "mostPopular": "Πιο Δημοφιλές"
+    }
+  },
+  "settings": {
+    "title": "Ρυθμίσεις",
+    "description": "Διαχειριστείτε τις ρυθμίσεις λογαριασμού και προτιμήσεις",
+    "profile": "Προφίλ",
+    "account": "Λογαριασμός",
+    "preferences": "Προτιμήσεις",
+    "security": "Ασφάλεια"
+  },
+  "common": {
+    "loading": "Φόρτωση...",
+    "save": "Αποθήκευση",
+    "cancel": "Ακύρωση",
+    "delete": "Διαγραφή",
+    "edit": "Επεξεργασία",
+    "create": "Δημιουργία",
+    "search": "Αναζήτηση...",
+    "back": "Πίσω",
+    "actions": "Ενέργειες",
+    "status": "Κατάσταση",
+    "date": "Ημερομηνία",
+    "name": "Όνομα",
+    "description": "Περιγραφή"
+  },
+  "errors": {
+    "pageNotFound": "Ουπς! Η σελίδα δεν βρέθηκε",
+    "returnHome": "Επιστροφή στην Αρχική",
+    "genericError": "Κάτι πήγε στραβά"
+  },
+  "language": {
+    "english": "English",
+    "greek": "Ελληνικά",
+    "selectLanguage": "Επιλογή Γλώσσας"
+  }
+}

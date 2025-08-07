@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { 
   LayoutDashboard, 
   FileText, 
@@ -9,12 +10,14 @@ import {
 } from "lucide-react";
 
 export const MobileNav = () => {
+  const { t } = useTranslation();
+  
   const navItems = [
-    { name: "Home", href: "/", icon: LayoutDashboard },
-    { name: "Templates", href: "/templates", icon: FileText },
-    { name: "Campaigns", href: "/campaigns", icon: Send },
-    { name: "Credits", href: "/buy-credits", icon: CreditCard, highlight: true },
-    { name: "Profile", href: "/settings", icon: User },
+    { name: t('navigation.home'), href: "/", icon: LayoutDashboard },
+    { name: t('navigation.templates'), href: "/templates", icon: FileText },
+    { name: t('navigation.campaigns'), href: "/campaigns", icon: Send },
+    { name: t('navigation.credits'), href: "/buy-credits", icon: CreditCard, highlight: true },
+    { name: t('navigation.profile'), href: "/settings", icon: User },
   ];
 
   return (

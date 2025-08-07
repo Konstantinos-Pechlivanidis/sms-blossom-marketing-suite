@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 import { SearchInput } from "@/components/common/SearchInput";
 
 interface TemplateFiltersProps {
@@ -16,10 +17,11 @@ export const TemplateFilters = ({
   onCategoryChange,
   categories
 }: TemplateFiltersProps) => {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col md:flex-row gap-4">
       <SearchInput
-        placeholder="Search templates..."
+        placeholder={t('templates.search')}
         value={searchTerm}
         onChange={onSearchChange}
         className="flex-1"
