@@ -4,6 +4,7 @@
     "title": "SMS Marketing"
   },
   "navigation": {
+    "menu": "Menu",
     "dashboard": "Dashboard",
     "templates": "Templates",
     "createCampaign": "Create Campaign",

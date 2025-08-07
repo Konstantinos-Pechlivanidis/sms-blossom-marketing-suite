@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { 
   LayoutDashboard, 
@@ -11,13 +11,23 @@ import {
   MessageSquare,
   CreditCard
 } from "lucide-react";
+import {
+  Sidebar as SidebarPrimitive,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  useSidebar,
+} from "@/components/ui/sidebar";
 
-interface SidebarProps {
-  onNavigate?: () => void;
-}
-
-export const Sidebar = ({ onNavigate }: SidebarProps) => {
+export const Sidebar = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const { state } = useSidebar();
   
   const navItems = [
     { name: t('navigation.dashboard'), href: "/", icon: LayoutDashboard },
@@ -30,43 +40,47 @@ export const Sidebar = ({ onNavigate }: SidebarProps) => {
     { name: t('navigation.settings'), href: "/settings", icon: Settings },
   ];
 
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return location.pathname === "/";
+    }
+    return location.pathname.startsWith(href);
+  };
+
   return (
-    <div className="w-64 bg-card border-r border-border h-full lg:h-screen lg:fixed lg:top-0 lg:left-0 lg:z-30">
-      <div className="flex flex-col h-full">
-        {/* Logo Section - only show on desktop sidebar */}
-        <div className="hidden lg:flex p-6 border-b border-border items-center space-x-2">
-          <MessageSquare className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold text-foreground">{t('app.name')}</span>
+    <SidebarPrimitive className="border-r border-border">
+      <SidebarHeader className="border-b border-border p-6">
+        <div className="flex items-center space-x-2">
+          <MessageSquare className="h-8 w-8 text-primary flex-shrink-0" />
+          {state === "expanded" && (
+            <span className="text-xl font-bold text-foreground">{t('app.name')}</span>
+          )}
         </div>
-        
-        {/* Mobile Header */}
-        <div className="lg:hidden p-6 border-b border-border">
-          <h2 className="text-xl font-bold text-primary">{t('app.title')}</h2>
-        </div>
-        
-        {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.href}
-              className={({ isActive }) =>
-                `flex items-center px-3 py-3 rounded-md text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-primary text-primary-foreground"
-                    : item.highlight
-                    ? "text-primary hover:bg-primary/10 border border-primary/20"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                }`
-              }
-              onClick={onNavigate}
-            >
-              <item.icon className="mr-3 h-5 w-5 flex-shrink-0" />
-              {item.name}
-            </NavLink>
-          ))}
-        </nav>
-      </div>
-    </div>
+      </SidebarHeader>
+      
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>{t('navigation.menu')}</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {navItems.map((item) => (
+                <SidebarMenuItem key={item.name}>
+                  <SidebarMenuButton 
+                    asChild 
+                    isActive={isActive(item.href)}
+                    className={item.highlight ? "border border-primary/20" : ""}
+                  >
+                    <NavLink to={item.href}>
+                      <item.icon className="h-5 w-5" />
+                      <span>{item.name}</span>
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </SidebarPrimitive>
   );
 };

@@ -4,6 +4,7 @@
     "title": "SMS Μάρκετινγκ"
   },
   "navigation": {
+    "menu": "Μενού",
     "dashboard": "Πίνακας Ελέγχου",
     "templates": "Πρότυπα",
     "createCampaign": "Δημιουργία Καμπάνιας",
