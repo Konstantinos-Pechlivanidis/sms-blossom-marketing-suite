@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { kpiData, recentCampaigns, templates, creditPacks } from '@/data/mockData';
+import { kpiData, recentCampaigns, templates, creditPacks } from '@/data/mock-data';
 
 // Create axios instance
 export const api = axios.create({

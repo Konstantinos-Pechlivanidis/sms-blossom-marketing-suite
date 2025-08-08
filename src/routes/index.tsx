@@ -4,7 +4,7 @@ import { AppLayout } from "@/layouts/AppLayout";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { PublicLayout } from "@/layouts/PublicLayout";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
-import { PageLoader } from "@/components/common/PageLoader";
+import { PageLoader } from "@/components";
 
 // Pages
 import Dashboard from "@/pages/Dashboard";
@@ -30,12 +30,15 @@ export const AppRoutes = () => {
         {/* Protected Routes with App Layout */}
         <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
           <Route index element={<Dashboard />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="templates" element={<Templates />} />
-          <Route path="create-campaign" element={<CreateCampaign />} />
-          <Route path="campaigns" element={<Campaigns />} />
+          <Route path="campaigns">
+            <Route index element={<Campaigns />} />
+            <Route path="create" element={<CreateCampaign />} />
+          </Route>
           <Route path="contacts" element={<Contacts />} />
           <Route path="automations" element={<Automations />} />
-          <Route path="buy-credits" element={<BuyCredits />} />
+          <Route path="credits" element={<BuyCredits />} />
           <Route path="settings" element={<Settings />} />
         </Route>
 

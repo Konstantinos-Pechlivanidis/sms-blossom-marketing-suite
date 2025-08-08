@@ -1,11 +1,14 @@
 import { Bell, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
-import { LanguageSwitcher } from "@/components/common/LanguageSwitcher";
+import { LanguageSwitcher } from "@/components";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useSMSCredits } from "@/hooks/api/useCredits";
 
 export const Header = () => {
   const { t } = useTranslation();
+  const { data: smsCredits } = useSMSCredits();
+  const creditsDisplay = (smsCredits as any)?.credits || 2847;
 
   return (
     <header className="bg-card border-b border-border px-4 py-3 md:px-6 flex items-center justify-between">
@@ -15,7 +18,7 @@ export const Header = () => {
         {/* SMS Credits - hidden on small mobile */}
         <div className="hidden sm:flex items-center space-x-2 bg-primary/10 px-3 py-1 rounded-full">
           <span className="text-sm font-medium text-primary">{t('header.smsCredits')}:</span>
-          <span className="text-sm font-bold text-foreground">2,847</span>
+          <span className="text-sm font-bold text-foreground">{creditsDisplay.toLocaleString()}</span>
         </div>
       </div>
       

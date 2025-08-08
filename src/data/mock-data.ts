@@ -1,9 +1,11 @@
-export const kpiData = [
+import type { KPIData, RecentCampaign, Template, CreditPack } from '@/types';
+
+export const kpiData: KPIData[] = [
   {
     title: "Total Campaigns Sent",
     value: "247",
     change: "+12%",
-    changeType: "positive" as const,
+    changeType: "positive",
     icon: "Send",
     color: "text-primary"
   },
@@ -11,53 +13,53 @@ export const kpiData = [
     title: "Avg Conversion Rate",
     value: "18.4%",
     change: "+3.2%",
-    changeType: "positive" as const,
+    changeType: "positive",
     icon: "TrendingUp",
-    color: "text-green-600"
+    color: "text-success"
   },
   {
     title: "Active Contacts",
     value: "2,847",
     change: "+156",
-    changeType: "positive" as const,
+    changeType: "positive",
     icon: "Users",
-    color: "text-blue-600"
+    color: "text-info"
   },
   {
     title: "Scheduled Campaigns",
     value: "12",
     change: "3 today",
-    changeType: "neutral" as const,
+    changeType: "neutral",
     icon: "Calendar",
-    color: "text-purple-600"
+    color: "text-warning"
   }
 ];
 
-export const recentCampaigns = [
+export const recentCampaigns: RecentCampaign[] = [
   {
     name: "Weekend Special - 30% Off",
-    status: "Sent",
+    status: "sent",
     sent: "2 hours ago",
     recipients: 1247,
     conversions: 23
   },
   {
     name: "New Arrivals Alert",
-    status: "Scheduled",
+    status: "scheduled",
     sent: "Tomorrow 9:00 AM",
     recipients: 2108,
     conversions: 0
   },
   {
     name: "Birthday Rewards",
-    status: "Sent",
+    status: "sent",
     sent: "Yesterday",
     recipients: 89,
     conversions: 12
   }
 ];
 
-export const templates = [
+export const templates: Template[] = [
   {
     id: 1,
     title: "Weekend Flash Sale",
@@ -132,7 +134,7 @@ export const templates = [
   }
 ];
 
-export const creditPacks = [
+export const creditPacks: CreditPack[] = [
   {
     id: "starter",
     title: "Starter Pack",
