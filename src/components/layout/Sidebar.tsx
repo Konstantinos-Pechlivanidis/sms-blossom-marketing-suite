@@ -32,11 +32,11 @@ export const Sidebar = () => {
   const navItems = [
     { name: t('navigation.dashboard'), href: "/", icon: LayoutDashboard },
     { name: t('navigation.templates'), href: "/templates", icon: FileText },
-    { name: t('navigation.createCampaign'), href: "/create-campaign", icon: PlusCircle },
+    { name: t('navigation.createCampaign'), href: "/campaigns/create", icon: PlusCircle },
     { name: t('navigation.campaigns'), href: "/campaigns", icon: Send },
     { name: t('navigation.contacts'), href: "/contacts", icon: Users },
     { name: t('navigation.automations'), href: "/automations", icon: Zap },
-    { name: t('navigation.buyCredits'), href: "/buy-credits", icon: CreditCard, highlight: true },
+    { name: t('navigation.buyCredits'), href: "/credits", icon: CreditCard, highlight: true },
     { name: t('navigation.settings'), href: "/settings", icon: Settings },
   ];
 

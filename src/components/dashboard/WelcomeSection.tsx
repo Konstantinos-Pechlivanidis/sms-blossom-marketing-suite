@@ -25,7 +25,7 @@ export const WelcomeSection = ({
           variant="secondary" 
           className="bg-white/20 hover:bg-white/30 text-primary-foreground border-white/30"
         >
-          <Link to="/create-campaign">
+          <Link to="/campaigns/create">
             <PlusCircle className="mr-2 h-4 w-4" />
             Create Campaign
           </Link>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -7,14 +8,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { 
+import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { 
-  ChevronRight, 
+import {
+  ChevronRight,
   ChevronLeft,
   Smartphone,
   Repeat,
@@ -22,9 +23,10 @@ import {
   Sparkles,
   Calendar,
   MessageSquare,
-  Settings
+  Settings,
 } from "lucide-react";
 import { toast } from "sonner";
+import { automationSteps } from "@/constants/campaign-steps";
 
 interface EditAutomationModalProps {
   automation: {
@@ -44,7 +46,12 @@ interface EditAutomationModalProps {
   onSave: (updatedAutomation: any) => void;
 }
 
-const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutomationModalProps) => {
+const EditAutomationModal = ({
+  automation,
+  isOpen,
+  onClose,
+  onSave,
+}: EditAutomationModalProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [editData, setEditData] = useState({
     message: automation?.message || "",
@@ -53,7 +60,7 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
     isRecurring: true,
     recurringDays: ["monday", "wednesday"] as string[],
     recurringTime: "10:00",
-    recurringEndDate: ""
+    recurringEndDate: "",
   });
 
   const weekDays = [
@@ -63,64 +70,79 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
     { id: "thursday", label: "Thu" },
     { id: "friday", label: "Fri" },
     { id: "saturday", label: "Sat" },
-    { id: "sunday", label: "Sun" }
+    { id: "sunday", label: "Sun" },
   ];
 
-  const steps = [
-    { id: 1, title: "Message", icon: MessageSquare, completed: editData.message.length > 0 },
-    { id: 2, title: "Schedule", icon: Calendar, completed: editData.recurringDays.length > 0 },
-    { id: 3, title: "Review", icon: Settings, completed: false }
-  ];
+  const currentSteps = automationSteps.map((step) => {
+    switch (step.id) {
+      case 1:
+        return { ...step, completed: editData.message.length > 0 };
+      case 2:
+        return {
+          ...step,
+          completed: editData.isRecurring && editData.recurringDays.length > 0,
+        };
+      default:
+        return step;
+    }
+  });
 
   const handleAiImprove = () => {
     const aiVersions = [
       `🎉 Hey [Name]! ${automation?.title.toLowerCase()} - here's something special just for you! Use code SPECIAL20 for 20% off your next purchase! 🛍️`,
       `✨ [Name], you're amazing! ${automation?.description.toLowerCase()} - enjoy this exclusive offer: SAVE25 for 25% off! Valid until midnight! ⏰`,
-      `💎 VIP Alert [Name]! ${automation?.trigger} detected - here's your personalized reward: 30% off with code VIP30! Don't miss out! 🎁`
+      `💎 VIP Alert [Name]! ${automation?.trigger} detected - here's your personalized reward: 30% off with code VIP30! Don't miss out! 🎁`,
     ];
-    
-    const randomAiVersion = aiVersions[Math.floor(Math.random() * aiVersions.length)];
-    setEditData(prev => ({ ...prev, aiMessage: randomAiVersion }));
+
+    const randomAiVersion =
+      aiVersions[Math.floor(Math.random() * aiVersions.length)];
+    setEditData((prev) => ({ ...prev, aiMessage: randomAiVersion }));
     toast.success("Message improved with AI!");
   };
 
   const handleRecurringDayToggle = (dayId: string) => {
-    setEditData(prev => ({
+    setEditData((prev) => ({
       ...prev,
       recurringDays: prev.recurringDays.includes(dayId)
-        ? prev.recurringDays.filter(id => id !== dayId)
-        : [...prev.recurringDays, dayId]
+        ? prev.recurringDays.filter((id) => id !== dayId)
+        : [...prev.recurringDays, dayId],
     }));
   };
 
   const handleSave = () => {
     if (!automation) return;
-    
+
     const updatedAutomation = {
       ...automation,
-      message: editData.useAiVersion && editData.aiMessage ? editData.aiMessage : editData.message
+      message:
+        editData.useAiVersion && editData.aiMessage
+          ? editData.aiMessage
+          : editData.message,
     };
-    
+
     onSave(updatedAutomation);
     toast.success(`"${automation.title}" automation updated successfully!`);
     onClose();
   };
 
   const getCurrentTime = () => {
-    return new Date().toLocaleTimeString('en-US', { 
-      hour: '2-digit', 
-      minute: '2-digit',
-      hour12: false 
+    return new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
     });
   };
 
   const canProceedToStep = (stepId: number) => {
     if (stepId <= currentStep) return true;
-    
+
     switch (stepId) {
-      case 2: return editData.message.length > 0;
-      case 3: return editData.recurringDays.length > 0;
-      default: return false;
+      case 2:
+        return editData.message.length > 0;
+      case 3:
+        return editData.recurringDays.length > 0;
+      default:
+        return false;
     }
   };
 
@@ -150,25 +172,27 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
             <div className="p-4 md:p-6 space-y-4 md:space-y-6">
               {/* Step Navigation */}
               <div className="flex flex-wrap gap-2 mb-6">
-                {steps.map((step, index) => (
+                {currentSteps.map((step, index) => (
                   <div key={step.id} className="flex items-center">
                     <button
                       onClick={() => goToStep(step.id)}
                       disabled={!canProceedToStep(step.id)}
                       className={`flex items-center space-x-2 px-3 py-2 rounded-full text-sm transition-all ${
-                        step.id === currentStep 
-                          ? "bg-[#5FBDB7] text-white shadow-sm" 
-                          : step.completed 
-                            ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200 cursor-pointer"
-                            : canProceedToStep(step.id)
-                              ? "bg-muted text-muted-foreground hover:bg-muted/80 cursor-pointer"
-                              : "bg-muted/50 text-muted-foreground/50 cursor-not-allowed"
+                        step.id === currentStep
+                          ? "bg-[#5FBDB7] text-white shadow-sm"
+                          : step.completed
+                          ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-200 cursor-pointer"
+                          : canProceedToStep(step.id)
+                          ? "bg-muted text-muted-foreground hover:bg-muted/80 cursor-pointer"
+                          : "bg-muted/50 text-muted-foreground/50 cursor-not-allowed"
                       }`}
                     >
                       <step.icon className="h-4 w-4" />
-                      <span className="hidden sm:inline font-medium">{step.title}</span>
+                      <span className="hidden sm:inline font-medium">
+                        {step.title}
+                      </span>
                     </button>
-                    {index < steps.length - 1 && (
+                    {index < currentSteps.length - 1 && (
                       <ChevronRight className="h-4 w-4 text-muted-foreground mx-2" />
                     )}
                   </div>
@@ -194,7 +218,9 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                           Auto-Generated
                         </Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground">{automation.description}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {automation.description}
+                      </p>
                     </div>
 
                     <div>
@@ -202,24 +228,47 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                       <Textarea
                         id="message"
                         placeholder="Customize your automation message..."
-                        value={editData.useAiVersion ? editData.aiMessage : editData.message}
-                        onChange={(e) => setEditData(prev => ({ 
-                          ...prev, 
-                          [editData.useAiVersion ? 'aiMessage' : 'message']: e.target.value 
-                        }))}
+                        value={
+                          editData.useAiVersion
+                            ? editData.aiMessage
+                            : editData.message
+                        }
+                        onChange={(e) =>
+                          setEditData((prev) => ({
+                            ...prev,
+                            [editData.useAiVersion ? "aiMessage" : "message"]:
+                              e.target.value,
+                          }))
+                        }
                         rows={4}
                         className="mt-1"
                       />
                       <div className="flex justify-between items-center mt-2">
                         <p className="text-sm text-muted-foreground">
-                          {(editData.useAiVersion ? editData.aiMessage : editData.message).length}/160 characters
+                          {
+                            (editData.useAiVersion
+                              ? editData.aiMessage
+                              : editData.message
+                            ).length
+                          }
+                          /160 characters
                         </p>
-                        <div className={`text-xs px-2 py-1 rounded ${
-                          (editData.useAiVersion ? editData.aiMessage : editData.message).length > 160 
-                            ? "bg-red-100 text-red-800" 
-                            : "bg-green-100 text-green-800"
-                        }`}>
-                          {(editData.useAiVersion ? editData.aiMessage : editData.message).length <= 160 ? "✓ Single SMS" : "⚠ Multiple SMS"}
+                        <div
+                          className={`text-xs px-2 py-1 rounded ${
+                            (editData.useAiVersion
+                              ? editData.aiMessage
+                              : editData.message
+                            ).length > 160
+                              ? "bg-red-100 text-red-800"
+                              : "bg-green-100 text-green-800"
+                          }`}
+                        >
+                          {(editData.useAiVersion
+                            ? editData.aiMessage
+                            : editData.message
+                          ).length <= 160
+                            ? "✓ Single SMS"
+                            : "⚠ Multiple SMS"}
                         </div>
                       </div>
                     </div>
@@ -230,22 +279,30 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                         onClick={handleAiImprove}
                         className="flex-1"
                       >
-                        <Sparkles className="mr-2 h-4 w-4" />
-                        ✨ Improve with AI
+                        <Sparkles className="mr-2 h-4 w-4" />✨ Improve with AI
                       </Button>
-                      
+
                       {editData.aiMessage && (
                         <Button
-                          variant={editData.useAiVersion ? "default" : "outline"}
-                          onClick={() => setEditData(prev => ({ ...prev, useAiVersion: !prev.useAiVersion }))}
+                          variant={
+                            editData.useAiVersion ? "default" : "outline"
+                          }
+                          onClick={() =>
+                            setEditData((prev) => ({
+                              ...prev,
+                              useAiVersion: !prev.useAiVersion,
+                            }))
+                          }
                           className="flex-1"
                         >
-                          {editData.useAiVersion ? "✅ Using AI Version" : "Use AI Version"}
+                          {editData.useAiVersion
+                            ? "✅ Using AI Version"
+                            : "Use AI Version"}
                         </Button>
                       )}
                     </div>
 
-                    <Button 
+                    <Button
                       onClick={() => setCurrentStep(2)}
                       disabled={!editData.message}
                       className="w-full bg-[#5FBDB7] hover:bg-[#5FBDB7]/90"
@@ -270,9 +327,17 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                       <Checkbox
                         id="recurring"
                         checked={editData.isRecurring}
-                        onCheckedChange={(checked) => setEditData(prev => ({ ...prev, isRecurring: !!checked }))}
+                        onCheckedChange={(checked) =>
+                          setEditData((prev) => ({
+                            ...prev,
+                            isRecurring: !!checked,
+                          }))
+                        }
                       />
-                      <Label htmlFor="recurring" className="flex items-center space-x-2">
+                      <Label
+                        htmlFor="recurring"
+                        className="flex items-center space-x-2"
+                      >
                         <Repeat className="h-4 w-4" />
                         <span>Enable recurring automation</span>
                       </Label>
@@ -286,12 +351,16 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                             {weekDays.map((day) => (
                               <Button
                                 key={day.id}
-                                variant={editData.recurringDays.includes(day.id) ? "default" : "outline"}
+                                variant={
+                                  editData.recurringDays.includes(day.id)
+                                    ? "default"
+                                    : "outline"
+                                }
                                 size="sm"
                                 onClick={() => handleRecurringDayToggle(day.id)}
                                 className={`min-w-[44px] ${
-                                  editData.recurringDays.includes(day.id) 
-                                    ? "bg-[#5FBDB7] hover:bg-[#5FBDB7]/90" 
+                                  editData.recurringDays.includes(day.id)
+                                    ? "bg-[#5FBDB7] hover:bg-[#5FBDB7]/90"
                                     : ""
                                 }`}
                               >
@@ -300,7 +369,7 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                             ))}
                           </div>
                         </div>
-                        
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
                             <Label htmlFor="recurringTime">Send Time</Label>
@@ -308,19 +377,31 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                               id="recurringTime"
                               type="time"
                               value={editData.recurringTime}
-                              onChange={(e) => setEditData(prev => ({ ...prev, recurringTime: e.target.value }))}
+                              onChange={(e) =>
+                                setEditData((prev) => ({
+                                  ...prev,
+                                  recurringTime: e.target.value,
+                                }))
+                              }
                               className="mt-1"
                             />
                           </div>
                           <div>
-                            <Label htmlFor="recurringEndDate">End Date (Optional)</Label>
+                            <Label htmlFor="recurringEndDate">
+                              End Date (Optional)
+                            </Label>
                             <Input
                               id="recurringEndDate"
                               type="date"
                               value={editData.recurringEndDate}
-                              onChange={(e) => setEditData(prev => ({ ...prev, recurringEndDate: e.target.value }))}
+                              onChange={(e) =>
+                                setEditData((prev) => ({
+                                  ...prev,
+                                  recurringEndDate: e.target.value,
+                                }))
+                              }
                               className="mt-1"
-                              min={new Date().toISOString().split('T')[0]}
+                              min={new Date().toISOString().split("T")[0]}
                             />
                           </div>
                         </div>
@@ -328,7 +409,7 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                     )}
 
                     <div className="flex flex-col sm:flex-row gap-3">
-                      <Button 
+                      <Button
                         variant="outline"
                         onClick={() => setCurrentStep(1)}
                         className="flex-1"
@@ -336,9 +417,12 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                         <ChevronLeft className="mr-2 h-4 w-4" />
                         Back
                       </Button>
-                      <Button 
+                      <Button
                         onClick={() => setCurrentStep(3)}
-                        disabled={editData.isRecurring && editData.recurringDays.length === 0}
+                        disabled={
+                          editData.isRecurring &&
+                          editData.recurringDays.length === 0
+                        }
                         className="flex-1 bg-[#5FBDB7] hover:bg-[#5FBDB7]/90"
                       >
                         Next: Review & Save
@@ -363,29 +447,34 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                         <h4 className="font-medium mb-2">Message Preview:</h4>
                         <div className="bg-white p-3 rounded border">
                           <p className="text-sm">
-                            {editData.useAiVersion && editData.aiMessage 
-                              ? editData.aiMessage 
+                            {editData.useAiVersion && editData.aiMessage
+                              ? editData.aiMessage
                               : editData.message}
                           </p>
                         </div>
                       </div>
-                      
-                      {editData.isRecurring && editData.recurringDays.length > 0 && (
-                        <div>
-                          <h4 className="font-medium mb-2">Recurring Schedule:</h4>
-                          <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                            <Repeat className="h-4 w-4" />
-                            <span>
-                              Every {editData.recurringDays.join(', ')} at {editData.recurringTime}
-                              {editData.recurringEndDate && ` until ${editData.recurringEndDate}`}
-                            </span>
+
+                      {editData.isRecurring &&
+                        editData.recurringDays.length > 0 && (
+                          <div>
+                            <h4 className="font-medium mb-2">
+                              Recurring Schedule:
+                            </h4>
+                            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                              <Repeat className="h-4 w-4" />
+                              <span>
+                                Every {editData.recurringDays.join(", ")} at{" "}
+                                {editData.recurringTime}
+                                {editData.recurringEndDate &&
+                                  ` until ${editData.recurringEndDate}`}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3">
-                      <Button 
+                      <Button
                         variant="outline"
                         onClick={() => setCurrentStep(2)}
                         className="flex-1"
@@ -393,7 +482,7 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                         <ChevronLeft className="mr-2 h-4 w-4" />
                         Back
                       </Button>
-                      <Button 
+                      <Button
                         onClick={handleSave}
                         className="flex-1 bg-[#5FBDB7] hover:bg-[#5FBDB7]/90"
                       >
@@ -415,7 +504,7 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                   <Smartphone className="mr-2 h-5 w-5" />
                   <h3 className="font-semibold">Mobile Preview</h3>
                 </div>
-                
+
                 {/* Realistic Phone Frame */}
                 <div className="mx-auto w-full max-w-xs bg-slate-900 rounded-[2.5rem] p-2 shadow-xl">
                   {/* Phone Screen */}
@@ -441,53 +530,74 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between">
-                          <h3 className="font-semibold text-slate-900">Bella's Boutique</h3>
-                          <span className="text-xs text-slate-500">{getCurrentTime()}</span>
+                          <h3 className="font-semibold text-slate-900">
+                            Bella's Boutique
+                          </h3>
+                          <span className="text-xs text-slate-500">
+                            {getCurrentTime()}
+                          </span>
                         </div>
-                        <p className="text-xs text-slate-500">Automation: {automation.title}</p>
+                        <p className="text-xs text-slate-500">
+                          Automation: {automation.title}
+                        </p>
                       </div>
                     </div>
-                    
+
                     {/* Message Bubble */}
                     <div className="space-y-3">
                       <div className="flex justify-start">
                         <div className="bg-slate-100 rounded-2xl rounded-tl-md p-3 max-w-[85%] shadow-sm">
                           <p className="text-sm text-slate-900 leading-relaxed">
-                            {editData.useAiVersion && editData.aiMessage 
-                              ? editData.aiMessage 
+                            {editData.useAiVersion && editData.aiMessage
+                              ? editData.aiMessage
                               : editData.message || automation.message}
                           </p>
                           <div className="flex justify-between items-center mt-2 pt-1">
                             <span className="text-xs text-slate-500">
                               {getCurrentTime()}
                             </span>
-                            <span className="text-xs text-slate-400">Delivered</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Recurring Info */}
-                      {editData.isRecurring && editData.recurringDays.length > 0 && (
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-2 mt-4">
-                          <div className="flex items-center space-x-2 text-xs text-blue-700">
-                            <Repeat className="h-3 w-3" />
-                            <span>
-                              Repeats: {editData.recurringDays.join(', ')} at {editData.recurringTime}
+                            <span className="text-xs text-slate-400">
+                              Delivered
                             </span>
                           </div>
                         </div>
-                      )}
+                      </div>
+
+                      {/* Recurring Info */}
+                      {editData.isRecurring &&
+                        editData.recurringDays.length > 0 && (
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-2 mt-4">
+                            <div className="flex items-center space-x-2 text-xs text-blue-700">
+                              <Repeat className="h-3 w-3" />
+                              <span>
+                                Repeats: {editData.recurringDays.join(", ")} at{" "}
+                                {editData.recurringTime}
+                              </span>
+                            </div>
+                          </div>
+                        )}
                     </div>
 
                     {/* Character Count Indicator */}
                     <div className="absolute bottom-4 left-4 right-4">
                       <div className="bg-slate-50 rounded-lg p-2 text-center">
-                        <span className={`text-xs font-medium ${
-                          (editData.useAiVersion ? editData.aiMessage : editData.message).length > 160 
-                            ? "text-red-600" 
-                            : "text-green-600"
-                        }`}>
-                          {(editData.useAiVersion ? editData.aiMessage : editData.message).length}/160 chars
+                        <span
+                          className={`text-xs font-medium ${
+                            (editData.useAiVersion
+                              ? editData.aiMessage
+                              : editData.message
+                            ).length > 160
+                              ? "text-red-600"
+                              : "text-green-600"
+                          }`}
+                        >
+                          {
+                            (editData.useAiVersion
+                              ? editData.aiMessage
+                              : editData.message
+                            ).length
+                          }
+                          /160 chars
                         </span>
                       </div>
                     </div>
@@ -506,12 +616,20 @@ const EditAutomationModal = ({ automation, isOpen, onClose, onSave }: EditAutoma
           </div>
           <div className="bg-slate-100 rounded-lg p-3">
             <p className="text-sm text-slate-900">
-              {editData.useAiVersion && editData.aiMessage 
-                ? editData.aiMessage 
+              {editData.useAiVersion && editData.aiMessage
+                ? editData.aiMessage
                 : editData.message || automation.message}
             </p>
             <div className="flex justify-between items-center mt-2 text-xs text-slate-500">
-              <span>{(editData.useAiVersion ? editData.aiMessage : editData.message).length}/160 chars</span>
+              <span>
+                {
+                  (editData.useAiVersion
+                    ? editData.aiMessage
+                    : editData.message
+                  ).length
+                }
+                /160 chars
+              </span>
               <span>Bella's Boutique</span>
             </div>
           </div>

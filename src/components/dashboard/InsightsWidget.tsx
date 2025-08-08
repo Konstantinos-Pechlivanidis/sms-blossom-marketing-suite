@@ -26,7 +26,7 @@ export const InsightsWidget = ({ smsCredits }: InsightsWidgetProps) => {
             </div>
             <p className="text-2xl font-bold text-primary mb-2">{smsCredits}</p>
             <Button asChild size="sm" className="w-full bg-primary hover:bg-primary/90">
-              <Link to="/buy-credits">
+              <Link to="/credits">
                 <CreditCard className="mr-2 h-4 w-4" />
                 Buy More Credits
               </Link>

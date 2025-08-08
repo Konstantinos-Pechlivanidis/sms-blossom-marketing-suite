@@ -58,7 +58,7 @@ export const TemplateCard = ({ template, getCategoryColor }: TemplateCardProps) 
             asChild 
             className="w-full bg-primary hover:bg-primary/90"
           >
-            <Link to={`/create-campaign?template=${template.id}`}>
+            <Link to={`/campaigns/create?template=${template.id}`}>
               📩 Use Template
             </Link>
           </Button>
