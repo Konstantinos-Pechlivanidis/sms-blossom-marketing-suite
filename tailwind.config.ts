@@ -27,15 +27,67 @@ export default {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
 			},
 			colors: {
+				/* Base Colors */
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				surface: 'hsl(var(--surface))',
+				'surface-secondary': 'hsl(var(--surface-secondary))',
+
+				/* Text Colors */
+				'text-primary': 'hsl(var(--text-primary))',
+				'text-secondary': 'hsl(var(--text-secondary))',
+				'text-heading': 'hsl(var(--text-heading))',
+				'text-muted': 'hsl(var(--text-muted))',
+				'text-accent': 'hsl(var(--text-accent))',
+
+				/* Brand Colors */
 				primary: {
-					DEFAULT: '#81D8D0',
+					DEFAULT: 'hsl(var(--primary))',
+					hover: 'hsl(var(--primary-hover))',
+					light: 'hsl(var(--primary-light))',
 					foreground: 'hsl(var(--primary-foreground))'
 				},
+
+				/* Status Colors */
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					light: 'hsl(var(--success-light))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					light: 'hsl(var(--warning-light))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				error: {
+					DEFAULT: 'hsl(var(--error))',
+					light: 'hsl(var(--error-light))',
+					foreground: 'hsl(var(--error-foreground))'
+				},
+				info: {
+					DEFAULT: 'hsl(var(--info))',
+					light: 'hsl(var(--info-light))',
+					foreground: 'hsl(var(--info-foreground))'
+				},
+
+				/* Neutral Scale */
+				neutral: {
+					50: 'hsl(var(--neutral-50))',
+					100: 'hsl(var(--neutral-100))',
+					200: 'hsl(var(--neutral-200))',
+					300: 'hsl(var(--neutral-300))',
+					400: 'hsl(var(--neutral-400))',
+					500: 'hsl(var(--neutral-500))',
+					600: 'hsl(var(--neutral-600))',
+					700: 'hsl(var(--neutral-700))',
+					800: 'hsl(var(--neutral-800))',
+					900: 'hsl(var(--neutral-900))'
+				},
+
+				/* Semantic Aliases (shadcn compatibility) */
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'

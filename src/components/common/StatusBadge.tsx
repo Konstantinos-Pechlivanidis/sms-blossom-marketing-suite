@@ -13,19 +13,19 @@ export const StatusBadge = ({ status, variant = "default", className }: StatusBa
     
     switch (normalizedStatus) {
       case "sent":
-        return "bg-green-100 text-green-800 hover:bg-green-200";
+        return "bg-success-light text-success hover:bg-success-light/80 border-success/20";
       case "scheduled":
-        return "bg-blue-100 text-blue-800 hover:bg-blue-200";
+        return "bg-info-light text-info hover:bg-info-light/80 border-info/20";
       case "draft":
-        return "bg-gray-100 text-gray-800 hover:bg-gray-200";
+        return "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 border-neutral-200";
       case "failed":
-        return "bg-red-100 text-red-800 hover:bg-red-200";
+        return "bg-error-light text-error hover:bg-error-light/80 border-error/20";
       case "active":
-        return "bg-emerald-100 text-emerald-800 hover:bg-emerald-200";
+        return "bg-success-light text-success hover:bg-success-light/80 border-success/20";
       case "inactive":
-        return "bg-gray-100 text-gray-800 hover:bg-gray-200";
+        return "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 border-neutral-200";
       default:
-        return "bg-muted text-muted-foreground hover:bg-muted/80";
+        return "bg-muted text-muted-foreground hover:bg-muted/80 border-muted/20";
     }
   };
 

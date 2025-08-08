@@ -7,36 +7,74 @@
 
 @layer base {
   :root {
+    /* Base Colors */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
+    --surface: 0 0% 100%;
+    --surface-secondary: 210 40% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Text Colors */
+    --text-primary: 222.2 84% 4.9%;
+    --text-secondary: 215.4 16.3% 46.9%;
+    --text-heading: 222.2 84% 4.9%;
+    --text-muted: 215.4 16.3% 46.9%;
+    --text-accent: 178 58% 68%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
+    /* Brand Colors */
     --primary: 178 58% 68%;
+    --primary-hover: 178 58% 58%;
+    --primary-light: 178 58% 85%;
     --primary-foreground: 210 40% 98%;
 
+    /* Status Colors */
+    --success: 142 76% 36%;
+    --success-light: 142 76% 94%;
+    --success-foreground: 355 20% 98%;
+    
+    --warning: 48 96% 53%;
+    --warning-light: 48 96% 94%;
+    --warning-foreground: 26 83% 14%;
+    
+    --error: 0 84% 60%;
+    --error-light: 0 84% 94%;
+    --error-foreground: 210 40% 98%;
+    
+    --info: 221 83% 53%;
+    --info-light: 221 83% 94%;
+    --info-foreground: 210 40% 98%;
+
+    /* Neutral Colors */
+    --neutral-50: 210 40% 98%;
+    --neutral-100: 210 40% 96%;
+    --neutral-200: 214 32% 91%;
+    --neutral-300: 213 27% 84%;
+    --neutral-400: 215 20% 65%;
+    --neutral-500: 215 16% 47%;
+    --neutral-600: 215 19% 35%;
+    --neutral-700: 215 25% 27%;
+    --neutral-800: 217 33% 17%;
+    --neutral-900: 222 84% 5%;
+
+    /* Semantic Aliases */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 178 58% 68%;
 
     --radius: 0.5rem;
 
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -48,34 +86,72 @@
   }
 
   .dark {
+    /* Base Colors */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
+    --surface: 222.2 84% 4.9%;
+    --surface-secondary: 217.2 32.6% 17.5%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    /* Text Colors */
+    --text-primary: 210 40% 98%;
+    --text-secondary: 215 20.2% 65.1%;
+    --text-heading: 210 40% 98%;
+    --text-muted: 215 20.2% 65.1%;
+    --text-accent: 178 58% 68%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
+    /* Brand Colors */
     --primary: 178 58% 68%;
+    --primary-hover: 178 58% 78%;
+    --primary-light: 178 58% 25%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
+    /* Status Colors */
+    --success: 142 71% 45%;
+    --success-light: 142 71% 15%;
+    --success-foreground: 355 20% 98%;
+    
+    --warning: 48 96% 63%;
+    --warning-light: 48 96% 25%;
+    --warning-foreground: 26 83% 14%;
+    
+    --error: 0 63% 31%;
+    --error-light: 0 63% 15%;
+    --error-foreground: 210 40% 98%;
+    
+    --info: 221 83% 63%;
+    --info-light: 221 83% 25%;
+    --info-foreground: 210 40% 98%;
+
+    /* Neutral Colors */
+    --neutral-50: 222 84% 5%;
+    --neutral-100: 217 33% 17%;
+    --neutral-200: 215 25% 27%;
+    --neutral-300: 215 19% 35%;
+    --neutral-400: 215 16% 47%;
+    --neutral-500: 215 20% 65%;
+    --neutral-600: 213 27% 84%;
+    --neutral-700: 214 32% 91%;
+    --neutral-800: 210 40% 96%;
+    --neutral-900: 210 40% 98%;
+
+    /* Semantic Aliases */
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 178 58% 68%;
     
+    /* Sidebar */
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
