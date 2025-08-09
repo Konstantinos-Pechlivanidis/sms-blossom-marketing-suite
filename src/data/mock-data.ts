@@ -64,73 +64,57 @@ export const templates: Template[] = [
     id: 1,
     title: "Weekend Flash Sale",
     category: "Fashion Stores",
-    conversionRate: "32%",
     message: "🎉 FLASH SALE! 50% off everything this weekend only! Use code WEEKEND50. Shop now: [link]",
-    testimonial: "Increased weekend sales by 200%! - Maria, boutique owner",
-    rating: 4.9
+    tags: ["sale", "weekend", "fashion"]
   },
   {
     id: 2,
     title: "New Member Welcome",
     category: "Gyms",
-    conversionRate: "28%",
     message: "Welcome to FitLife! 💪 Your first personal training session is FREE. Book now: [link]",
-    testimonial: "Perfect for converting trial members - Jake, gym manager",
-    rating: 4.8
+    tags: ["welcome", "fitness", "free"]
   },
   {
     id: 3,
     title: "Daily Coffee Special",
     category: "Coffee Shops",
-    conversionRate: "24%",
     message: "☕ Today's special: Buy any large coffee, get a pastry FREE! Valid until 3 PM.",
-    testimonial: "Boosts afternoon sales every time - Emma, café owner",
-    rating: 4.7
+    tags: ["coffee", "special", "free"]
   },
   {
     id: 4,
     title: "Appointment Reminder",
     category: "Beauty",
-    conversionRate: "45%",
     message: "Hi [Name]! Reminder: Your appointment is tomorrow at [time]. Reply CONFIRM or call us.",
-    testimonial: "Reduced no-shows by 60% - Lisa, salon owner",
-    rating: 4.9
+    tags: ["reminder", "appointment", "beauty"]
   },
   {
     id: 5,
     title: "Birthday Surprise",
     category: "All",
-    conversionRate: "38%",
     message: "🎂 Happy Birthday [Name]! Enjoy 30% off your next visit as our gift to you! Code: BDAY30",
-    testimonial: "Creates such a personal touch - customers love it!",
-    rating: 4.8
+    tags: ["birthday", "discount", "personal"]
   },
   {
     id: 6,
     title: "Lunch Rush Special",
     category: "Restaurants",
-    conversionRate: "29%",
     message: "🍽️ Lunch Special: Any main dish + drink for $12.99! Available until 3 PM today.",
-    testimonial: "Perfect for slow lunch hours - Tony, restaurant owner",
-    rating: 4.6
+    tags: ["lunch", "restaurant", "special"]
   },
   {
     id: 7,
     title: "Class Reminder",
     category: "Gyms",
-    conversionRate: "41%",
     message: "Don't forget! Your yoga class starts in 1 hour. See you there! 🧘‍♀️",
-    testimonial: "Attendance improved significantly - Sarah, instructor",
-    rating: 4.8
+    tags: ["reminder", "class", "yoga"]
   },
   {
     id: 8,
     title: "Seasonal Promotion",
     category: "Fashion Stores",
-    conversionRate: "35%",
     message: "🍂 Fall Collection is here! 40% off all sweaters and jackets. Limited time!",
-    testimonial: "Great for seasonal inventory - Rachel, store manager",
-    rating: 4.7
+    tags: ["seasonal", "fashion", "promotion"]
   }
 ];
 
@@ -165,3 +149,5 @@ export const creditPacks: CreditPack[] = [
     originalPrice: "€39.99"
   }
 ];
+
+export const mockTemplates = templates;

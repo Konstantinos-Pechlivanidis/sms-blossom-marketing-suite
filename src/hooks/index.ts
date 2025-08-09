@@ -2,6 +2,7 @@
 export { useAppDispatch, useAppSelector } from '@/store/hooks';
 export { useIsMobile } from './use-mobile';
 export { useToast } from './use-toast';
+export { useFilteredItems } from './useFilteredItems';
 
 // API Hooks
 export { useCampaigns, useRecentCampaigns, useCreateCampaign, useUpdateCampaign, useDeleteCampaign } from './api/useCampaigns';

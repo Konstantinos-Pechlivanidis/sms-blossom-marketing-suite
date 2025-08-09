@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -27,23 +25,13 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { automationSteps } from "@/constants/campaign-steps";
+import { Automation, EditAutomationData, WeekDay } from "@/types/automation";
 
 interface EditAutomationModalProps {
-  automation: {
-    id: number;
-    title: string;
-    description: string;
-    trigger: string;
-    message: string;
-    active: boolean;
-    icon: any;
-    color: string;
-    bgColor: string;
-    stats: { sent: number; converted: number };
-  } | null;
+  automation: Automation | null;
   isOpen: boolean;
   onClose: () => void;
-  onSave: (updatedAutomation: any) => void;
+  onSave: (updatedAutomation: Automation) => void;
 }
 
 const EditAutomationModal = ({
@@ -53,17 +41,17 @@ const EditAutomationModal = ({
   onSave,
 }: EditAutomationModalProps) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [editData, setEditData] = useState({
+  const [editData, setEditData] = useState<EditAutomationData>({
     message: automation?.message || "",
     aiMessage: "",
     useAiVersion: false,
     isRecurring: true,
-    recurringDays: ["monday", "wednesday"] as string[],
+    recurringDays: ["monday", "wednesday"],
     recurringTime: "10:00",
     recurringEndDate: "",
   });
 
-  const weekDays = [
+  const weekDays: WeekDay[] = [
     { id: "monday", label: "Mon" },
     { id: "tuesday", label: "Tue" },
     { id: "wednesday", label: "Wed" },
@@ -88,10 +76,12 @@ const EditAutomationModal = ({
   });
 
   const handleAiImprove = () => {
+    if (!automation) return;
+    
     const aiVersions = [
-      `🎉 Hey [Name]! ${automation?.title.toLowerCase()} - here's something special just for you! Use code SPECIAL20 for 20% off your next purchase! 🛍️`,
-      `✨ [Name], you're amazing! ${automation?.description.toLowerCase()} - enjoy this exclusive offer: SAVE25 for 25% off! Valid until midnight! ⏰`,
-      `💎 VIP Alert [Name]! ${automation?.trigger} detected - here's your personalized reward: 30% off with code VIP30! Don't miss out! 🎁`,
+      `🎉 Hey [Name]! ${automation.title.toLowerCase()} - here's something special just for you! Use code SPECIAL20 for 20% off your next purchase! 🛍️`,
+      `✨ [Name], you're amazing! ${automation.description.toLowerCase()} - enjoy this exclusive offer: SAVE25 for 25% off! Valid until midnight! ⏰`,
+      `💎 VIP Alert [Name]! ${automation.trigger} detected - here's your personalized reward: 30% off with code VIP30! Don't miss out! 🎁`,
     ];
 
     const randomAiVersion =

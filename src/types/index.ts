@@ -6,14 +6,16 @@ export interface User {
   phone: string;
 }
 
-export interface Campaign {
+export interface Campaign extends Record<string, unknown> {
   id: number;
   name: string;
-  status: 'sent' | 'scheduled' | 'draft' | 'failed';
-  date: string;
+  message: string;
+  status: 'Draft' | 'Sent' | 'Scheduled';
   recipients: number;
+  date?: string;
+  time?: string;
   conversions: number;
-  sent: string;
+  conversionRate: string;
 }
 
 export interface RecentCampaign {
@@ -24,14 +26,12 @@ export interface RecentCampaign {
   conversions: number;
 }
 
-export interface Template {
+export interface Template extends Record<string, unknown> {
   id: number;
   title: string;
-  category: string;
-  conversionRate: string;
   message: string;
-  testimonial: string;
-  rating: number;
+  category: string;
+  tags: string[];
 }
 
 export interface CreditPack {

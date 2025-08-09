@@ -36,11 +36,9 @@ export interface Campaign {
 export interface Template {
   id: number;
   title: string;
-  category: string;
-  conversionRate: string;
   message: string;
-  testimonial: string;
-  rating: number;
+  category: string;
+  tags: string[];
 }
 
 export interface CreditPack {

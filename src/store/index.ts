@@ -8,8 +8,6 @@ export {
   loginSuccess, 
   loginFailure, 
   logout, 
-  updateUser, 
-  updatePassword, 
   clearError as clearAuthError 
 } from './slices/authSlice';
 
@@ -23,12 +21,8 @@ export {
 } from './slices/uiSlice';
 
 export { 
-  setCredits, 
-  addCredits, 
-  deductCredits, 
-  purchaseCreditsStart, 
-  purchaseCreditsSuccess, 
-  purchaseCreditsFailure, 
+  setSmsLoading,
+  setSmsError,
   clearError as clearSMSError 
 } from './slices/smsSlice';
 

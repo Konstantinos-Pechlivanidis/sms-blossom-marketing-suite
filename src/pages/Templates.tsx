@@ -8,6 +8,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useTemplates } from "@/hooks/api/useTemplates";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setFilter, setSearchTerm } from "@/store/slices/uiSlice";
+import { useFilteredItems } from "@/hooks/useFilteredItems";
+import { Template } from "@/types";
 
 const Templates = () => {
   const { t } = useTranslation();
@@ -25,12 +27,14 @@ const Templates = () => {
     "Restaurants"
   ];
 
-  const filteredTemplates = templates?.filter(template => {
-    const matchesSearch = template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         template.message.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === t('templates.categories.all') || template.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  }) || [];
+  const filteredTemplates = useFilteredItems({
+    items: templates,
+    searchTerm,
+    activeFilter: selectedCategory,
+    searchFields: ['title', 'message'],
+    filterField: 'category',
+    allFilterValue: t('templates.categories.all')
+  });
 
   const getCategoryColor = (category: string) => {
     const colors = {
@@ -69,7 +73,7 @@ const Templates = () => {
         ) : (
           filteredTemplates.map((template) => (
             <TemplateCard
-              key={template.id}
+              key={String(template.id)}
               template={template}
               getCategoryColor={getCategoryColor}
             />

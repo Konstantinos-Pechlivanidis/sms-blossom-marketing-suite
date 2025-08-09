@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -36,6 +34,8 @@ import { toast } from "sonner";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
 import { t } from "i18next";
+import { useFilteredItems } from "@/hooks/useFilteredItems";
+import { Campaign } from "@/types";
 
 const Campaigns = () => {
   const dispatch = useAppDispatch();
@@ -49,21 +49,20 @@ const Campaigns = () => {
 
   const statuses = ["All", "Sent", "Scheduled", "Draft"];
 
-  const filteredCampaigns =
-    campaigns?.filter((campaign) => {
-      const matchesSearch =
-        campaign.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        campaign.message.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesStatus =
-        statusFilter === "All" || campaign.status === statusFilter;
-      return matchesSearch && matchesStatus;
-    }) || [];
+  const filteredCampaigns = useFilteredItems({
+    items: campaigns,
+    searchTerm,
+    activeFilter: statusFilter,
+    searchFields: ['name', 'message'],
+    filterField: 'status',
+    allFilterValue: 'All'
+  });
 
-  const handleEdit = (campaign: any) => {
+  const handleEdit = (campaign: Campaign) => {
     toast.success(`Editing "${campaign.name}"`);
   };
 
-  const handleResend = (campaign: any) => {
+  const handleResend = (campaign: Campaign) => {
     updateCampaignMutation.mutate({
       id: campaign.id,
       updates: {
@@ -80,7 +79,7 @@ const Campaigns = () => {
     );
   };
 
-  const handleDelete = (campaign: any) => {
+  const handleDelete = (campaign: Campaign) => {
     deleteCampaignMutation.mutate(campaign.id);
     toast.success(`"${campaign.name}" has been deleted`);
   };
@@ -221,9 +220,9 @@ const Campaigns = () => {
           ? Array.from({ length: 3 }).map((_, index) => (
               <Skeleton key={index} className="h-48" />
             ))
-          : filteredCampaigns.map((campaign) => (
+            : filteredCampaigns.map((campaign) => (
               <Card
-                key={campaign.id}
+                key={String(campaign.id)}
                 className="hover:shadow-md transition-shadow"
               >
                 <CardContent className="p-6">
@@ -232,13 +231,13 @@ const Campaigns = () => {
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                            {campaign.name}
+                            {String(campaign.name)}
                           </h3>
                           <p className="text-sm text-gray-600 mb-2">
-                            {campaign.message.substring(0, 80)}...
+                            {String(campaign.message).substring(0, 80)}...
                           </p>
                         </div>
-                        <StatusBadge status={campaign.status} />
+                        <StatusBadge status={String(campaign.status)} />
                       </div>
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
@@ -254,20 +253,20 @@ const Campaigns = () => {
                         <div className="flex items-center space-x-2">
                           <Users className="h-4 w-4 text-gray-400" />
                           <span className="text-gray-600">
-                            {campaign.recipients.toLocaleString()} recipients
+                            {Number(campaign.recipients).toLocaleString()} recipients
                           </span>
                         </div>
 
                         <div className="flex items-center space-x-2">
                           <BarChart3 className="h-4 w-4 text-gray-400" />
                           <span className="text-gray-600">
-                            {campaign.conversions} conversions
+                            {String(campaign.conversions)} conversions
                           </span>
                         </div>
 
                         <div className="flex items-center space-x-2">
                           <span className="text-sm font-medium text-[#81D8D0]">
-                            {campaign.conversionRate} rate
+                            {String(campaign.conversionRate)} rate
                           </span>
                         </div>
                       </div>
@@ -282,21 +281,21 @@ const Campaigns = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem
-                            onClick={() => handleEdit(campaign)}
+                            onClick={() => handleEdit(campaign as Campaign)}
                           >
                             <Edit className="mr-2 h-4 w-4" />
                             Edit
                           </DropdownMenuItem>
                           {campaign.status === "Sent" && (
                             <DropdownMenuItem
-                              onClick={() => handleResend(campaign)}
+                              onClick={() => handleResend(campaign as Campaign)}
                             >
                               <Copy className="mr-2 h-4 w-4" />
                               Resend
                             </DropdownMenuItem>
                           )}
                           <DropdownMenuItem
-                            onClick={() => handleDelete(campaign)}
+                            onClick={() => handleDelete(campaign as Campaign)}
                             className="text-red-600"
                           >
                             <Trash2 className="mr-2 h-4 w-4" />
