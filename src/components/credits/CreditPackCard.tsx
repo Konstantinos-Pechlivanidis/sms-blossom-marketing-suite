@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Zap, CreditCard, Loader2 } from "lucide-react";
 import { usePurchaseCredits } from "@/hooks/api/useCredits";
+import { TRANSITIONS, ANIMATION, ICON_SIZES } from "@/constants/design";
 
 interface CreditPack {
   id: string;

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { SearchInput } from "@/components/common/SearchInput";
 
+
 interface TemplateFiltersProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;

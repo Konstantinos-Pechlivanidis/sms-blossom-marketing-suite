@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { MessageSquare, PlusCircle, LucideIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { ICON_SIZES, SPACING } from '@/constants/design';
 
 interface EmptyStateProps {
   icon?: LucideIcon;
@@ -21,7 +22,7 @@ export const EmptyState = ({
 }: EmptyStateProps) => {
   const { t } = useTranslation();
   return (
-    <div className="text-center py-12">
+    <div className="text-center py-8">
       <Icon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
       <h3 className="text-lg font-medium text-foreground mb-2">{title}</h3>
       {description && (

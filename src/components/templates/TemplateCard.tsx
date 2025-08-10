@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Star, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Template } from "@/types";
+import { COMPONENTS } from "@/constants/design";
 
 interface TemplateCardProps {
   template: Template;
@@ -12,7 +13,7 @@ interface TemplateCardProps {
 
 export const TemplateCard = ({ template, getCategoryColor }: TemplateCardProps) => {
   return (
-    <Card className="hover:shadow-lg transition-shadow duration-200">
+    <Card className={COMPONENTS.CARD_HOVER}>
       <CardHeader>
         <div className="flex items-start justify-between mb-2">
           <CardTitle className="text-lg">{template.title}</CardTitle>

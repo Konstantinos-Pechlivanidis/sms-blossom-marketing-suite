@@ -60,3 +60,6 @@ export const PAGINATION = {
   DEFAULT_PAGE_SIZE: 10,
   MAX_PAGE_SIZE: 100,
 } as const;
+
+// Re-export design constants
+export * from './design';
