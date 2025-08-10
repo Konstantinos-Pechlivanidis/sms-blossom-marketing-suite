@@ -89,9 +89,9 @@ const Templates = () => {
       {!isLoading && filteredTemplates.length === 0 && (
         <EmptyState
           icon={MessageSquare}
-          title="No templates found"
-          description="Try adjusting your search or category filters to find templates"
-          ctaText="View All Templates"
+          title={t('templates.empty.title')}
+          description={t('templates.empty.description')}
+          ctaText={t('templates.empty.ctaText')}
           ctaLink="/templates"
         />
       )}

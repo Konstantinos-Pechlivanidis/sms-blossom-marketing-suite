@@ -49,6 +49,11 @@
       "edit": "Edit",
       "delete": "Delete",
       "use": "Use Template"
+    },
+    "empty": {
+      "title": "No templates found",
+      "description": "Try adjusting your search or category filters to find templates",
+      "ctaText": "View All Templates"
     }
   },
   "campaigns": {
@@ -66,6 +71,11 @@
       "edit": "Edit",
       "delete": "Delete",
       "view": "View Details"
+    },
+    "empty": {
+      "title": "No campaigns found",
+      "description": "Create your first campaign to start sending SMS messages to your customers",
+      "ctaText": "Create Campaign"
     }
   },
   "credits": {

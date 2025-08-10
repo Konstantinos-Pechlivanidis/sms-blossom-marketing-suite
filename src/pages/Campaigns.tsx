@@ -34,10 +34,12 @@ import { toast } from "sonner";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
 import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 import { useFilterAndSearch } from "@/hooks/useFilterAndSearch";
 import { Campaign } from "@/types";
 
 const Campaigns = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { data: campaigns, isLoading } = useCampaigns();
   const updateCampaignMutation = useUpdateCampaign();
@@ -317,9 +319,9 @@ const Campaigns = () => {
       {!isLoading && filteredCampaigns.length === 0 && (
         <EmptyState
           icon={Send}
-          title="No campaigns found"
-          description="Create your first campaign to start sending SMS messages to your customers"
-          ctaText="Create Campaign"
+          title={t('campaigns.empty.title')}
+          description={t('campaigns.empty.description')}
+          ctaText={t('campaigns.empty.ctaText')}
           ctaLink="/campaigns/create"
         />
       )}
