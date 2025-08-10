@@ -9,7 +9,7 @@ import { EmptyState } from "@/components/common/EmptyState";
 import { useTemplates } from "@/hooks/api/useTemplates";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setFilter, setSearchTerm } from "@/store/slices/uiSlice";
-import { useFilteredItems } from "@/hooks/useFilteredItems";
+import { useFilterAndSearch } from "@/hooks/useFilterAndSearch";
 import { Template } from "@/types";
 
 const Templates = () => {
@@ -28,13 +28,17 @@ const Templates = () => {
     "Restaurants"
   ];
 
-  const filteredTemplates = useFilteredItems({
+  const filteredTemplates = useFilterAndSearch({
     items: templates,
     searchTerm,
-    activeFilter: selectedCategory,
     searchFields: ['title', 'message'],
-    filterField: 'category',
-    allFilterValue: t('templates.categories.all')
+    filters: [
+      {
+        field: 'category',
+        value: selectedCategory,
+        allValue: t('templates.categories.all')
+      }
+    ]
   });
 
   const getCategoryColor = (category: string) => {

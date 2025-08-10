@@ -34,7 +34,7 @@ import { toast } from "sonner";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
 import { t } from "i18next";
-import { useFilteredItems } from "@/hooks/useFilteredItems";
+import { useFilterAndSearch } from "@/hooks/useFilterAndSearch";
 import { Campaign } from "@/types";
 
 const Campaigns = () => {
@@ -49,13 +49,17 @@ const Campaigns = () => {
 
   const statuses = ["All", "Sent", "Scheduled", "Draft"];
 
-  const filteredCampaigns = useFilteredItems({
+  const filteredCampaigns = useFilterAndSearch({
     items: campaigns,
     searchTerm,
-    activeFilter: statusFilter,
     searchFields: ['name', 'message'],
-    filterField: 'status',
-    allFilterValue: 'All'
+    filters: [
+      {
+        field: 'status',
+        value: statusFilter,
+        allValue: 'All'
+      }
+    ]
   });
 
   const handleEdit = (campaign: Campaign) => {
