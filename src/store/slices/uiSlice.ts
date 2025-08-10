@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UiState {
-  sidebarOpen: boolean;
   loading: {
     campaigns: boolean;
     templates: boolean;
@@ -19,7 +18,6 @@ interface UiState {
 }
 
 const initialState: UiState = {
-  sidebarOpen: false,
   loading: {
     campaigns: false,
     templates: false,
@@ -40,12 +38,6 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState,
   reducers: {
-    toggleSidebar: (state) => {
-      state.sidebarOpen = !state.sidebarOpen;
-    },
-    setSidebarOpen: (state, action: PayloadAction<boolean>) => {
-      state.sidebarOpen = action.payload;
-    },
     setLoading: (state, action: PayloadAction<{ section: keyof UiState['loading']; loading: boolean }>) => {
       state.loading[action.payload.section] = action.payload.loading;
     },
@@ -63,8 +55,6 @@ const uiSlice = createSlice({
 });
 
 export const {
-  toggleSidebar,
-  setSidebarOpen,
   setLoading,
   setFilter,
   setSearchTerm,

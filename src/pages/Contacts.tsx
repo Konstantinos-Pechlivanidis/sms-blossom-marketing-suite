@@ -675,10 +675,14 @@ const Contacts = () => {
         </CardHeader>
         <CardContent>
           {filteredContacts.length === 0 ? (
-            <div className="text-center py-12">
-              <Users className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No contacts found</h3>
-              <p className="text-gray-500">Try adjusting your filters or search query.</p>
+            <div className="flex flex-col items-center justify-center py-12">
+              <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-foreground mb-2">No contacts found</h3>
+              <p className="text-muted-foreground mb-4">Try adjusting your filters or search query, or add new contacts to get started.</p>
+              <Button className="bg-primary hover:bg-primary/90">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Contact
+              </Button>
             </div>
           ) : (
             <div className="space-y-3">

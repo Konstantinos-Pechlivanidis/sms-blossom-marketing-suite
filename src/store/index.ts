@@ -12,8 +12,6 @@ export {
 } from './slices/authSlice';
 
 export { 
-  toggleSidebar, 
-  setSidebarOpen, 
   setLoading, 
   setFilter, 
   setSearchTerm, 

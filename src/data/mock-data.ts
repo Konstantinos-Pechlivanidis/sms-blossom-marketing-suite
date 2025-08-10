@@ -65,56 +65,80 @@ export const templates: Template[] = [
     title: "Weekend Flash Sale",
     category: "Fashion Stores",
     message: "🎉 FLASH SALE! 50% off everything this weekend only! Use code WEEKEND50. Shop now: [link]",
-    tags: ["sale", "weekend", "fashion"]
+    tags: ["sale", "weekend", "fashion"],
+    conversionRate: "32.1%",
+    testimonial: "Our best performing urgency template for flash sales",
+    rating: 4.9
   },
   {
     id: 2,
     title: "New Member Welcome",
     category: "Gyms",
     message: "Welcome to FitLife! 💪 Your first personal training session is FREE. Book now: [link]",
-    tags: ["welcome", "fitness", "free"]
+    tags: ["welcome", "fitness", "free"],
+    conversionRate: "24.5%",
+    testimonial: "This template increased our new customer retention by 40%",
+    rating: 4.8
   },
   {
     id: 3,
     title: "Daily Coffee Special",
     category: "Coffee Shops",
     message: "☕ Today's special: Buy any large coffee, get a pastry FREE! Valid until 3 PM.",
-    tags: ["coffee", "special", "free"]
+    tags: ["coffee", "special", "free"],
+    conversionRate: "21.3%",
+    testimonial: "Great for introducing new menu items to customers",
+    rating: 4.5
   },
   {
     id: 4,
     title: "Appointment Reminder",
     category: "Beauty",
     message: "Hi [Name]! Reminder: Your appointment is tomorrow at [time]. Reply CONFIRM or call us.",
-    tags: ["reminder", "appointment", "beauty"]
+    tags: ["reminder", "appointment", "beauty"],
+    conversionRate: "15.8%",
+    testimonial: "Reduces no-shows significantly",
+    rating: 4.4
   },
   {
     id: 5,
     title: "Birthday Surprise",
     category: "All",
     message: "🎂 Happy Birthday [Name]! Enjoy 30% off your next visit as our gift to you! Code: BDAY30",
-    tags: ["birthday", "discount", "personal"]
+    tags: ["birthday", "discount", "personal"],
+    conversionRate: "28.7%",
+    testimonial: "Customers love personal birthday messages",
+    rating: 4.7
   },
   {
     id: 6,
     title: "Lunch Rush Special",
     category: "Restaurants",
     message: "🍽️ Lunch Special: Any main dish + drink for $12.99! Available until 3 PM today.",
-    tags: ["lunch", "restaurant", "special"]
+    tags: ["lunch", "restaurant", "special"],
+    conversionRate: "26.4%",
+    testimonial: "Perfect for weekend promotions",
+    rating: 4.6
   },
   {
     id: 7,
     title: "Class Reminder",
     category: "Gyms",
     message: "Don't forget! Your yoga class starts in 1 hour. See you there! 🧘‍♀️",
-    tags: ["reminder", "class", "yoga"]
+    tags: ["reminder", "class", "yoga"],
+    conversionRate: "18.2%",
+    testimonial: "Perfect for keeping members engaged and motivated",
+    rating: 4.6
   },
   {
     id: 8,
     title: "Seasonal Promotion",
     category: "Fashion Stores",
     message: "🍂 Fall Collection is here! 40% off all sweaters and jackets. Limited time!",
-    tags: ["seasonal", "fashion", "promotion"]
+    tags: ["seasonal", "fashion", "promotion"],
+    conversionRate: "35.2%",
+    testimonial: "Excellent for customer retention",
+    rating: 4.8
   }
 ];
 

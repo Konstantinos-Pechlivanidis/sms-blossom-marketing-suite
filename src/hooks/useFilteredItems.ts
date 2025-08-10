@@ -4,12 +4,12 @@ interface UseFilteredItemsOptions<T> {
   items: T[] | undefined;
   searchTerm: string;
   activeFilter: string;
-  searchFields: string[];
-  filterField?: string;
+  searchFields: (keyof T)[];
+  filterField?: keyof T;
   allFilterValue?: string;
 }
 
-export const useFilteredItems = <T extends Record<string, unknown>>({
+export const useFilteredItems = <T extends Record<string, any>>({
   items,
   searchTerm,
   activeFilter,
@@ -34,6 +34,6 @@ export const useFilteredItems = <T extends Record<string, unknown>>({
                            item[filterField] === activeFilter;
 
       return matchesSearch && matchesFilter;
-    }) as T[];
+    });
   }, [items, searchTerm, activeFilter, searchFields, filterField, allFilterValue]);
 };

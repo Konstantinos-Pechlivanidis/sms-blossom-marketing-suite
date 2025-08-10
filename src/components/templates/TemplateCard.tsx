@@ -3,16 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
-
-interface Template {
-  id: number;
-  title: string;
-  category: string;
-  conversionRate: string;
-  message: string;
-  testimonial: string;
-  rating: number;
-}
+import { Template } from "@/types";
 
 interface TemplateCardProps {
   template: Template;

@@ -200,8 +200,19 @@ const Automations = () => {
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {automations.map((automation) => (
+        {automations.length === 0 ? (
+          <div className="col-span-full flex flex-col items-center justify-center py-12">
+            <Zap className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-foreground mb-2">No automations configured</h3>
+            <p className="text-muted-foreground mb-4">Set up automated SMS campaigns to engage customers based on their behavior</p>
+            <Button className="bg-primary hover:bg-primary/90">
+              <Settings className="w-4 h-4 mr-2" />
+              Create Automation
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {automations.map((automation) => (
             <Card key={automation.id} className="hover:shadow-md transition-shadow">
               <CardHeader>
                 <div className="flex items-start justify-between">
@@ -279,8 +290,9 @@ const Automations = () => {
                 </div>
               </CardContent>
             </Card>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Tips Section */}

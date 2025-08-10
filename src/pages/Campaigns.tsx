@@ -310,12 +310,12 @@ const Campaigns = () => {
             ))}
       </div>
 
-      {filteredCampaigns.length === 0 && (
+      {!isLoading && filteredCampaigns.length === 0 && (
         <EmptyState
           icon={Send}
-          title={t("campaigns.noCampaignsFound")}
-          description={t("campaigns.tryAdjustingFilters")}
-          ctaText={t("campaigns.actions.createFirst")}
+          title="No campaigns found"
+          description="Create your first campaign to start sending SMS messages to your customers"
+          ctaText="Create Campaign"
           ctaLink="/campaigns/create"
         />
       )}

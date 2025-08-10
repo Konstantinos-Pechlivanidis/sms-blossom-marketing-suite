@@ -5,6 +5,7 @@ import { PageHeader } from "@/components/common/PageHeader";
 import { TemplateFilters } from "@/components/templates/TemplateFilters";
 import { TemplateCard } from "@/components/templates/TemplateCard";
 import { Skeleton } from "@/components/ui/skeleton";
+import { EmptyState } from "@/components/common/EmptyState";
 import { useTemplates } from "@/hooks/api/useTemplates";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { setFilter, setSearchTerm } from "@/store/slices/uiSlice";
@@ -74,19 +75,21 @@ const Templates = () => {
           filteredTemplates.map((template) => (
             <TemplateCard
               key={String(template.id)}
-              template={template}
+              template={template as Template}
               getCategoryColor={getCategoryColor}
             />
           ))
         )}
       </div>
 
-      {filteredTemplates.length === 0 && (
-        <div className="text-center py-12">
-          <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-foreground mb-2">{t('errors.pageNotFound')}</h3>
-          <p className="text-muted-foreground">{t('templates.search')}</p>
-        </div>
+      {!isLoading && filteredTemplates.length === 0 && (
+        <EmptyState
+          icon={MessageSquare}
+          title="No templates found"
+          description="Try adjusting your search or category filters to find templates"
+          ctaText="View All Templates"
+          ctaLink="/templates"
+        />
       )}
     </div>
   );

@@ -32,6 +32,9 @@ export interface Template extends Record<string, unknown> {
   message: string;
   category: string;
   tags: string[];
+  conversionRate: string;
+  testimonial: string;
+  rating: number;
 }
 
 export interface CreditPack {
