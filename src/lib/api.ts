@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { kpiData, recentCampaigns, templates, creditPacks } from '@/data/mock-data';
+import { kpiData, recentCampaigns, templates, creditPacks, campaigns, currentUser, smsCredits } from '@/data/mock-data';
 
 // Create axios instance
 export const api = axios.create({
@@ -70,54 +70,6 @@ export const apiService = {
   // Campaigns
   async getCampaigns(): Promise<Campaign[]> {
     await delay();
-    // Transform recent campaigns to full campaign format
-    const campaigns: Campaign[] = [
-      {
-        id: 1,
-        name: "Weekend Special - 30% Off",
-        status: "Sent",
-        sent: "2 hours ago",
-        recipients: 1247,
-        conversions: 23,
-        conversionRate: "1.8%",
-        message: "🎉 Weekend Special! Get 30% off all items. Use code WEEKEND30. Limited time offer!",
-        date: "2024-01-15",
-        time: "10:30 AM"
-      },
-      {
-        id: 2,
-        name: "New Arrivals Alert",
-        status: "Scheduled",
-        sent: "Tomorrow 9:00 AM",
-        recipients: 2108,
-        conversions: 0,
-        conversionRate: "0%",
-        message: "🆕 New arrivals are here! Check out our latest collection. Shop now for early bird discounts!",
-        date: "2024-01-16",
-        time: "09:00 AM"
-      },
-      {
-        id: 3,
-        name: "Birthday Rewards",
-        status: "Sent",
-        sent: "Yesterday",
-        recipients: 89,
-        conversions: 12,
-        conversionRate: "13.5%",
-        message: "🎂 Happy Birthday! Enjoy a special 25% discount as our gift to you. Code: BIRTHDAY25",
-        date: "2024-01-14",
-        time: "02:00 PM"
-      },
-      {
-        id: 4,
-        name: "Flash Sale Alert",
-        status: "Draft",
-        recipients: 0,
-        conversions: 0,
-        conversionRate: "0%",
-        message: "⚡ FLASH SALE! 50% off everything for the next 2 hours only! Don't miss out!"
-      }
-    ];
     return campaigns;
   },
 
@@ -164,12 +116,7 @@ export const apiService = {
   // User
   async getCurrentUser(): Promise<User> {
     await delay();
-    return {
-      id: '1',
-      name: 'John Doe',
-      email: 'john@example.com',
-      phone: '+1 234 567 8900'
-    };
+    return currentUser;
   },
 
   async updateUser(updates: Partial<User>): Promise<User> {
@@ -187,7 +134,7 @@ export const apiService = {
   // SMS Credits
   async getSMSCredits(): Promise<number> {
     await delay();
-    return 2847;
+    return smsCredits;
   },
 
   async updateSMSCredits(newCredits: number): Promise<number> {

@@ -1,4 +1,4 @@
-import type { KPIData, RecentCampaign, Template, CreditPack } from '@/types';
+import type { KPIData, RecentCampaign, Template, CreditPack, Campaign, User } from '@/types';
 
 export const kpiData: KPIData[] = [
   {
@@ -173,5 +173,62 @@ export const creditPacks: CreditPack[] = [
     originalPrice: "€39.99"
   }
 ];
+
+export const campaigns: Campaign[] = [
+  {
+    id: 1,
+    name: "Weekend Special - 30% Off",
+    status: "Sent",
+    sent: "2 hours ago",
+    recipients: 1247,
+    conversions: 23,
+    conversionRate: "1.8%",
+    message: "🎉 Weekend Special! Get 30% off all items. Use code WEEKEND30. Limited time offer!",
+    date: "2024-01-15",
+    time: "10:30 AM"
+  },
+  {
+    id: 2,
+    name: "New Arrivals Alert",
+    status: "Scheduled",
+    sent: "Tomorrow 9:00 AM",
+    recipients: 2108,
+    conversions: 0,
+    conversionRate: "0%",
+    message: "🆕 New arrivals are here! Check out our latest collection. Shop now for early bird discounts!",
+    date: "2024-01-16",
+    time: "09:00 AM"
+  },
+  {
+    id: 3,
+    name: "Birthday Rewards",
+    status: "Sent",
+    sent: "Yesterday",
+    recipients: 89,
+    conversions: 12,
+    conversionRate: "13.5%",
+    message: "🎂 Happy Birthday! Enjoy a special 25% discount as our gift to you. Code: BIRTHDAY25",
+    date: "2024-01-14",
+    time: "02:00 PM"
+  },
+  {
+    id: 4,
+    name: "Flash Sale Alert",
+    status: "Draft",
+    recipients: 0,
+    conversions: 0,
+    conversionRate: "0%",
+    message: "⚡ FLASH SALE! 50% off everything for the next 2 hours only! Don't miss out!"
+  }
+];
+
+export const currentUser: User = {
+  id: '1',
+  name: 'John Doe',
+  email: 'john@example.com',
+  phone: '+1 234 567 8900'
+};
+
+export const smsCredits: number = 2847;
 
 export const mockTemplates = templates;
