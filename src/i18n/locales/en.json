@@ -40,9 +40,14 @@
     "search": "Search templates...",
     "categories": {
       "all": "All",
-      "marketing": "Marketing",
-      "transactional": "Transactional",
-      "promotional": "Promotional"
+      "coffeeshops": "Coffee Shops",
+      "gyms": "Gyms",
+      "fashionstores": "Fashion Stores",
+      "beauty": "Beauty",
+      "restaurants": "Restaurants"
+    },
+    "filters": {
+      "searchPlaceholder": "Search templates..."
     },
     "actions": {
       "create": "Create Template",

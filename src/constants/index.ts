@@ -40,7 +40,7 @@ export const STORAGE_KEYS = {
 // Validation Rules
 export const VALIDATION = {
   EMAIL_REGEX: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  PHONE_REGEX: /^\+?[\d\s\-\(\)]{10,}$/,
+  PHONE_REGEX: /^\+?[\d\s\-\\(\\)]{10,}$/,
   PASSWORD_MIN_LENGTH: 8,
   SMS_MESSAGE_MAX_LENGTH: 160,
 } as const;
@@ -59,6 +59,15 @@ export const STATUS_TYPES = {
 export const PAGINATION = {
   DEFAULT_PAGE_SIZE: 10,
   MAX_PAGE_SIZE: 100,
+} as const;
+
+export const SIDEBAR = {
+  COOKIE_NAME: 'sidebar:state',
+  COOKIE_MAX_AGE: 60 * 60 * 24 * 7,
+  WIDTH: '16rem',
+  WIDTH_MOBILE: '18rem',
+  WIDTH_ICON: '3rem',
+  KEYBOARD_SHORTCUT: 'b',
 } as const;
 
 // Re-export design constants

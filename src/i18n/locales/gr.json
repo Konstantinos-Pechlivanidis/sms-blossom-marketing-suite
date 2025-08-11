@@ -40,9 +40,14 @@
     "search": "Αναζήτηση προτύπων...",
     "categories": {
       "all": "Όλα",
-      "marketing": "Μάρκετινγκ",
-      "transactional": "Συναλλακτικά",
-      "promotional": "Προωθητικά"
+      "coffeeshops": "Καφετέριες",
+      "gyms": "Γυμναστήρια",
+      "fashionstores": "Καταστήματα Μόδας",
+      "beauty": "Ομορφιά",
+      "restaurants": "Εστιατόρια"
+    },
+    "filters": {
+      "searchPlaceholder": "Αναζήτηση προτύπων..."
     },
     "actions": {
       "create": "Δημιουργία Προτύπου",

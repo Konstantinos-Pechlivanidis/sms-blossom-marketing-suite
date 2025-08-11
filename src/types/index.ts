@@ -6,16 +6,17 @@ export interface User {
   phone: string;
 }
 
-export interface Campaign extends Record<string, unknown> {
+export interface Campaign {
   id: number;
   name: string;
   message: string;
-  status: 'Draft' | 'Sent' | 'Scheduled';
+  status: 'Draft' | 'Sent' | 'Scheduled' | 'sent' | 'scheduled' | 'draft' | 'failed';
   recipients: number;
   date?: string;
   time?: string;
   conversions: number;
   conversionRate: string;
+  sent?: string;
 }
 
 export interface RecentCampaign {
@@ -26,7 +27,7 @@ export interface RecentCampaign {
   conversions: number;
 }
 
-export interface Template extends Record<string, unknown> {
+export interface Template {
   id: number;
   title: string;
   message: string;
@@ -35,6 +36,7 @@ export interface Template extends Record<string, unknown> {
   conversionRate: string;
   testimonial: string;
   rating: number;
+  highlight?: boolean;
 }
 
 export interface CreditPack {

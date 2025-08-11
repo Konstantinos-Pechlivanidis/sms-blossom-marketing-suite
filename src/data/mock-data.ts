@@ -59,7 +59,7 @@ export const recentCampaigns: RecentCampaign[] = [
   }
 ];
 
-export const templates: Template[] = [
+export const englishTemplates: Template[] = [
   {
     id: 1,
     title: "Weekend Flash Sale",
@@ -68,7 +68,8 @@ export const templates: Template[] = [
     tags: ["sale", "weekend", "fashion"],
     conversionRate: "32.1%",
     testimonial: "Our best performing urgency template for flash sales",
-    rating: 4.9
+    rating: 4.9,
+    highlight: false,
   },
   {
     id: 2,
@@ -78,7 +79,8 @@ export const templates: Template[] = [
     tags: ["welcome", "fitness", "free"],
     conversionRate: "24.5%",
     testimonial: "This template increased our new customer retention by 40%",
-    rating: 4.8
+    rating: 4.8,
+    highlight: false,
   },
   {
     id: 3,
@@ -88,7 +90,8 @@ export const templates: Template[] = [
     tags: ["coffee", "special", "free"],
     conversionRate: "21.3%",
     testimonial: "Great for introducing new menu items to customers",
-    rating: 4.5
+    rating: 4.5,
+    highlight: false,
   },
   {
     id: 4,
@@ -98,7 +101,8 @@ export const templates: Template[] = [
     tags: ["reminder", "appointment", "beauty"],
     conversionRate: "15.8%",
     testimonial: "Reduces no-shows significantly",
-    rating: 4.4
+    rating: 4.4,
+    highlight: false,
   },
   {
     id: 5,
@@ -108,7 +112,8 @@ export const templates: Template[] = [
     tags: ["birthday", "discount", "personal"],
     conversionRate: "28.7%",
     testimonial: "Customers love personal birthday messages",
-    rating: 4.7
+    rating: 4.7,
+    highlight: false,
   },
   {
     id: 6,
@@ -118,7 +123,8 @@ export const templates: Template[] = [
     tags: ["lunch", "restaurant", "special"],
     conversionRate: "26.4%",
     testimonial: "Perfect for weekend promotions",
-    rating: 4.6
+    rating: 4.6,
+    highlight: false,
   },
   {
     id: 7,
@@ -128,7 +134,8 @@ export const templates: Template[] = [
     tags: ["reminder", "class", "yoga"],
     conversionRate: "18.2%",
     testimonial: "Perfect for keeping members engaged and motivated",
-    rating: 4.6
+    rating: 4.6,
+    highlight: false,
   },
   {
     id: 8,
@@ -138,9 +145,69 @@ export const templates: Template[] = [
     tags: ["seasonal", "fashion", "promotion"],
     conversionRate: "35.2%",
     testimonial: "Excellent for customer retention",
-    rating: 4.8
+    rating: 4.8,
+    highlight: true,
   }
 ];
+
+export const greekTemplates: Template[] = [
+  {
+    id: 9,
+    title: "Καλοκαιρινή Έκπτωση",
+    category: "Fashion Stores",
+    message: "☀️ Καλοκαιρινές Εκπτώσεις! 50% σε όλα τα είδη! Χρησιμοποιήστε τον κωδικό SUMMER50. Αγοράστε τώρα: [link]",
+    tags: ["έκπτωση", "καλοκαίρι", "μόδα"],
+    conversionRate: "35.5%",
+    testimonial: "Αυξήσαμε τις πωλήσεις κατά 150% - Μαρία, ιδιοκτήτρια μπουτίκ",
+    rating: 4.9,
+    highlight: false,
+  },
+  {
+    id: 10,
+    title: "Καλωσόρισμα Νέου Μέλους",
+    category: "Gyms",
+    message: "Καλωσόρισμα στη FitLife! 💪 Η πρώτη σας προπόνηση είναι ΔΩΡΕΑΝ. Κάντε κράτηση τώρα: [link]",
+    tags: ["καλωσόρισμα", "γυμναστήριο", "δωρεάν"],
+    conversionRate: "28.1%",
+    testimonial: "Ιδανικό για την απόκτηση νέων μελών - Γιάννης, manager γυμναστηρίου",
+    rating: 4.8,
+    highlight: false,
+  },
+  {
+    id: 11,
+    title: "Καθημερινή Προσφορά Καφέ",
+    category: "Coffee Shops",
+    message: "☕ Σημερινή προσφορά: Αγοράστε έναν μεγάλο καφέ, και πάρτε ένα γλυκό ΔΩΡΕΑΝ! Ισχύει μέχρι τις 3 μ.μ.",
+    tags: ["καφές", "προσφορά", "γλυκό"],
+    conversionRate: "23.9%",
+    testimonial: "Αυξάνει τις απογευματινές πωλήσεις - Ελένη, ιδιοκτήτρια καφέ",
+    rating: 4.7,
+    highlight: false,
+  },
+  {
+    id: 12,
+    title: "Υπενθύμιση Ραντεβού",
+    category: "Beauty",
+    message: "Γεια σας [Name]! Υπενθύμιση: Το ραντεβού σας είναι αύριο στις [time]. Απαντήστε ΕΠΙΒΕΒΑΙΩΣΗ ή καλέστε μας.",
+    tags: ["υπενθύμιση", "ραντεβού", "ομορφιά"],
+    conversionRate: "17.4%",
+    testimonial: "Μειώνει σημαντικά τις ακυρώσεις - Λίνα, ιδιοκτήτρια κομμωτηρίου",
+    rating: 4.6,
+    highlight: false,
+  },
+  {
+    id: 13,
+    title: "Γενέθλια Έκπληξη",
+    category: "All",
+    message: "🎂 Χρόνια Πολλά [Name]! Απολαύστε 30% έκπτωση στην επόμενη επίσκεψή σας ως δώρο από εμάς! Κωδικός: BDAY30",
+    tags: ["γενέθλια", "έκπτωση", "προσωπική"],
+    conversionRate: "31.2%",
+    testimonial: "Οι πελάτες λατρεύουν τα προσωπικά μηνύματα γενεθλίων",
+    rating: 4.8,
+    highlight: true,
+  }
+];
+
 
 export const creditPacks: CreditPack[] = [
   {
@@ -230,5 +297,3 @@ export const currentUser: User = {
 };
 
 export const smsCredits: number = 2847;
-
-export const mockTemplates = templates;

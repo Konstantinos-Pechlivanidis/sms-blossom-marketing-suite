@@ -1,63 +1,26 @@
 import axios from 'axios';
-import { kpiData, recentCampaigns, templates, creditPacks, campaigns, currentUser, smsCredits } from '@/data/mock-data';
+import { 
+  kpiData, 
+  recentCampaigns, 
+  englishTemplates, 
+  greekTemplates,
+  creditPacks, 
+  campaigns, 
+  currentUser, 
+  smsCredits 
+} from '@/data/mock-data';
+
+// Import all necessary types from the centralized types file.
+import type { KPIData, Campaign, RecentCampaign, Template, CreditPack, User } from '@/types';
 
 // Create axios instance
 export const api = axios.create({
-  baseURL: '/api', // This would be your actual API base URL
+  baseURL: '/api',
   timeout: 10000,
 });
 
 // Simulate API delay
 const delay = (ms: number = 1000) => new Promise(resolve => setTimeout(resolve, ms));
-
-// API Types
-export interface KPIData {
-  title: string;
-  value: string;
-  change: string;
-  changeType: 'positive' | 'negative' | 'neutral';
-  icon: string;
-  color: string;
-}
-
-export interface Campaign {
-  id: number;
-  name: string;
-  status: 'Sent' | 'Scheduled' | 'Draft';
-  sent?: string;
-  recipients: number;
-  conversions: number;
-  conversionRate: string;
-  message: string;
-  date?: string;
-  time?: string;
-}
-
-export interface Template {
-  id: number;
-  title: string;
-  message: string;
-  category: string;
-  tags: string[];
-}
-
-export interface CreditPack {
-  id: string;
-  title: string;
-  credits: number;
-  price: string;
-  description: string;
-  features: string[];
-  popular: boolean;
-  originalPrice?: string;
-}
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-}
 
 // Mock API functions that simulate backend calls
 export const apiService = {
@@ -73,14 +36,28 @@ export const apiService = {
     return campaigns;
   },
 
-  async getRecentCampaigns(): Promise<typeof recentCampaigns> {
+  async getRecentCampaigns(): Promise<RecentCampaign[]> {
     await delay();
     return recentCampaigns;
   },
 
   async createCampaign(campaign: Omit<Campaign, 'id'>): Promise<Campaign> {
     await delay();
-    return { ...campaign, id: Date.now() };
+    // This is the correct implementation.
+    // It combines the incoming `campaign` data with default values for all
+    // required properties to ensure a complete Campaign object is returned.
+    return {
+      id: Date.now(),
+      name: campaign.name || 'New Campaign',
+      message: campaign.message || '',
+      status: campaign.status || 'Draft',
+      recipients: campaign.recipients || 0,
+      conversions: campaign.conversions || 0,
+      conversionRate: campaign.conversionRate || '0%',
+      sent: campaign.sent || 'N/A',
+      date: campaign.date || '',
+      time: campaign.time || '',
+    };
   },
 
   async updateCampaign(id: number, updates: Partial<Campaign>): Promise<Campaign> {
@@ -93,13 +70,15 @@ export const apiService = {
 
   async deleteCampaign(id: number): Promise<void> {
     await delay();
-    // In real implementation, this would delete from backend
   },
 
   // Templates
-  async getTemplates(): Promise<Template[]> {
+  async getTemplates(language: string = 'en'): Promise<Template[]> {
     await delay();
-    return templates;
+    if (language === 'gr') {
+      return greekTemplates;
+    }
+    return englishTemplates;
   },
 
   // Credit Packs
@@ -121,13 +100,12 @@ export const apiService = {
 
   async updateUser(updates: Partial<User>): Promise<User> {
     await delay();
-    const currentUser = await this.getCurrentUser();
-    return { ...currentUser, ...updates };
+    const mockCurrentUser = await this.getCurrentUser();
+    return { ...mockCurrentUser, ...updates };
   },
 
   async updatePassword(data: { oldPassword: string; newPassword: string }): Promise<{ success: boolean }> {
     await delay();
-    // Simulate password update
     return { success: true };
   },
 
