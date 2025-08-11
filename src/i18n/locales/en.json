@@ -66,44 +66,79 @@
     "description": "Manage your SMS marketing campaigns",
     "search": "Search campaigns...",
     "status": {
+      "all": "All",
       "draft": "Draft",
       "scheduled": "Scheduled",
       "sent": "Sent",
-      "failed": "Failed"
+      "failed": "Failed",
+      "notScheduled": "Not scheduled"
     },
     "actions": {
       "create": "Create Campaign",
       "edit": "Edit",
       "delete": "Delete",
-      "view": "View Details"
+      "view": "View Details",
+      "resend": "Resend"
     },
+    "recipients": "recipients",
+    "conversions": "conversions",
+    "conversionRate": "conversion rate",
+    "totalCampaigns": "Total Campaigns",
     "empty": {
       "title": "No campaigns found",
       "description": "Create your first campaign to start sending SMS messages to your customers",
       "ctaText": "Create Campaign"
     }
   },
-  "credits": {
-    "title": "Buy SMS Credits",
-    "description": "Choose a credit package that fits your needs",
-    "current": "Current Credits",
-    "packages": {
-      "starter": "Starter",
-      "professional": "Professional",
-      "enterprise": "Enterprise"
-    },
+  "contacts": {
+    "title": "Contacts",
+    "description": "Manage your customer contact list",
     "actions": {
-      "buy": "Buy Now",
-      "mostPopular": "Most Popular"
+      "add": "Add Contact",
+      "export": "Export CSV",
+      "bulkDelete": "Delete Selected",
+      "addToList": "Add to List",
+      "removeFromList": "Remove from List"
+    },
+    "search": {
+      "placeholder": "Search by name or phone..."
+    },
+    "filters": {
+      "all": "All Contacts",
+      "men": "Men",
+      "women": "Women",
+      "vip": "VIP",
+      "customViews": "Custom Views",
+      "active": "Active filters"
+    },
+    "table": {
+      "selectAll": "Select All",
+      "selected_one": "{{count}} contact selected",
+      "selected_other": "{{count}} contacts selected"
+    },
+    "modals": {
+      "editTitle": "Edit Contact",
+      "editDescription": "Update contact information and preferences.",
+      "viewTitle": "Contact Details",
+      "deleteTitle": "Delete Contact",
+      "deleteDescription": "Are you sure you want to delete {{name}}? This action cannot be undone.",
+      "notesPlaceholder": "Additional notes about this contact..."
+    },
+    "form": {
+      "name": "Name",
+      "phone": "Phone",
+      "email": "Email",
+      "gender": "Gender",
+      "genderMale": "Male",
+      "genderFemale": "Female",
+      "vip": "VIP Customer",
+      "tags": "Tags (comma separated)"
+    },
+    "empty": {
+      "title": "No contacts found",
+      "description": "Try adjusting your filters or search query, or add new contacts to get started.",
+      "ctaText": "Add Contact"
     }
-  },
-  "settings": {
-    "title": "Settings",
-    "description": "Manage your account settings and preferences",
-    "profile": "Profile",
-    "account": "Account",
-    "preferences": "Preferences",
-    "security": "Security"
   },
   "common": {
     "loading": "Loading...",

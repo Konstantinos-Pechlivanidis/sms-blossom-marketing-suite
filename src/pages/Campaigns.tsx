@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
@@ -12,7 +11,6 @@ import {
 } from "@/hooks/api/useCampaigns";
 import {
   Search,
-  Filter,
   MoreHorizontal,
   Edit,
   Copy,
@@ -22,6 +20,7 @@ import {
   Users,
   BarChart3,
   PlusCircle,
+  TrendingUp,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -33,10 +32,11 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
-import { t } from "i18next";
+import { PageHeader } from "@/components/common/PageHeader";
 import { useTranslation } from "react-i18next";
 import { useFilterAndSearch } from "@/hooks/useFilterAndSearch";
 import { Campaign } from "@/types";
+import { cn } from "@/lib/utils";
 
 const Campaigns = () => {
   const { t } = useTranslation();
@@ -54,14 +54,14 @@ const Campaigns = () => {
   const filteredCampaigns = useFilterAndSearch({
     items: campaigns,
     searchTerm,
-    searchFields: ['name', 'message'],
+    searchFields: ["name", "message"],
     filters: [
       {
-        field: 'status',
+        field: "status",
         value: statusFilter,
-        allValue: 'All'
-      }
-    ]
+        allValue: "All",
+      },
+    ],
   });
 
   const handleEdit = (campaign: Campaign) => {
@@ -77,6 +77,7 @@ const Campaigns = () => {
         time: new Date().toLocaleTimeString("en-US", {
           hour: "2-digit",
           minute: "2-digit",
+          hour12: false,
         }),
       },
     });
@@ -100,97 +101,72 @@ const Campaigns = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Campaigns</h1>
-          <p className="text-gray-600">Manage and track your SMS campaigns</p>
-        </div>
-        <Button asChild className="bg-[#81D8D0] hover:bg-[#5FBDB7]">
-          <Link to="/campaigns/create">
+      <PageHeader
+        title={t("campaigns.title")}
+        description={t("campaigns.description")}
+      >
+        <Link to="/campaigns/create">
+          <Button className="bg-primary hover:bg-primary-hover">
             <PlusCircle className="mr-2 h-4 w-4" />
-            Create Campaign
-          </Link>
-        </Button>
-      </div>
+            {t("campaigns.actions.create")}
+          </Button>
+        </Link>
+      </PageHeader>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {isLoading ? (
-          Array.from({ length: 4 }).map((_, index) => (
-            <Skeleton key={index} className="h-24" />
-          ))
-        ) : (
-          <>
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      Total Campaigns
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {isLoading
+          ? Array.from({ length: 4 }).map((_, index) => (
+              <Skeleton key={index} className="h-28" />
+            ))
+          : [
+              {
+                title: t("campaigns.totalCampaigns"),
+                value: totalCampaigns,
+                icon: Send,
+                iconColor: "text-primary",
+              },
+              {
+                title: t("campaigns.status.sent"),
+                value: sentCampaigns,
+                icon: TrendingUp,
+                iconColor: "text-success",
+              },
+              {
+                title: t("campaigns.status.scheduled"),
+                value: scheduledCampaigns,
+                icon: Calendar,
+                iconColor: "text-info",
+              },
+              {
+                title: t("campaigns.status.draft"),
+                value: draftCampaigns,
+                icon: Edit,
+                iconColor: "text-muted-foreground",
+              },
+            ].map((stat, index) => (
+              <Card key={index} className="hover:shadow-md transition-shadow">
+                <CardContent className="p-4 flex items-center justify-between">
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-muted-foreground">
+                      {stat.title}
                     </p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      {totalCampaigns}
-                    </p>
-                  </div>
-                  <Send className="h-8 w-8 text-[#81D8D0]" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Sent</p>
-                    <p className="text-2xl font-bold text-green-600">
-                      {sentCampaigns}
-                    </p>
-                  </div>
-                  <BarChart3 className="h-8 w-8 text-green-600" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">
-                      Scheduled
-                    </p>
-                    <p className="text-2xl font-bold text-blue-600">
-                      {scheduledCampaigns}
+                    <p className="text-3xl font-bold text-foreground">
+                      {stat.value}
                     </p>
                   </div>
-                  <Calendar className="h-8 w-8 text-blue-600" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Drafts</p>
-                    <p className="text-2xl font-bold text-gray-600">
-                      {draftCampaigns}
-                    </p>
-                  </div>
-                  <Edit className="h-8 w-8 text-gray-600" />
-                </div>
-              </CardContent>
-            </Card>
-          </>
-        )}
+                  <stat.icon className={cn("h-8 w-8", stat.iconColor)} />
+                </CardContent>
+              </Card>
+            ))}
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-col md:flex-row gap-4">
+      {/* Filters and Search */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
-            placeholder="Search campaigns..."
+            placeholder={t("campaigns.search")}
             value={searchTerm}
             onChange={(e) =>
               dispatch(
@@ -201,7 +177,7 @@ const Campaigns = () => {
           />
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {statuses.map((status) => (
             <Button
               key={status}
@@ -210,11 +186,12 @@ const Campaigns = () => {
               onClick={() =>
                 dispatch(setFilter({ type: "campaignStatus", value: status }))
               }
-              className={
-                statusFilter === status ? "bg-[#81D8D0] hover:bg-[#5FBDB7]" : ""
-              }
+              className={cn(
+                "font-normal",
+                statusFilter === status && "bg-primary text-primary-foreground"
+              )}
             >
-              {status}
+              {t(`campaigns.status.${status.toLowerCase()}`)}
             </Button>
           ))}
         </div>
@@ -224,107 +201,110 @@ const Campaigns = () => {
       <div className="space-y-4">
         {isLoading
           ? Array.from({ length: 3 }).map((_, index) => (
-              <Skeleton key={index} className="h-48" />
+              <Skeleton key={index} className="h-56" />
             ))
-            : filteredCampaigns.map((campaign) => (
+          : filteredCampaigns.length > 0 ? (
+            filteredCampaigns.map((campaign) => (
               <Card
                 key={String(campaign.id)}
-                className="hover:shadow-md transition-shadow"
+                className="hover:shadow-lg transition-shadow duration-200"
               >
                 <CardContent className="p-6">
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                            {String(campaign.name)}
-                          </h3>
-                          <p className="text-sm text-gray-600 mb-2">
-                            {String(campaign.message).substring(0, 80)}...
-                          </p>
-                        </div>
+                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                    <div className="flex-1 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-semibold text-foreground">
+                          {String(campaign.name)}
+                        </h3>
                         <StatusBadge status={String(campaign.status)} />
                       </div>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {String(campaign.message)}
+                      </p>
 
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                        <div className="flex items-center space-x-2">
-                          <Calendar className="h-4 w-4 text-gray-400" />
-                          <span className="text-gray-600">
+                      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 pt-3 border-t">
+                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                          <Calendar className="h-4 w-4 shrink-0" />
+                          <span className="truncate">
                             {campaign.date
                               ? `${campaign.date} ${campaign.time}`
-                              : "Not scheduled"}
+                              : t("campaigns.status.notScheduled")}
                           </span>
                         </div>
 
-                        <div className="flex items-center space-x-2">
-                          <Users className="h-4 w-4 text-gray-400" />
-                          <span className="text-gray-600">
-                            {Number(campaign.recipients).toLocaleString()} recipients
+                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                          <Users className="h-4 w-4 shrink-0" />
+                          <span className="truncate">
+                            {Number(campaign.recipients).toLocaleString()}{" "}
+                            {t("campaigns.recipients")}
                           </span>
                         </div>
 
-                        <div className="flex items-center space-x-2">
-                          <BarChart3 className="h-4 w-4 text-gray-400" />
-                          <span className="text-gray-600">
-                            {String(campaign.conversions)} conversions
+                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                          <BarChart3 className="h-4 w-4 shrink-0" />
+                          <span className="truncate">
+                            {Number(campaign.conversions).toLocaleString()}{" "}
+                            {t("campaigns.conversions")}
                           </span>
                         </div>
 
-                        <div className="flex items-center space-x-2">
-                          <span className="text-sm font-medium text-[#81D8D0]">
-                            {String(campaign.conversionRate)} rate
+                        <div className="flex items-center space-x-2 text-sm">
+                          <span className="font-semibold text-primary">
+                            {String(campaign.conversionRate)}{" "}
+                            {t("campaigns.conversionRate")}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center space-x-2">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm">
-                            <MoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="self-center"
+                        >
+                          <MoreHorizontal className="h-4 w-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          onClick={() => handleEdit(campaign as Campaign)}
+                        >
+                          <Edit className="mr-2 h-4 w-4" />
+                          {t("common.edit")}
+                        </DropdownMenuItem>
+                        {campaign.status === "Sent" && (
                           <DropdownMenuItem
-                            onClick={() => handleEdit(campaign as Campaign)}
+                            onClick={() => handleResend(campaign as Campaign)}
                           >
-                            <Edit className="mr-2 h-4 w-4" />
-                            Edit
+                            <Copy className="mr-2 h-4 w-4" />
+                            {t("campaigns.actions.resend")}
                           </DropdownMenuItem>
-                          {campaign.status === "Sent" && (
-                            <DropdownMenuItem
-                              onClick={() => handleResend(campaign as Campaign)}
-                            >
-                              <Copy className="mr-2 h-4 w-4" />
-                              Resend
-                            </DropdownMenuItem>
-                          )}
-                          <DropdownMenuItem
-                            onClick={() => handleDelete(campaign as Campaign)}
-                            className="text-red-600"
-                          >
-                            <Trash2 className="mr-2 h-4 w-4" />
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </div>
+                        )}
+                        <DropdownMenuItem
+                          onClick={() => handleDelete(campaign as Campaign)}
+                          className="text-destructive"
+                        >
+                          <Trash2 className="mr-2 h-4 w-4" />
+                          {t("common.delete")}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            ))
+          ) : (
+            <EmptyState
+              icon={Send}
+              title={t("campaigns.empty.title")}
+              description={t("campaigns.empty.description")}
+              ctaText={t("campaigns.empty.ctaText")}
+              ctaLink="/campaigns/create"
+            />
+          )}
       </div>
-
-      {!isLoading && filteredCampaigns.length === 0 && (
-        <EmptyState
-          icon={Send}
-          title={t('campaigns.empty.title')}
-          description={t('campaigns.empty.description')}
-          ctaText={t('campaigns.empty.ctaText')}
-          ctaLink="/campaigns/create"
-        />
-      )}
     </div>
   );
 };
