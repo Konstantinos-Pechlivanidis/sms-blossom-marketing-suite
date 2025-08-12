@@ -48,9 +48,9 @@ export const InsightsWidget: React.FC<InsightsWidgetProps> = ({ data }) => {
         return (
           <Card
             key={index}
-            className="rounded-3xl shadow-soft-sm border border-gray-200 dark:border-gray-800"
+            className="rounded-3xl shadow-soft-sm border border-gray-200 dark:border-gray-800 h-28"
           >
-            <CardContent className="p-4 flex items-center justify-between">
+            <CardContent className="p-4 flex h-full items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className={cn('p-2 rounded-full', iconBgColor)}>
                   {IconComponent && (
