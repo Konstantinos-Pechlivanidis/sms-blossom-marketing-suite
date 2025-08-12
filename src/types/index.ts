@@ -73,3 +73,28 @@ export interface StatusBadgeProps {
   variant?: 'default' | 'outline' | 'secondary' | 'destructive';
   className?: string;
 }
+
+// Contact and CustomView type definitions
+export interface Contact {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  gender: 'male' | 'female';
+  isVip: boolean;
+  tags: string[];
+  lastInteraction: string;
+  conversions: number;
+  joinDate?: string;
+  notes?: string;
+}
+
+export interface CustomView {
+  id: string;
+  name: string;
+  filters: {
+    gender?: 'male' | 'female';
+    isVip?: boolean;
+    tags?: string[];
+  };
+}

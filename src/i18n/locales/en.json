@@ -98,7 +98,8 @@
       "export": "Export CSV",
       "bulkDelete": "Delete Selected",
       "addToList": "Add to List",
-      "removeFromList": "Remove from List"
+      "removeFromList": "Remove from List",
+      "view": "View"
     },
     "search": {
       "placeholder": "Search by name or phone..."
@@ -109,7 +110,9 @@
       "women": "Women",
       "vip": "VIP",
       "customViews": "Custom Views",
-      "active": "Active filters"
+      "active": "Active filters",
+      "highConversions": "High Conversions",
+      "birthdayClub": "Birthday Club"
     },
     "table": {
       "selectAll": "Select All",
@@ -119,6 +122,7 @@
     "modals": {
       "editTitle": "Edit Contact",
       "editDescription": "Update contact information and preferences.",
+      "addDescription": "Fill in the details to add a new contact to your list.",
       "viewTitle": "Contact Details",
       "deleteTitle": "Delete Contact",
       "deleteDescription": "Are you sure you want to delete {{name}}? This action cannot be undone.",
@@ -132,13 +136,18 @@
       "genderMale": "Male",
       "genderFemale": "Female",
       "vip": "VIP Customer",
-      "tags": "Tags (comma separated)"
+      "tags": "Tags (comma separated)",
+      "joinDate": "Join Date",
+      "lastInteraction": "Last Interaction",
+      "notes": "Notes",
+      "addDescription": "Fill in the details to add a new contact to your list."
     },
     "empty": {
       "title": "No contacts found",
       "description": "Try adjusting your filters or search query, or add new contacts to get started.",
       "ctaText": "Add Contact"
-    }
+    },
+    "show": "Show"
   },
   "common": {
     "loading": "Loading...",
