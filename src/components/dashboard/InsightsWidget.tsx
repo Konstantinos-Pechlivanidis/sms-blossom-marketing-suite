@@ -1,3 +1,4 @@
+// src/components/dashboard/InsightsWidget.tsx
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTranslation } from 'react-i18next';
@@ -29,61 +30,63 @@ export const InsightsWidget: React.FC<InsightsWidgetProps> = ({ data }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {data.map((kpi, index) => {
-        const IconComponent = getIconComponent(kpi.icon);
-        const iconBgColor =
-          kpi.changeType === 'positive'
-            ? 'bg-success/10'
-            : kpi.changeType === 'negative'
-            ? 'bg-destructive/10'
-            : 'bg-muted/20';
-        const valueColor =
-          kpi.changeType === 'positive'
-            ? 'text-success'
-            : kpi.changeType === 'negative'
-            ? 'text-destructive'
-            : 'text-foreground';
+    <div>
+      <h2 className="text-2xl font-bold text-foreground mb-4 px-2">Insights</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {data.map((kpi, index) => {
+          const IconComponent = getIconComponent(kpi.icon);
+          const iconBgColor =
+            kpi.changeType === 'positive'
+              ? 'bg-success/10'
+              : kpi.changeType === 'negative'
+              ? 'bg-destructive/10'
+              : 'bg-muted';
+          const changeColor =
+            kpi.changeType === 'positive'
+              ? 'bg-success/10 text-success'
+              : kpi.changeType === 'negative'
+              ? 'bg-destructive/10 text-destructive'
+              : 'bg-muted text-muted-foreground';
 
-        return (
-          <Card
-            key={index}
-            className="rounded-3xl shadow-soft-sm border border-gray-200 dark:border-gray-800 h-28"
-          >
-            <CardContent className="p-4 flex h-full items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className={cn('p-2 rounded-full', iconBgColor)}>
-                  {IconComponent && (
-                    <IconComponent
-                      className={cn('w-6 h-6', kpi.color)}
-                    />
+          return (
+            <Card
+              key={index}
+              className="rounded-3xl shadow-soft-lg border-0 transition-transform duration-300 ease-in-out hover:scale-[1.03]"
+            >
+              <CardContent className="p-5 flex flex-col justify-between h-full">
+                <div className="flex justify-between items-start">
+                  <div className={cn('p-2.5 rounded-full', iconBgColor)}>
+                    {IconComponent && (
+                      <IconComponent
+                        className={cn('w-5 h-5', kpi.color)}
+                      />
+                    )}
+                  </div>
+                  {kpi.change && (
+                    <Badge
+                      variant="secondary"
+                      className={cn(
+                        'rounded-full px-2.5 py-1 text-xs font-semibold',
+                        changeColor
+                      )}
+                    >
+                      {kpi.change}
+                    </Badge>
                   )}
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">
-                    {t(`dashboard.kpi.${kpi.title.replace(/\s/g, '')}`)}
-                  </p>
-                  <p className={cn('text-2xl font-bold', valueColor)}>
+                <div className="mt-4">
+                  <p className="text-3xl font-bold text-foreground tracking-tight">
                     {kpi.value}
                   </p>
+                  <p className="text-sm font-medium text-muted-foreground mt-1">
+                    {t(`dashboard.kpi.${kpi.title.replace(/\s/g, '')}`)}
+                  </p>
                 </div>
-              </div>
-              {kpi.change && (
-                <Badge
-                  variant="secondary"
-                  className={cn(
-                    'rounded-full px-2 py-1 text-xs font-medium',
-                    kpi.changeType === 'positive' && 'bg-success/10 text-success',
-                    kpi.changeType === 'negative' && 'bg-destructive/10 text-destructive'
-                  )}
-                >
-                  {kpi.change}
-                </Badge>
-              )}
-            </CardContent>
-          </Card>
-        );
-      })}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
     </div>
   );
 };

@@ -18,7 +18,6 @@
     "profile": "Προφίλ"
   },
   "dashboard": {
-    "welcome": "Καλώς ήρθες πίσω",
     "overview": "Εδώ είναι τι συμβαίνει με τις SMS καμπάνιες σας σήμερα",
     "kpi": {
       "messagesSent": "Μηνύματα που Στάλθηκαν",
@@ -31,7 +30,11 @@
     },
     "recentCampaigns": "Πρόσφατες Καμπάνιες",
     "insights": "Αναλύσεις",
-    "smsCredits": "Πιστώσεις SMS"
+    "smsCredits": "Πιστώσεις SMS",
+    "welcome": "Καλώς όρισες, {{name}}!",
+    "welcomeSubtitle": "Η επιχείρηση {{businessName}} είναι έτοιμη να προσελκύσει πελάτες με εξατομικευμένες καμπάνιες SMS.",
+    "createCampaignButton": "Δημιουργία Καμπάνιας",
+    "browseTemplatesButton": "Περιήγηση στα Πρότυπα"
   },
   "header": {
     "smsCredits": "Πιστώσεις SMS",

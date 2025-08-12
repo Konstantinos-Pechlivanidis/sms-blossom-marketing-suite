@@ -18,7 +18,6 @@
     "profile": "Profile"
   },
   "dashboard": {
-    "welcome": "Welcome back",
     "overview": "Here's what's happening with your SMS campaigns today",
     "kpi": {
       "messagesSent": "Messages Sent",
@@ -31,7 +30,11 @@
     },
     "recentCampaigns": "Recent Campaigns",
     "insights": "Insights",
-    "smsCredits": "SMS Credits"
+    "smsCredits": "SMS Credits",
+    "welcome": "Welcome back, {{name}}!",
+    "welcomeSubtitle": "{{businessName}} is ready to engage customers with personalized SMS campaigns.",
+    "createCampaignButton": "Create Campaign",
+    "browseTemplatesButton": "Browse Templates"
   },
   "header": {
     "smsCredits": "SMS Credits",
