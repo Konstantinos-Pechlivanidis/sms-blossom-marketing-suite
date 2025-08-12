@@ -76,7 +76,7 @@ const Campaigns = () => {
     campaigns?.filter((c) => c.status === "Draft").length || 0;
 
   return (
-    <div className="flex-1 space-y-6 bg-gray-100 dark:bg-gray-950 p-4 sm:p-6 lg:p-8">
+    <div className="flex-1 space-y-6 bg-gray-100 dark:bg-gray-950 p-4 sm:p-6 lg:p-8 rounded-3xl">
       <PageHeader
         title={t("campaigns.title")}
         description={t("campaigns.description")}
@@ -88,79 +88,6 @@ const Campaigns = () => {
           </Button>
         </Link>
       </PageHeader>
-
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {isLoading
-          ? Array.from({ length: 4 }).map((_, index) => (
-              <Skeleton key={index} className="h-28 rounded-3xl shadow-soft-sm" />
-            ))
-          : [
-              {
-                title: t("campaigns.totalCampaigns"),
-                value: totalCampaigns,
-                icon: Send,
-                iconColor: "text-primary",
-              },
-              {
-                title: t("campaigns.status.sent"),
-                value: sentCampaigns,
-                icon: TrendingUp,
-                iconColor: "text-success",
-              },
-              {
-                title: t("campaigns.status.scheduled"),
-                value: scheduledCampaigns,
-                icon: Calendar,
-                iconColor: "text-info",
-              },
-              {
-                title: t("campaigns.status.draft"),
-                value: draftCampaigns,
-                icon: Edit,
-                iconColor: "text-muted-foreground",
-              },
-            ].map((stat, index) => {
-              const IconComponent = stat.icon;
-              const iconBgColor = 
-                stat.iconColor === 'text-success' ? 'bg-success/10' :
-                stat.iconColor === 'text-info' ? 'bg-info/10' :
-                stat.iconColor === 'text-muted-foreground' ? 'bg-muted/20' :
-                'bg-primary/10';
-
-              return (
-                <Card
-                  key={index}
-                  className="rounded-3xl shadow-soft-sm border border-gray-200 dark:border-gray-800 h-28"
-                >
-                  <CardContent className="p-4 flex h-full items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className={cn('p-2 rounded-full', iconBgColor)}>
-                        {IconComponent && (
-                          <IconComponent
-                            className={cn('w-6 h-6', stat.iconColor)}
-                          />
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-muted-foreground">
-                          {stat.title}
-                        </p>
-                        <p className="text-2xl font-bold text-foreground">
-                          {stat.value}
-                        </p>
-                      </div>
-                    </div>
-                    {/* {stat.title === t('campaigns.totalCampaigns') && (
-                      <Badge variant="secondary" className="rounded-full px-2 py-1 text-xs font-medium bg-success/10 text-success">
-                        +12%
-                      </Badge>
-                    )} */}
-                  </CardContent>
-                </Card>
-              );
-            })}
-      </div>
 
       {/* Filters and Search */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
