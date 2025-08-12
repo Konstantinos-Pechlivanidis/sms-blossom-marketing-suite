@@ -24,7 +24,10 @@
       "messagesSent": "Messages Sent",
       "openRate": "Open Rate",
       "totalContacts": "Total Contacts",
-      "scheduledCampaigns": "Scheduled Campaigns"
+      "ScheduledCampaigns": "Scheduled Campaigns",
+      "TotalCampaignsSent": "Total Campaigns Sent",
+      "AvgConversionRate": "Avg Conversion Rate",
+      "ActiveContacts": "Active Contacts"
     },
     "recentCampaigns": "Recent Campaigns",
     "insights": "Insights",
@@ -141,6 +144,7 @@
       "lastInteraction": "Last Interaction",
       "notes": "Notes",
       "addDescription": "Fill in the details to add a new contact to your list."
+
     },
     "empty": {
       "title": "No contacts found",
@@ -162,7 +166,9 @@
     "status": "Status",
     "date": "Date",
     "name": "Name",
-    "description": "Description"
+    "description": "Description",
+    "viewAll": "View All",
+    "success": "Success"
   },
   "errors": {
     "pageNotFound": "Oops! Page not found",
@@ -173,5 +179,145 @@
     "english": "English",
     "greek": "Ελληνικά",
     "selectLanguage": "Select Language"
+  },
+  "createCampaign": {
+    "editTitle": "Edit Campaign",
+    "title": "Create Campaign",
+    "description": "Build and send targeted SMS campaigns to your customers",
+    "steps": {
+      "next": "Next",
+      "campaigndetails": { "title": "Campaign Details" },
+      "targetaudience": { "title": "Target Audience" },
+      "writemessage": { "title": "Write Message" },
+      "schedule&send": { "title": "Schedule & Send" },
+      "step1": {
+        "title": "1. Campaign Details",
+        "nameLabel": "Campaign Name",
+        "namePlaceholder": "e.g., Weekend Flash Sale",
+        "categoryLabel": "Campaign Category",
+        "categoryPlaceholder": "Select category",
+        "categoryOptions": {
+          "promotion": "Promotion",
+          "announcement": "Announcement",
+          "reminder": "Reminder",
+          "welcome": "Welcome",
+          "followUp": "Follow-up"
+        },
+        "next": "Next: Select Audience"
+      },
+      "step2": {
+        "title": "2. Target Audience",
+        "newCustomers": "New Customers",
+        "inactiveCustomers": "Inactive (30+ days)",
+        "selectedRecipients": "Selected: {{count}} recipients",
+        "next": "Next: Write Message"
+      },
+      "step3": {
+        "title": "3. Write Message",
+        "messageLabel": "SMS Message",
+        "messagePlaceholder": "Write your SMS message here...",
+        "charCount": "{{count}}/160 characters",
+        "singleSMS": "✓ Single SMS",
+        "multiSMS": "⚠ Multiple SMS"
+      },
+      "step4": {
+        "title": "4. Schedule & Send",
+        "sendNow": "Send Now",
+        "immediate": "Immediate delivery",
+        "scheduleLater": "Schedule Later",
+        "chooseTime": "Choose date & time",
+        "saveDraft": "Save as Draft",
+        "sendLater": "Send later",
+        "date": "Date",
+        "time": "Time",
+        "sendNowButton": "Send Campaign Now",
+        "scheduleButton": "Schedule Campaign",
+        "saveDraftButton": "Save as Draft"
+      }
+    },
+    "recurring": {
+      "title": "Make this a recurring campaign",
+      "selectDays": "Select Days",
+      "endDate": "End Date (Optional)",
+      "forever": "Leave empty to run forever",
+      "selectDayError": "Please select at least one day for recurring campaigns"
+    },
+    "preview": {
+      "title": "Mobile Preview",
+      "senderName": "Bella's Boutique",
+      "status": "Delivered",
+      "linkAdded": "Tracking Link Added",
+      "linkDescription": "A tracking link will be automatically added to your message: {{link}}",
+      "placeholder": "Your SMS message will appear here...",
+      "scheduled": "Scheduled",
+      "repeats": "Repeats",
+      "charCount": "{{count}}/160 chars",
+      "selectAudience": "Select audience",
+      "toRecipients": "To: {{count}} contacts"
+    },
+    "ai": {
+      "improveButton": "✨ Improve with AI",
+      "useAI": "✅ Using AI Version",
+      "original": "Use Original Message",
+      "success": "Message improved with AI!"
+    },
+    "success": {
+      "sent": "Campaign sent successfully! 🎉",
+      "scheduled": "Campaign scheduled successfully! 📅",
+      "recurring": "Recurring campaign scheduled for {{days}}! 🔄",
+      "draft": "Campaign saved as draft"
+    },
+    "error": {
+      "selectDayError": "Please select at least one day for recurring campaigns"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Manage your account settings and preferences",
+    "profile": {
+      "title": "Personal Information",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "phone": "Phone Number",
+      "phonePlaceholder": "Enter your phone number",
+      "saveButton": "Save Changes"
+    },
+    "password": {
+      "title": "Change Password",
+      "current": "Current Password",
+      "currentPlaceholder": "Enter your current password",
+      "new": "New Password",
+      "newPlaceholder": "Enter new password (min. 6 characters)",
+      "confirm": "Confirm New Password",
+      "confirmPlaceholder": "Confirm your new password",
+      "saveButton": "Update Password",
+      "errors": {
+        "fillFields": "Please fill in all password fields",
+        "minLength": "New password must be at least 6 characters",
+        "match": "New passwords do not match"
+      },
+      "success": "Password updated successfully!"
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "updating": "Updating...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search...",
+    "back": "Back",
+    "actions": "Actions",
+    "status": "Status",
+    "date": "Date",
+    "name": "Name",
+    "description": "Description",
+    "viewAll": "View All",
+    "success": "Success"
   }
 }

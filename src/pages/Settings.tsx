@@ -1,4 +1,4 @@
-
+ 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,17 +6,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { 
-  Lock, 
+import {
+  Lock,
   User,
   Save,
   Eye,
-  EyeOff
+  EyeOff,
+  Phone,
+  Mail,
+  UserPlus,
 } from "lucide-react";
 import { toast } from "sonner";
-import { useCurrentUser, useUpdateUser, useUpdatePassword } from "@/hooks/api/useUser";
+import {
+  useCurrentUser,
+  useUpdateUser,
+  useUpdatePassword,
+} from "@/hooks/api/useUser";
+import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const Settings = () => {
+  const { t } = useTranslation();
   const { data: user, isLoading: userLoading } = useCurrentUser();
   const updateUserMutation = useUpdateUser();
   const updatePasswordMutation = useUpdatePassword();
@@ -24,264 +34,189 @@ const Settings = () => {
   const [passwordData, setPasswordData] = useState({
     oldPassword: "",
     newPassword: "",
-    confirmPassword: ""
+    confirmPassword: "",
   });
 
   const [profileData, setProfileData] = useState({
     fullName: "",
     email: "",
-    phone: ""
+    phone: "",
   });
 
   const [showPasswords, setShowPasswords] = useState({
     old: false,
     new: false,
-    confirm: false
+    confirm: false,
   });
 
-  // Update profile data when user data loads
   useEffect(() => {
     if (user) {
       setProfileData({
         fullName: user.name,
         email: user.email,
-        phone: user.phone
+        phone: user.phone,
       });
     }
   }, [user]);
 
   const handlePasswordUpdate = async () => {
-    // Basic validation
-    if (!passwordData.oldPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
-      toast.error("Please fill in all password fields");
+    if (
+      !passwordData.oldPassword ||
+      !passwordData.newPassword ||
+      !passwordData.confirmPassword
+    ) {
+      toast.error(t("settings.password.errors.fillFields"));
       return;
     }
 
     if (passwordData.newPassword.length < 6) {
-      toast.error("New password must be at least 6 characters");
+      toast.error(t("settings.password.errors.minLength"));
       return;
     }
 
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      toast.error("New passwords do not match");
+      toast.error(t("settings.password.errors.match"));
       return;
     }
 
-    updatePasswordMutation.mutate({
-      oldPassword: passwordData.oldPassword,
-      newPassword: passwordData.newPassword
-    }, {
-      onSuccess: () => {
-        setPasswordData({ oldPassword: "", newPassword: "", confirmPassword: "" });
+    updatePasswordMutation.mutate(
+      {
+        oldPassword: passwordData.oldPassword,
+        newPassword: passwordData.newPassword,
+      },
+      {
+        onSuccess: () => {
+          setPasswordData({
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+          });
+          toast.success(t("settings.password.success"));
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
       }
-    });
+    );
   };
 
   const handleProfileUpdate = async () => {
-    // Basic validation
     if (!profileData.fullName || !profileData.email) {
-      toast.error("Please fill in required fields");
+      toast.error(t("settings.profile.errors.requiredFields"));
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(profileData.email)) {
-      toast.error("Please enter a valid email address");
+      toast.error(t("settings.profile.errors.validEmail"));
       return;
     }
 
-    updateUserMutation.mutate({
-      name: profileData.fullName,
-      email: profileData.email,
-      phone: profileData.phone
-    });
+    updateUserMutation.mutate(
+      {
+        name: profileData.fullName,
+        email: profileData.email,
+        phone: profileData.phone,
+      },
+      {
+        onSuccess: () => {
+          toast.success(t("settings.profile.success"));
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      }
+    );
   };
 
-  const togglePasswordVisibility = (field: 'old' | 'new' | 'confirm') => {
-    setShowPasswords(prev => ({ ...prev, [field]: !prev[field] }));
+  const togglePasswordVisibility = (field: "old" | "new" | "confirm") => {
+    setShowPasswords((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings</h1>
-        <p className="text-gray-600">Manage your account settings and preferences</p>
-      </div>
+  <div className="min-h-screen px-4 py-10 sm:px-6 lg:px-8 bg-background">
+    {/* Header */}
+    <header className="mb-10 text-center sm:text-left space-y-2">
+      <h1 className="text-4xl font-bold tracking-tight text-foreground">{t('settings.title')}</h1>
+      <p className="text-lg text-muted-foreground">{t('settings.description')}</p>
+    </header>
 
-      {/* Change Password Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Lock className="mr-2 h-5 w-5 text-[#81D8D0]" />
-            Change Password
+    {/* Responsive Grid Layout */}
+    <div className="grid gap-10 md:grid-cols-2">
+      {/* Profile Section */}
+      <Card className="rounded-3xl border border-border bg-white/60 backdrop-blur-md shadow-xl">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl font-semibold text-primary flex items-center gap-2">
+            <User className="h-5 w-5" />
+            {t('settings.profile.title')}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <Label htmlFor="oldPassword">Current Password</Label>
-            <div className="relative">
-              <Input
-                id="oldPassword"
-                type={showPasswords.old ? "text" : "password"}
-                value={passwordData.oldPassword}
-                onChange={(e) => setPasswordData(prev => ({ ...prev, oldPassword: e.target.value }))}
-                placeholder="Enter your current password"
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                onClick={() => togglePasswordVisibility('old')}
-              >
-                {showPasswords.old ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          <div>
-            <Label htmlFor="newPassword">New Password</Label>
-            <div className="relative">
-              <Input
-                id="newPassword"
-                type={showPasswords.new ? "text" : "password"}
-                value={passwordData.newPassword}
-                onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
-                placeholder="Enter new password (min. 6 characters)"
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                onClick={() => togglePasswordVisibility('new')}
-              >
-                {showPasswords.new ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          <div>
-            <Label htmlFor="confirmPassword">Confirm New Password</Label>
-            <div className="relative">
-              <Input
-                id="confirmPassword"
-                type={showPasswords.confirm ? "text" : "password"}
-                value={passwordData.confirmPassword}
-                onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
-                placeholder="Confirm your new password"
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                onClick={() => togglePasswordVisibility('confirm')}
-              >
-                {showPasswords.confirm ? (
-                  <EyeOff className="h-4 w-4" />
-                ) : (
-                  <Eye className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          <Button 
-            onClick={handlePasswordUpdate}
-            disabled={updatePasswordMutation.isPending}
-            className="bg-[#81D8D0] hover:bg-[#5FBDB7] text-white w-full sm:w-auto"
-          >
-            {updatePasswordMutation.isPending ? (
-              <>
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Updating...
-              </>
-            ) : (
-              <>
-                <Lock className="mr-2 h-4 w-4" />
-                Update Password
-              </>
-            )}
-          </Button>
-        </CardContent>
-      </Card>
-
-      <Separator />
-
-      {/* Edit Personal Info Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <User className="mr-2 h-5 w-5 text-[#81D8D0]" />
-            Edit Personal Information
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-6">
           {userLoading ? (
             <div className="space-y-4">
-              <Skeleton className="h-10" />
-              <Skeleton className="h-10" />
-              <Skeleton className="h-10" />
-              <Skeleton className="h-10 w-32" />
+              <Skeleton className="h-12 w-full rounded-2xl" />
+              <Skeleton className="h-12 w-full rounded-2xl" />
+              <Skeleton className="h-12 w-full rounded-2xl" />
+              <Skeleton className="h-12 w-36 rounded-full" />
             </div>
           ) : (
             <>
-              <div>
-                <Label htmlFor="fullName">Full Name *</Label>
+              {/* Full Name */}
+              <div className="space-y-1">
+                <Label htmlFor="fullName" className="text-sm font-medium flex items-center gap-2 text-muted-foreground">                  {t('settings.profile.fullName')} *
+                </Label>
                 <Input
                   id="fullName"
                   value={profileData.fullName}
                   onChange={(e) => setProfileData(prev => ({ ...prev, fullName: e.target.value }))}
-                  placeholder="Enter your full name"
+                  placeholder={t('settings.profile.fullNamePlaceholder')}
+                  className="rounded-xl text-sm sm:text-base leading-tight"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="email">Email Address *</Label>
+              {/* Email */}
+              <div className="space-y-1">
+                <Label htmlFor="email" className="text-sm font-medium flex items-center gap-2 text-muted-foreground">                  {t('settings.profile.email')} *
+                </Label>
                 <Input
                   id="email"
                   type="email"
                   value={profileData.email}
                   onChange={(e) => setProfileData(prev => ({ ...prev, email: e.target.value }))}
-                  placeholder="Enter your email address"
+                  placeholder={t('settings.profile.emailPlaceholder')}
+                  className="rounded-xl text-sm sm:text-base leading-tight"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="phone">Phone Number</Label>
+              {/* Phone */}
+              <div className="space-y-1">
+                <Label htmlFor="phone" className="text-sm font-medium flex items-center gap-2 text-muted-foreground">                  {t('settings.profile.phone')}
+                </Label>
                 <Input
                   id="phone"
                   type="tel"
                   value={profileData.phone}
                   onChange={(e) => setProfileData(prev => ({ ...prev, phone: e.target.value }))}
-                  placeholder="Enter your phone number"
+                  placeholder={t('settings.profile.phonePlaceholder')}
+                  className="rounded-xl text-sm sm:text-sm leading-tight"
                 />
               </div>
 
-              <Button 
+              {/* Save Profile Button */}
+              <Button
                 onClick={handleProfileUpdate}
                 disabled={updateUserMutation.isPending}
-                className="bg-[#81D8D0] hover:bg-[#5FBDB7] text-white w-full sm:w-auto"
+                className="w-full sm:w-auto rounded-full bg-primary hover:bg-primary/90 shadow-md"
               >
                 {updateUserMutation.isPending ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Saving...
+                    {t('common.saving')}
                   </>
                 ) : (
                   <>
                     <Save className="mr-2 h-4 w-4" />
-                    Save Changes
+                    {t('settings.profile.saveButton')}
                   </>
                 )}
               </Button>
@@ -289,8 +224,70 @@ const Settings = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Password Section */}
+      <Card className="rounded-3xl border border-border bg-white/60 backdrop-blur-md shadow-xl">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl font-semibold text-primary flex items-center gap-2">
+            <Lock className="h-5 w-5" />
+            {t('settings.password.title')}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {['current', 'new', 'confirm'].map((field) => (
+            <div key={field} className="space-y-1">
+              <Label htmlFor={`${field}Password`} className="text-sm font-medium flex items-center gap-2 text-muted-foreground">                {t(`settings.password.${field}`)}
+              </Label>
+              <div className="relative">
+                <Input
+                  id={`${field}Password`}
+                  type={showPasswords[field] ? 'text' : 'password'}
+                  value={passwordData[`${field}Password`]}
+                  onChange={(e) => setPasswordData(prev => ({ ...prev, [`${field}Password`]: e.target.value }))}
+                  placeholder={t(`settings.password.${field}Placeholder`)}
+                  className="rounded-xl text-sm sm:text-base leading-tight pr-10"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                  onClick={() => togglePasswordVisibility(field as 'old' | 'new' | 'confirm')}
+                >
+                  {showPasswords[field] ? (
+                    <EyeOff className="h-4 w-4 text-muted-foreground" />
+                  ) : (
+                    <Eye className="h-4 w-4 text-muted-foreground" />
+                  )}
+                </Button>
+              </div>
+            </div>
+          ))}
+
+          {/* Save Password Button */}
+          <Button
+            onClick={handlePasswordUpdate}
+            disabled={updatePasswordMutation.isPending}
+            className="w-full sm:w-auto rounded-full bg-primary hover:bg-primary/90 shadow-md"
+          >
+            {updatePasswordMutation.isPending ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                {t('common.updating')}
+              </>
+            ) : (
+              <>
+                <Save className="mr-2 h-4 w-4" />
+                {t('settings.password.saveButton')}
+              </>
+            )}
+          </Button>
+        </CardContent>
+      </Card>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default Settings;

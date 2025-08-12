@@ -1,73 +1,37 @@
-import { 
-  Send, 
-  TrendingUp, 
-  Users, 
-  Calendar,
-  ArrowUpRight
-} from "lucide-react";
-import { StatsCard } from "@/components/common/StatsCard";
-import { WelcomeSection } from "@/components/dashboard/WelcomeSection";
-import { RecentCampaigns } from "@/components/dashboard/RecentCampaigns";
-import { InsightsWidget } from "@/components/dashboard/InsightsWidget";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useKPIData } from "@/hooks/api/useKPIData";
-import { useRecentCampaigns } from "@/hooks/api/useCampaigns";
-import { useSMSCredits } from "@/hooks/api/useCredits";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import {InsightsWidget} from '@/components/dashboard/InsightsWidget';
+import {RecentCampaigns} from '@/components/dashboard/RecentCampaigns';
+import { PageHeader } from '@/components/common/PageHeader';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { kpiData, recentCampaigns, englishTemplates, greekTemplates } from '@/data/mock-data';
 
 const Dashboard = () => {
-  const { data: kpiData, isLoading: kpiLoading } = useKPIData();
-  const { data: recentCampaigns, isLoading: campaignsLoading } = useRecentCampaigns();
-  const { data: smsCredits, isLoading: creditsLoading } = useSMSCredits();
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language;
 
-  const iconMap = {
-    Send,
-    TrendingUp,
-    Users,
-    Calendar
-  };
+  // Use the appropriate templates based on the current language
+  const templates = currentLanguage === 'gr' ? greekTemplates : englishTemplates;
 
   return (
-    <div className="space-y-6">
-      <WelcomeSection />
+    <div className="flex-1 space-y-6 bg-gray-100 dark:bg-gray-950 p-4 sm:p-6 lg:p-8 rounded-3xl">
+      <PageHeader
+        title={t('dashboard.welcome')}
+        description={t('dashboard.overview')}
+      >
+        <Link to="/campaigns/create">
+          <Button className="bg-primary hover:bg-primary-hover rounded-full shadow-soft-sm">
+            <Plus className="mr-2 h-4 w-4" />
+            {t('navigation.createCampaign')}
+          </Button>
+        </Link>
+      </PageHeader>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {kpiLoading ? (
-          // Loading skeletons
-          Array.from({ length: 4 }).map((_, index) => (
-            <Skeleton key={index} className="h-32" />
-          ))
-        ) : (
-          kpiData?.map((kpi, index) => {
-            const IconComponent = iconMap[kpi.icon as keyof typeof iconMap];
-            return (
-              <StatsCard
-                key={index}
-                title={kpi.title}
-                value={kpi.value}
-                change={kpi.change}
-                changeType={kpi.changeType}
-                icon={IconComponent}
-                iconColor={kpi.color}
-              />
-            );
-          })
-        )}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {campaignsLoading ? (
-          <Skeleton className="lg:col-span-2 h-64" />
-        ) : (
-          <RecentCampaigns campaigns={recentCampaigns || []} />
-        )}
-        
-        {creditsLoading ? (
-          <Skeleton className="h-64" />
-        ) : (
-          <InsightsWidget smsCredits={smsCredits?.toLocaleString() || '0'} />
-        )}
-      </div>
+      <InsightsWidget data={kpiData} />
+      
+      <RecentCampaigns campaigns={recentCampaigns} />
     </div>
   );
 };

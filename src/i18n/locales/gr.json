@@ -24,7 +24,10 @@
       "messagesSent": "Μηνύματα που Στάλθηκαν",
       "openRate": "Ποσοστό Ανοίγματος",
       "totalContacts": "Συνολικές Επαφές",
-      "scheduledCampaigns": "Προγραμματισμένες Καμπάνιες"
+      "ScheduledCampaigns": "Προγραμματισμένες Καμπάνιες",
+      "TotalCampaignsSent": "Συνολικές Αποστολές Καμπανιών",
+      "AvgConversionRate": "Μέσος Όρος Μετατροπών",
+      "ActiveContacts": "Ενεργές Επαφές"
     },
     "recentCampaigns": "Πρόσφατες Καμπάνιες",
     "insights": "Αναλύσεις",
@@ -107,10 +110,26 @@
   "settings": {
     "title": "Ρυθμίσεις",
     "description": "Διαχειριστείτε τις ρυθμίσεις λογαριασμού και προτιμήσεις",
-    "profile": "Προφίλ",
-    "account": "Λογαριασμός",
-    "preferences": "Προτιμήσεις",
-    "security": "Ασφάλεια"
+    "profile": {
+      "title": "Προσωπικά Στοιχεία",
+      "fullName": "Πλήρες Όνομα",
+      "fullNamePlaceholder": "Εισαγάγετε το πλήρες όνομά σας",
+      "email": "Διεύθυνση Email",
+      "emailPlaceholder": "Εισαγάγετε τη διεύθυνση email σας",
+      "phone": "Τηλέφωνο",
+      "phonePlaceholder": "Εισαγάγετε τον αριθμό τηλεφώνου σας",
+      "saveButton": "Αποθήκευση Αλλαγών"
+    },
+    "password": {
+      "title": "Αλλαγή Κωδικού",
+      "current": "Τρέχων Κωδικός",
+      "currentPlaceholder": "Εισαγάγετε τον τρέχοντα κωδικό σας",
+      "new": "Νέος Κωδικός",
+      "newPlaceholder": "Εισαγάγετε τον νέο κωδικό (ελάχιστο 6 χαρακτήρες)",
+      "confirm": "Επιβεβαίωση Νέου Κωδικού",
+      "confirmPlaceholder": "Επιβεβαιώστε τον νέο σας κωδικό",
+      "saveButton": "Ενημέρωση Κωδικού"
+    }
   },
   "contacts": {
     "title": "Επαφές",
@@ -132,7 +151,9 @@
       "women": "Γυναίκες",
       "vip": "VIP",
       "customViews": "Προσαρμοσμένες Προβολές",
-      "active": "Ενεργά φίλτρα"
+      "active": "Ενεργά φίλτρα",
+      "highConversions": "Υψηλές Μετατροπές",
+      "birthdayClub": "Λέσχη Γενεθλίων"
     },
     "table": {
       "selectAll": "Επιλογή Όλων",
@@ -182,7 +203,9 @@
     "status": "Κατάσταση",
     "date": "Ημερομηνία",
     "name": "Όνομα",
-    "description": "Περιγραφή"
+    "description": "Περιγραφή",
+    "viewAll": "Προβολή Όλων",
+    "success": "Επιτυχία"
   },
   "errors": {
     "pageNotFound": "Ουπς! Η σελίδα δεν βρέθηκε",
@@ -193,5 +216,96 @@
     "english": "English",
     "greek": "Ελληνικά",
     "selectLanguage": "Επιλογή Γλώσσας"
+  },
+  "createCampaign": {
+    "editTitle": "Επεξεργασία Καμπάνιας",
+    "title": "Δημιουργία Καμπάνιας",
+    "description": "Δημιουργήστε και στείλτε στοχευμένες καμπάνιες SMS στους πελάτες σας",
+    "steps": {
+      "next": "Επόμενο",
+      "campaigndetails": { "title": "Στοιχεία Καμπάνιας" },
+      "targetaudience": { "title": "Στόχευση Κοινού" },
+      "writemessage": { "title": "Συγγραφή Μηνύματος" },
+      "schedule&send": { "title": "Προγραμματισμός & Αποστολή" },
+      "step1": {
+        "title": "1. Στοιχεία Καμπάνιας",
+        "nameLabel": "Όνομα Καμπάνιας",
+        "namePlaceholder": "π.χ. Προσφορά Σαββατοκύριακου",
+        "categoryLabel": "Κατηγορία Καμπάνιας",
+        "categoryPlaceholder": "Επιλέξτε κατηγορία",
+        "categoryOptions": {
+          "promotion": "Προώθηση",
+          "announcement": "Ανακοίνωση",
+          "reminder": "Υπενθύμιση",
+          "welcome": "Καλωσόρισμα",
+          "followUp": "Follow-up"
+        },
+        "next": "Επόμενο: Επιλογή Κοινού"
+      },
+      "step2": {
+        "title": "2. Στόχευση Κοινού",
+        "newCustomers": "Νέοι Πελάτες",
+        "inactiveCustomers": "Ανενεργοί (30+ ημέρες)",
+        "selectedRecipients": "Επιλεγμένοι: {{count}} παραλήπτες",
+        "next": "Επόμενο: Συγγραφή Μηνύματος"
+      },
+      "step3": {
+        "title": "3. Συγγραφή Μηνύματος",
+        "messageLabel": "Μήνυμα SMS",
+        "messagePlaceholder": "Γράψτε το μήνυμά σας εδώ...",
+        "charCount": "{{count}}/160 χαρακτήρες",
+        "singleSMS": "✓ Ένα SMS",
+        "multiSMS": "⚠ Πολλαπλά SMS"
+      },
+      "step4": {
+        "title": "4. Προγραμματισμός & Αποστολή",
+        "sendNow": "Αποστολή Τώρα",
+        "immediate": "Άμεση αποστολή",
+        "scheduleLater": "Προγραμματισμός",
+        "chooseTime": "Επιλέξτε ημερομηνία & ώρα",
+        "saveDraft": "Αποθήκευση ως Πρόχειρο",
+        "sendLater": "Αποστολή αργότερα",
+        "date": "Ημερομηνία",
+        "time": "Ώρα",
+        "sendNowButton": "Αποστολή Καμπάνιας τώρα",
+        "scheduleButton": "Προγραμματισμός Καμπάνιας",
+        "saveDraftButton": "Αποθήκευση ως Πρόχειρο"
+      }
+    },
+    "recurring": {
+      "title": "Ορίστε ως επαναλαμβανόμενη καμπάνια",
+      "selectDays": "Επιλέξτε Ημέρες",
+      "endDate": "Ημερομηνία Λήξης (Προαιρετικό)",
+      "forever": "Αφήστε κενό για επ' αόριστον",
+      "selectDayError": "Παρακαλώ επιλέξτε τουλάχιστον μία ημέρα για επαναλαμβανόμενες καμπάνιες"
+    },
+    "preview": {
+      "title": "Προεπισκόπηση Κινητού",
+      "senderName": "Bella's Boutique",
+      "status": "Παραδόθηκε",
+      "linkAdded": "Προστέθηκε Link Παρακολούθησης",
+      "linkDescription": "Ένας σύνδεσμος παρακολούθησης θα προστεθεί αυτόματα στο μήνυμά σας: {{link}}",
+      "placeholder": "Το μήνυμά σας θα εμφανιστεί εδώ...",
+      "scheduled": "Προγραμματισμένο",
+      "repeats": "Επανάληψη",
+      "charCount": "{{count}}/160 χαρακτήρες",
+      "selectAudience": "Επιλογή κοινού",
+      "toRecipients": "Προς: {{count}} επαφές"
+    },
+    "ai": {
+      "improveButton": "✨ Βελτίωση με AI",
+      "useAI": "✅ Χρήση έκδοσης AI",
+      "original": "Χρήση Αρχικού Μηνύματος",
+      "success": "Το μήνυμα βελτιώθηκε με AI!"
+    },
+    "success": {
+      "sent": "Η καμπάνια στάλθηκε επιτυχώς! 🎉",
+      "scheduled": "Η καμπάνια προγραμματίστηκε επιτυχώς! 📅",
+      "recurring": "Η επαναλαμβανόμενη καμπάνια προγραμματίστηκε για τις {{days}}! 🔄",
+      "draft": "Η καμπάνια αποθηκεύτηκε ως πρόχειρο"
+    },
+    "error": {
+      "selectDayError": "Παρακαλώ επιλέξτε τουλάχιστον μία ημέρα για επαναλαμβανόμενες καμπάνιες"
+    }
   }
 }
