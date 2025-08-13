@@ -8,12 +8,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
-import { 
-  ChevronRight, 
-  ChevronDown, 
+import {
+  ChevronRight,
+  ChevronDown,
   ChevronLeft,
-  Sparkles, 
-  Users, 
+  Sparkles,
+  Users,
   Calendar,
   Send,
   Save,
@@ -23,7 +23,7 @@ import {
   ArrowLeft,
   Link as LinkIcon
 } from "lucide-react";
-import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { campaignSteps } from "@/constants/campaign-steps";
 import { StepProgress } from "@/components/campaign/StepProgress";
@@ -68,7 +68,7 @@ const CreateCampaign = () => {
     { id: "monday", label: t('createCampaign.recurring.days.mon') },
     { id: "tuesday", label: t('createCampaign.recurring.days.tue') },
     { id: "wednesday", label: t('createCampaign.recurring.days.wed') },
-    { id: "thursday", label: "Thu" }, // This should be translated in the language file
+    { id: "thursday", label: "createCampaign.recurring.days.thu" }, 
     { id: "friday", label: t('createCampaign.recurring.days.fri') },
     { id: "saturday", label: t('createCampaign.recurring.days.sat') },
     { id: "sunday", label: t('createCampaign.recurring.days.sun') }
@@ -82,7 +82,7 @@ const CreateCampaign = () => {
         name: campaignToEdit.name,
         category: campaignToEdit.category,
         audience: campaignToEdit.audience,
-        message: campaignToEdit.message,
+        message: campaignToEdit.message || campaignToEdit.preview,
         scheduleType: campaignToEdit.scheduleType,
         scheduleDate: "",
         scheduleTime: "",
@@ -93,25 +93,15 @@ const CreateCampaign = () => {
       });
       setAiMessage(campaignToEdit.message);
       setUseAiVersion(false);
-      setCurrentStep(3);
-      toast.info(t('createCampaign.editTitle') + ': ' + campaignToEdit.name);
-    } else {
-      const templateId = new URLSearchParams(location.search).get('template');
-      if (templateId) {
-        const template = mockCampaigns.find(t => String(t.id) === templateId);
-        if (template) {
-          setCampaignData(prev => ({
-            ...prev,
-            name: template.name,
-            message: template.message
-          }));
-          setAiMessage(template.message);
-          setCurrentStep(2);
-          toast.info(t('createCampaign.templateLoaded', { name: template.name }));
-        }
+      // If it's a template, start from step 1, otherwise it's an edit of an existing campaign
+      setCurrentStep(campaignToEdit.preview ? 1 : 3);
+      if (campaignToEdit.preview) {
+        toast.info(t('createCampaign.notifications.templateLoaded', { name: campaignToEdit.name }));
+      } else {
+        toast.info(t('createCampaign.editTitle') + ': ' + campaignToEdit.name);
       }
     }
-  }, [location.state, location.search, t]);
+  }, [location.state, t]);
 
   const getActiveMessage = () => {
     return useAiVersion && aiMessage ? aiMessage : campaignData.message;

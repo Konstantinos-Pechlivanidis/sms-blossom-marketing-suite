@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { TemplateCard } from '@/components/templates/TemplateCard';
@@ -7,35 +7,23 @@ import { EmptyState } from '@/components/common/EmptyState';
 import { BookText } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Template } from "@/types";
-import { apiService } from '@/lib/api';
+import { useTemplates } from '@/hooks/api/useTemplates';
+import { templateCategories, TemplateCategory, templateLanguages, TemplateLanguage } from '@/constants/templates';
 
 const TemplatesPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const [templates, setTemplates] = useState<Template[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState<TemplateCategory>('All');
+  const [activeLang, setActiveLang] = useState<TemplateLanguage>('gr');
 
-  useEffect(() => {
-    const fetchTemplates = async () => {
-      setIsLoading(true);
-      try {
-        const data = await apiService.getTemplates();
-        setTemplates(data);
-      } catch (error) {
-        console.error("Failed to fetch templates:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchTemplates();
-  }, []);
+  const { data: templates, isLoading } = useTemplates(activeLang);
 
   const filteredTemplates = useMemo(() => {
+    if (!templates) return [];
     return templates
-      .filter(template => selectedCategory === 'all' || template.category === selectedCategory)
+      .filter(template => selectedCategory === 'All' || template.category === selectedCategory)
       .filter(template => {
         const term = searchTerm.toLowerCase();
         if (!term) return true;
@@ -46,13 +34,8 @@ const TemplatesPage = () => {
   }, [templates, searchTerm, selectedCategory]);
 
   const handleSelectTemplate = (template: Template) => {
-    navigate('/campaigns/create', { state: { selectedTemplate: template } });
+    navigate('/campaigns/create', { state: { campaignToEdit: template } });
   };
-
-  const categories = useMemo(() => {
-    const allCategories = templates.map(t => t.category);
-    return ['all', ...Array.from(new Set(allCategories))];
-  }, [templates]);
 
   return (
     <div className="flex-1 space-y-6">
@@ -65,7 +48,10 @@ const TemplatesPage = () => {
         onSearchChange={setSearchTerm}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
-        categories={categories}
+        categories={templateCategories}
+        activeLang={activeLang}
+        onLangChange={setActiveLang}
+        languages={templateLanguages}
       />
       
       {isLoading ? (
@@ -81,8 +67,8 @@ const TemplatesPage = () => {
       ) : (
         <EmptyState
           icon={BookText}
-          title={t('templates.emptyTitle')}
-          description={t('templates.emptyDescription')}
+          title={t('templates.empty.title')}
+          description={t('templates.empty.description')}
         />
       )}
     </div>

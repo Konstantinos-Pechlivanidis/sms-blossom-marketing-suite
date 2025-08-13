@@ -17,8 +17,8 @@ export type TemplateCategory = (typeof templateCategories)[number]['value'];
  * An array of supported template languages.
  */
 export const templateLanguages = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
   { code: 'gr', name: 'Ελληνικά', flag: '🇬🇷' },
+  { code: 'en', name: 'English', flag: '🇬🇧' },
 ] as const;
 
 export type TemplateLanguage = (typeof templateLanguages)[number]['code'];

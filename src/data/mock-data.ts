@@ -89,60 +89,45 @@ export const campaigns: Campaign[] = [
   },
 ];
 
-export const mockTemplates: Template[] = [
-  // --- Ελληνικά Πρότυπα ---
+export const greekTemplates: Template[] = [
   {
-    lang: 'el',
-    id: 'flash_sale_01_gr',
-    name: 'Flash Sale 24 Ωρών',
-    category: 'Sales',
-    preview: '💥 FLASH SALE για 24 ώρες! 💥 -50% σε ΟΛΑ! Χρησιμοποίησε τον κωδικό FLASH50 στο ταμείο. Μην το χάσεις!',
-    tags: ['προσφορά', 'έκπτωση', 'επείγον']
+    lang: 'gr',
+    id: 'gr_restaurant_1',
+    name: 'Αποκλειστική Προσφορά',
+    category: 'Restaurants',
+    preview: 'Μόνο για εσάς! Απολαύστε 20% έκπτωση στο επόμενο γεύμα σας. Δείξτε αυτό το μήνυμα για να εξαργυρώσετε την προσφορά σας!',
+    tags: ['προσφορά', 'έκπτωση', 'εστιατόριο']
   },
   {
-    lang: 'el',
-    id: 'bogo_offer_01_gr',
-    name: 'Προσφορά 1+1 Δώρο',
-    category: 'Sales',
-    preview: '☕️ Αγόρασε έναν καφέ και πάρε άλλον έναν ΔΩΡΟ! Έλα με την παρέα σου και κερδίστε. Ισχύει μέχρι αύριο. Δείξε το QR code.',
-    tags: ['bogo', 'προσφορά', 'καφές']
+    lang: 'gr',
+    id: 'gr_gym_1',
+    name: 'Πρόκληση Fitness',
+    category: 'Gyms',
+    preview: 'Είστε έτοιμοι για την πρόκληση; Ελάτε στο γυμναστήριο αυτή την εβδομάδα και κερδίστε ένα δωρεάν ρόφημα πρωτεΐνης!',
+    tags: ['πρόκληση', 'γυμναστήριο', 'προσφορά']
   },
-  {
-    lang: 'el',
-    id: 'holiday_greeting_01_gr',
-    name: 'Ευχές Γιορτών',
-    category: 'Holidays',
-    preview: '🎄 Χρόνια Πολλά & Καλές Γιορτές από όλη την ομάδα μας! Σας ευχαριστούμε για την προτίμησή σας! ✨',
-    tags: ['χριστούγεννα', 'γιορτές']
-  },
-
-  // --- Αγγλικά Πρότυπα ---
-  {
-    lang: 'en',
-    id: 'flash_sale_01_en',
-    name: '24-Hour Flash Sale',
-    category: 'Sales',
-    preview: '💥 24-HOUR FLASH SALE! 💥 50% off EVERYTHING! Use code: FLASH50 at checkout. Don\'t miss out!',
-    tags: ['sale', 'offer', 'urgent']
-  },
-  {
-    lang: 'en',
-    id: 'new_arrivals_01_en',
-    name: 'New Collection Arrived',
-    category: 'Announcements',
-    preview: '🚀 IT\'S HERE! Our new collection just dropped. Be the first to discover it! Show this QR code in-store.',
-    tags: ['new', 'collection', 'product']
-  },
-  {
-    lang: 'en',
-    id: 'customer_feedback_01_en',
-    name: 'Feedback Request',
-    category: 'Customer Care',
-    preview: 'How was your experience? We\'d love to hear your thoughts! Your feedback helps us improve.',
-    tags: ['feedback', 'review', 'support']
-  }
 ];
 
+export const englishTemplates: Template[] = [
+  {
+    lang: 'en',
+    id: 'en_restaurant_1',
+    name: 'Exclusive Offer',
+    category: 'Restaurants',
+    preview: 'Just for you! Enjoy a 20% discount on your next meal. Show this message to redeem your offer!',
+    tags: ['offer', 'discount', 'restaurant']
+  },
+  {
+    lang: 'en',
+    id: 'en_gym_1',
+    name: 'Fitness Challenge',
+    category: 'Gyms',
+    preview: 'Are you up for the challenge? Come to the gym this week and get a free protein shake!',
+    tags: ['challenge', 'gym', 'offer']
+  },
+];
+
+export const mockTemplates: Template[] = [...greekTemplates, ...englishTemplates];
 
 export const mockAutomations: Automation[] = [
   {

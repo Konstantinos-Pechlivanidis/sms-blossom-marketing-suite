@@ -41,12 +41,31 @@
     "notifications": "Notifications"
   },
   "templates": {
-    "title": "Πρότυπα",
-    "search_placeholder": "Αναζήτηση προτύπων...",
-    "category_label": "Κατηγορία",
-    "all_categories": "Όλες οι Κατηγορίες",
-    "emptyTitle": "Δεν βρέθηκαν πρότυπα",
-    "emptyDescription": "Δοκιμάστε να αλλάξετε τους όρους αναζήτησης ή τα φίλτρα κατηγορίας."
+    "title": "SMS Templates",
+    "description": "Manage your SMS message templates",
+    "search": "Search templates...",
+    "categories": {
+      "all": "All",
+      "coffeeshops": "Coffee Shops",
+      "gyms": "Gyms",
+      "fashionstores": "Fashion Stores",
+      "beauty": "Beauty",
+      "restaurants": "Restaurants"
+    },
+    "filters": {
+      "searchPlaceholder": "Search templates..."
+    },
+    "actions": {
+      "create": "Create Template",
+      "edit": "Edit",
+      "delete": "Delete",
+      "use": "Use Template"
+    },
+    "empty": {
+      "title": "No templates found",
+      "description": "Try adjusting your search or category filters to find templates",
+      "ctaText": "View All Templates"
+    }
   },
   "campaigns": {
     "title": "SMS Campaigns",
@@ -137,16 +156,16 @@
     "show": "Show"
   },
   "automations": {
-    "title": "Αυτοματισμοί",
-    "edit": "Επεξεργασία",
-    "trigger_label": "Κανόνας",
-    "sent": "Απεστάλησαν",
-    "converted": "Μετατράπηκαν",
-    "search_placeholder": "Αναζήτηση αυτοματισμών...",
-    "edit_title": "Επεξεργασία Αυτοματισμού",
-    "edit_desc": "Κάντε αλλαγές στον αυτοματισμό σας εδώ.",
-    "message_label": "Μήνυμα",
-    "generate_with_ai": "Δημιουργία με AI"
+    "title": "Automations",
+    "edit": "Edit",
+    "trigger_label": "Trigger",
+    "sent": "Sent",
+    "converted": "Converted",
+    "search_placeholder": "Search automations...",
+    "edit_title": "Edit Automation",
+    "edit_desc": "Make changes to your automation here.",
+    "message_label": "Message",
+    "generate_with_ai": "Generate with AI"
   },
   "errors": {
     "pageNotFound": "Oops! Page not found",
@@ -159,6 +178,9 @@
     "selectLanguage": "Select Language"
   },
   "createCampaign": {
+    "notifications": {
+      "templateLoaded": "Template '{{name}}' loaded successfully!"
+    },
     "editTitle": "Edit Campaign",
     "title": "Create Campaign",
     "description": "Build and send targeted SMS campaigns to your customers",
@@ -298,6 +320,25 @@
     "viewAll": "View All",
     "success": "Success",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "use": "Use",
+    "preview": "Preview"
+  },
+  "recurring": {
+    "title": "Make this a recurring campaign",
+    "selectDays": "Select Days",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "endDate": "End Date (Optional)",
+    "forever": "Leave empty to run forever",
+    "selectDayError": "Please select at least one day for recurring campaigns",
+    "scheduleRecurringButton": "Schedule Recurring"
   }
 }

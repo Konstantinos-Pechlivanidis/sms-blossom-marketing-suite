@@ -49,10 +49,10 @@ export interface RecentCampaign {
 }
 
 export interface Template {
-  lang: 'en' | 'el';
+  lang: 'en' | 'gr';
   id: string;
   name: string;
-  category: 'Sales' | 'Holidays' | 'Announcements' | 'Customer Care';
+  category: 'Restaurants' | 'Gyms' | 'Fashion Stores' | 'Beauty' | 'Coffee Shops' | 'Sales' | 'Holidays' | 'Announcements' | 'Customer Care';
   preview: string;
   tags: string[];
 }
