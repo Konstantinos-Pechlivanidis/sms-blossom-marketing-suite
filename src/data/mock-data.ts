@@ -1,4 +1,5 @@
 import type { KPIData, RecentCampaign, Template, CreditPack, Campaign, User, Contact, CustomView } from '@/types';
+import type { Automation } from '@/types/automation';
 
 export const kpiData: KPIData[] = [
   {
@@ -332,4 +333,82 @@ export const customViews: CustomView[] = [
     name: 'Birthday Club',
     filters: {}
   }
+];
+
+export const mockAutomations: Automation[] = [
+  {
+    id: 'welcome_en',
+    title: 'Welcome Series',
+    description: 'Send a warm welcome message to new subscribers.',
+    trigger: 'New Subscriber',
+    message: "Hey {{name}}! Welcome to our family. Here's 10% off on your first order: WELCOME10",
+    active: true,
+    icon: 'Zap',
+    color: 'text-yellow-500',
+    bgColor: 'bg-yellow-500/10',
+    stats: {
+      sent: 1250,
+      converted: 320,
+    },
+  },
+  {
+    id: 'abandoned_cart_en',
+    title: 'Abandoned Cart',
+    description: 'Remind customers about items left in their cart.',
+    trigger: 'Cart Abandoned after 1 hour',
+    message: 'Still thinking about it? The items in your cart are waiting for you!',
+    active: true,
+    icon: 'ShoppingBag',
+    color: 'text-pink-500',
+    bgColor: 'bg-pink-500/10',
+    stats: {
+      sent: 850,
+      converted: 150,
+    },
+  },
+  {
+    id: 'birthday_greeting_en',
+    title: 'Birthday Greeting',
+    description: 'Delight customers with a special birthday offer.',
+    trigger: 'Customer\'s Birthday',
+    message: 'Happy Birthday {{name}}! Celebrate with 20% off just for you!',
+    active: false,
+    icon: 'Clock',
+    color: 'text-orange-500',
+    bgColor: 'bg-orange-500/10',
+    stats: {
+      sent: 430,
+      converted: 95,
+    },
+  },
+    {
+    id: 'win_back_campaign_en',
+    title: 'Win-back Campaign',
+    description: 'Re-engage inactive customers with a special offer.',
+    trigger: '90 days since last purchase',
+    message: 'We miss you, {{name}}! Here\'s a special 15% discount to welcome you back.',
+    active: true,
+    icon: 'Repeat',
+    color: 'text-green-500',
+    bgColor: 'bg-green-500/10',
+    stats: {
+      sent: 120,
+      converted: 18,
+    },
+  },
+  {
+    id: 'vip_reward_en',
+    title: 'VIP Reward',
+    description: 'Send an exclusive offer to your most loyal customers.',
+    trigger: 'Total spend exceeds $500',
+    message: 'You\'re a VIP, {{name}}! As a thank you, enjoy free shipping on your next order.',
+    active: true,
+    icon: 'Award',
+    color: 'text-purple-500',
+    bgColor: 'bg-purple-500/10',
+    stats: {
+      sent: 95,
+      converted: 45,
+    },
+  },
 ];

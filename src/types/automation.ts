@@ -1,3 +1,4 @@
+// src/types/automations.ts
 import { LucideIcon } from 'lucide-react';
 
 export interface AutomationStats {
@@ -6,13 +7,13 @@ export interface AutomationStats {
 }
 
 export interface Automation {
-  id: number;
+  id: string; // Changed to string for better compatibility with i18next keys
   title: string;
   description: string;
   trigger: string;
   message: string;
   active: boolean;
-  icon: LucideIcon;
+  icon: string; // The name of the icon component as a string
   color: string;
   bgColor: string;
   stats: AutomationStats;

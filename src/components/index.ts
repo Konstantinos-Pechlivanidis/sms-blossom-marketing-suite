@@ -1,23 +1,40 @@
-// Component Barrel Exports
-export { PageLoader } from './common/PageLoader';
-export { SearchInput } from './common/SearchInput';
-export { StatusBadge } from './common/StatusBadge';
-export { StatsCard } from './common/StatsCard';
-export { PageHeader } from './common/PageHeader';
-export { LanguageSwitcher } from './common/LanguageSwitcher';
+// src/components/index.ts
 
-// Layout Components
-export { Header } from './layout/Header';
-export { Sidebar } from './layout/Sidebar';
+// Common components
+export * from './common/StatusBadge';
+export * from './common/StatsCard';
+export * from './common/SearchInput';
+export * from './common/PageLoader';
+export * from './common/PageHeader';
+export * from './common/LanguageSwitcher';
+export * from './common/EmptyState';
 
-// Feature-specific Components
-export { TemplateCard } from './templates/TemplateCard';
-export { TemplateFilters } from './templates/TemplateFilters';
-export { CreditPackCard } from './credits/CreditPackCard';
-export { StepProgress } from './campaign/StepProgress';
-export { default as EditAutomationModal } from './EditAutomationModal';
+// Dashboard components
+export * from './dashboard/WelcomeSection';
+export * from './dashboard/RecentCampaigns';
+export * from './dashboard/InsightsWidget';
 
-// Dashboard Components
-export { InsightsWidget } from './dashboard/InsightsWidget';
-export { RecentCampaigns } from './dashboard/RecentCampaigns';
-export { WelcomeSection } from './dashboard/WelcomeSection';
+// Campaign components
+export * from './campaign/StepProgress';
+
+// Template components
+export * from './templates/TemplateCard';
+export * from './templates/TemplateFilters';
+
+// Credits components
+export * from './credits/CreditPackCard';
+
+// Contact components
+export * from './contacts/AddContactForm';
+export * from './contacts/EditContactForm';
+export * from './contacts/ViewContactDetails';
+
+// Automations components
+export * from './automations/AutomationFilters';
+
+// Layout components
+export * from './layout/Header';
+export * from './layout/Sidebar';
+
+// NEW - Correctly exporting the modal
+export * from './EditAutomationModal';

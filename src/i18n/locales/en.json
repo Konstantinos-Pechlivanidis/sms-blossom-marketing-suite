@@ -147,7 +147,6 @@
       "lastInteraction": "Last Interaction",
       "notes": "Notes",
       "addDescription": "Fill in the details to add a new contact to your list."
-
     },
     "empty": {
       "title": "No contacts found",
@@ -156,22 +155,77 @@
     },
     "show": "Show"
   },
-  "common": {
-    "loading": "Loading...",
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
+  "automations": {
+    "title": "Automations",
     "edit": "Edit",
-    "create": "Create",
-    "search": "Search...",
-    "back": "Back",
-    "actions": "Actions",
-    "status": "Status",
-    "date": "Date",
-    "name": "Name",
-    "description": "Description",
-    "viewAll": "View All",
-    "success": "Success"
+    "trigger_label": "Trigger",
+    "sent": "Sent",
+    "converted": "Converted",
+    "edit_title": "Edit Automation",
+    "edit_desc": "Make changes to your automation here. Click save when you're done.",
+    "message_label": "Message",
+    "list": [
+      {
+        "id": "birthday_promo_en",
+        "title": "Birthday Treat",
+        "description": "Automatically send a special offer on your customers' birthday to make them feel special.",
+        "trigger": "On customer's birthday",
+        "message": "Happy Birthday {{name}}! 🎂 Come celebrate with us and get a drink on the house! Show this QR code to redeem.",
+        "active": true,
+        "icon": "Clock",
+        "color": "text-orange-500",
+        "bgColor": "bg-orange-500/10",
+        "stats": { "sent": 430, "converted": 95 }
+      },
+      {
+        "id": "welcome_new_customer_en",
+        "title": "New Member Welcome",
+        "description": "Greet new customers who sign up and give them a reason to visit for the first time.",
+        "trigger": "New contact registration",
+        "message": "Hey {{name}}, welcome to the club! Get 15% off your first order with us. We can't wait to see you! Show this QR code to redeem.",
+        "active": true,
+        "icon": "Zap",
+        "color": "text-yellow-500",
+        "bgColor": "bg-yellow-500/10",
+        "stats": { "sent": 1250, "converted": 320 }
+      },
+      {
+        "id": "win_back_en",
+        "title": "We Miss You!",
+        "description": "Re-engage customers who haven't visited in a while with a friendly reminder and a special deal.",
+        "trigger": "60 days since last visit",
+        "message": "It's been a while, {{name}}! We miss you. Come back this week and enjoy a free coffee with any purchase. Show this QR code to redeem.",
+        "active": false,
+        "icon": "Repeat",
+        "color": "text-green-500",
+        "bgColor": "bg-green-500/10",
+        "stats": { "sent": 120, "converted": 18 }
+      },
+      {
+        "id": "vip_reward_en",
+        "title": "VIP Customer Reward",
+        "description": "Reward your most loyal customers to show them your appreciation and keep them coming back.",
+        "trigger": "After 10 visits",
+        "message": "You're a VIP, {{name}}! As a thank you for your loyalty, your next drink is on us. Show this QR code to redeem.",
+        "active": true,
+        "icon": "Award",
+        "color": "text-purple-500",
+        "bgColor": "bg-purple-500/10",
+        "stats": { "sent": 95, "converted": 45 }
+      },
+      {
+        "id": "happy_hour_en",
+        "title": "Happy Hour Push",
+        "description": "Boost traffic during quiet hours with a time-sensitive happy hour notification.",
+        "trigger": "On Tuesdays at 3:00 PM",
+        "message": "Happy Tuesday! 🍹 Get 1+1 on all cocktails for the next 2 hours. The perfect excuse for an after-work drink! Show this QR code to redeem.",
+        "active": false,
+        "icon": "MessageSquare",
+        "color": "text-blue-500",
+        "bgColor": "bg-blue-500/10",
+        "stats": { "sent": 55, "converted": 12 }
+      }
+    ]
   },
   "errors": {
     "pageNotFound": "Oops! Page not found",
@@ -321,6 +375,8 @@
     "name": "Name",
     "description": "Description",
     "viewAll": "View All",
-    "success": "Success"
+    "success": "Success",
+    "active": "Active",
+    "inactive": "Inactive"
   }
 }
