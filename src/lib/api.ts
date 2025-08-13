@@ -1,13 +1,12 @@
 import axios from 'axios';
-import { 
-  kpiData, 
-  recentCampaigns, 
-  englishTemplates, 
-  greekTemplates,
-  creditPacks, 
-  campaigns, 
-  currentUser, 
-  smsCredits 
+import {
+  kpiData,
+  recentCampaigns,
+  mockTemplates,
+  creditPacks,
+  campaigns,
+  currentUser,
+  smsCredits
 } from '@/data/mock-data';
 
 // Import all necessary types from the centralized types file.
@@ -43,9 +42,6 @@ export const apiService = {
 
   async createCampaign(campaign: Omit<Campaign, 'id'>): Promise<Campaign> {
     await delay();
-    // This is the correct implementation.
-    // It combines the incoming `campaign` data with default values for all
-    // required properties to ensure a complete Campaign object is returned.
     return {
       id: Date.now(),
       name: campaign.name || 'New Campaign',
@@ -72,13 +68,12 @@ export const apiService = {
     await delay();
   },
 
-  // Templates
-  async getTemplates(language: string = 'en'): Promise<Template[]> {
+  // CORRECTED Templates API
+  async getTemplates(): Promise<Template[]> {
     await delay();
-    if (language === 'gr') {
-      return greekTemplates;
-    }
-    return englishTemplates;
+    // The logic is now simpler: it returns the entire list.
+    // The frontend will handle filtering by category or search term.
+    return mockTemplates;
   },
 
   // Credit Packs

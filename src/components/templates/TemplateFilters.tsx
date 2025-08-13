@@ -1,61 +1,52 @@
-// File: src/components/templates/TemplateFilters.tsx
-
-import { SearchInput, SearchInputProps } from "@/components/common/SearchInput";
-import { useTranslation } from "react-i18next";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Search } from 'lucide-react';
 
 interface TemplateFiltersProps {
   searchTerm: string;
-  onSearchChange: SearchInputProps['onChange'];
+  onSearchChange: (term: string) => void;
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
-  // This prop now correctly accepts an array of objects with value and label.
-  categories: { value: string; label: string }[];
+  categories: string[];
 }
 
-export const TemplateFilters = ({
+export const TemplateFilters: React.FC<TemplateFiltersProps> = ({
   searchTerm,
   onSearchChange,
   selectedCategory,
   onCategoryChange,
   categories,
-}: TemplateFiltersProps) => {
+}) => {
   const { t } = useTranslation();
 
-  const handleCategoryChange = (categoryValue: string) => {
-    // When a category is clicked, pass the internal 'value' to the parent component.
-    onCategoryChange(categoryValue);
-  };
-
   return (
-    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <SearchInput
-        placeholder={t('templates.filters.searchPlaceholder')}
-        value={searchTerm}
-        onChange={onSearchChange}
-      />
-      <div className="md:ml-auto">
-        <ToggleGroup
-          type="single"
-          value={selectedCategory}
-          onValueChange={handleCategoryChange}
-          className="flex-wrap justify-start md:justify-end"
-        >
-          {categories.map((category) => (
-            <ToggleGroupItem
-              key={category.value}
-              value={category.value}
-              aria-label={`Filter by ${category.label}`}
-              className={cn(
-                "px-4 text-sm whitespace-nowrap",
-                selectedCategory === category.value && "bg-primary text-primary-foreground hover:bg-primary"
-              )}
-            >
-              {category.label}
-            </ToggleGroupItem>
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Category Filter */}
+      <Select value={selectedCategory} onValueChange={onCategoryChange}>
+        <SelectTrigger className="w-full sm:w-[200px] rounded-full">
+          <SelectValue placeholder={t('templates.category_label')} />
+        </SelectTrigger>
+        <SelectContent>
+          {categories.map(category => (
+            <SelectItem key={category} value={category}>
+              {category === 'all' ? t('templates.all_categories') : category}
+            </SelectItem>
           ))}
-        </ToggleGroup>
+        </SelectContent>
+      </Select>
+
+      {/* Search Input */}
+      <div className="relative w-full sm:w-auto sm:max-w-xs">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input
+          type="search"
+          placeholder={t('templates.search_placeholder')}
+          value={searchTerm}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="pl-9 rounded-full"
+        />
       </div>
     </div>
   );

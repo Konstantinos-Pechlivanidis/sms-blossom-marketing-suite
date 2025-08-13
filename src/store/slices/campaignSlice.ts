@@ -184,7 +184,17 @@ const campaignSlice = createSlice({
     },
     generateAiMessage: (state, action: PayloadAction<string>) => {
       state.currentCampaign.aiMessage = action.payload;
-    }
+    },
+    setCampaignFromTemplate: (state, action: PayloadAction<{ name: string; message: string }>) => {
+      state.currentCampaign.name = action.payload.name;
+      state.currentCampaign.message = action.payload.message;
+    },
+    updateCurrentCampaign: (state, action: PayloadAction<Partial<Campaign>>) => {
+      state.currentCampaign = { ...state.currentCampaign, ...action.payload };
+    },
+    resetCurrentCampaign: (state) => {
+      state.currentCampaign = initialState.currentCampaign;
+    },
   },
 });
 

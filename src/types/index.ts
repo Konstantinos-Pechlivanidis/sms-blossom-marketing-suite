@@ -1,49 +1,15 @@
-// Global Type Definitions
 export interface User {
   id: string;
   name: string;
   email: string;
-  phone: string;
-}
-
-export interface Campaign {
-  id: number;
-  name: string;
-  message: string;
-  status: 'Draft' | 'Sent' | 'Scheduled' | 'sent' | 'scheduled' | 'draft' | 'failed';
-  recipients: number;
-  date?: string;
-  time?: string;
-  conversions: number;
-  conversionRate: string;
-  sent?: string;
-}
-
-export interface RecentCampaign {
-  name: string;
-  status: 'sent' | 'scheduled' | 'draft' | 'failed';
-  sent: string;
-  recipients: number;
-  conversions: number;
-}
-
-export interface Template {
-  id: number;
-  title: string;
-  message: string;
-  category: string;
-  tags: string[];
-  conversionRate: string;
-  testimonial: string;
-  rating: number;
-  highlight?: boolean;
+  businessName?: string;
 }
 
 export interface CreditPack {
   id: string;
   title: string;
   credits: number;
-  price: string;
+  price: number;
   description: string;
   features: string[];
   popular: boolean;
@@ -59,7 +25,61 @@ export interface KPIData {
   color: string;
 }
 
-export type StatusType = 'sent' | 'scheduled' | 'draft' | 'failed' | 'active' | 'inactive';
+export type CampaignStatus = 'Draft' | 'Sent' | 'Scheduled' | 'Failed';
+
+export interface Campaign {
+  id: number;
+  name: string;
+  message: string;
+  status: CampaignStatus;
+  recipients: number;
+  date: string;
+  time: string;
+  conversions: number;
+  conversionRate: string;
+  sent: string;
+}
+
+export interface RecentCampaign {
+  name: string;
+  sent: string;
+  recipients: number;
+  conversions: string;
+  status: 'sent' | 'draft' | 'scheduled' | 'failed';
+}
+
+export interface Template {
+  lang: 'en' | 'el';
+  id: string;
+  name: string;
+  category: 'Sales' | 'Holidays' | 'Announcements' | 'Customer Care';
+  preview: string;
+  tags: string[];
+}
+
+export interface Contact {
+  id: string;
+  name: string;
+  phone: string;
+  email?: string;
+  gender: 'male' | 'female' | 'other';
+  isVip: boolean;
+  tags: string[];
+  lastInteraction: string;
+  conversions: number;
+  joinDate: string;
+  notes?: string;
+}
+
+export interface CustomView {
+  id: string;
+  name: string;
+  filters: {
+    gender?: 'male' | 'female' | 'other';
+    isVip?: boolean;
+    tags?: string[];
+  };
+}
 
 export interface SearchInputProps {
   placeholder?: string;
@@ -70,31 +90,5 @@ export interface SearchInputProps {
 
 export interface StatusBadgeProps {
   status: string;
-  variant?: 'default' | 'outline' | 'secondary' | 'destructive';
   className?: string;
-}
-
-// Contact and CustomView type definitions
-export interface Contact {
-  id: string;
-  name: string;
-  phone: string;
-  email?: string;
-  gender: 'male' | 'female';
-  isVip: boolean;
-  tags: string[];
-  lastInteraction: string;
-  conversions: number;
-  joinDate?: string;
-  notes?: string;
-}
-
-export interface CustomView {
-  id: string;
-  name: string;
-  filters: {
-    gender?: 'male' | 'female';
-    isVip?: boolean;
-    tags?: string[];
-  };
 }

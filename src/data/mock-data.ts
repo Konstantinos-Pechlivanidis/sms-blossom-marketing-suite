@@ -1,414 +1,292 @@
-import type { KPIData, RecentCampaign, Template, CreditPack, Campaign, User, Contact, CustomView } from '@/types';
-import type { Automation } from '@/types/automation';
+import { KPIData, RecentCampaign, Template, CreditPack, Campaign, User, Contact, CustomView } from '@/types';
+import { Automation } from '@/types/automation';
+
+export const currentUser: User = {
+  id: 'user-1a2b3c',
+  name: 'Nikos Papadopoulos',
+  email: 'nikos.p@thegroovebar.gr',
+  businessName: 'The Groove Bar',
+};
+
+export const smsCredits: number = 2450;
 
 export const kpiData: KPIData[] = [
   {
-    title: "Total Campaigns Sent",
-    value: "247",
-    change: "+12%",
-    changeType: "positive",
-    icon: "Send",
-    color: "text-primary"
+    title: 'Total Sent',
+    value: '12,540',
+    change: '+15.3%',
+    changeType: 'positive',
+    icon: 'Send',
+    color: 'text-primary',
   },
   {
-    title: "Avg Conversion Rate",
-    value: "18.4%",
-    change: "+3.2%",
-    changeType: "positive",
-    icon: "TrendingUp",
-    color: "text-success"
+    title: 'Conversion Rate',
+    value: '4.8%',
+    change: '+2.1%',
+    changeType: 'positive',
+    icon: 'TrendingUp',
+    color: 'text-green-500',
   },
   {
-    title: "Active Contacts",
-    value: "2,847",
-    change: "+156",
-    changeType: "positive",
-    icon: "Users",
-    color: "text-info"
+    title: 'New Subscribers',
+    value: '289',
+    change: '+32',
+    changeType: 'positive',
+    icon: 'Users',
+    color: 'text-blue-500',
   },
   {
-    title: "Scheduled Campaigns",
-    value: "12",
-    change: "3 today",
-    changeType: "neutral",
-    icon: "Calendar",
-    color: "text-warning"
-  }
+    title: 'Campaigns Sent',
+    value: '42',
+    change: '-2',
+    changeType: 'negative',
+    icon: 'Calendar',
+    color: 'text-orange-500',
+  },
 ];
 
 export const recentCampaigns: RecentCampaign[] = [
   {
-    name: "Weekend Special - 30% Off",
-    status: "sent",
-    sent: "2 hours ago",
-    recipients: 1247,
-    conversions: 23
+    name: 'Weekend Cocktail Nights',
+    sent: 'Sent on Aug 08, 2025',
+    recipients: 1200,
+    conversions: '78',
+    status: 'sent',
   },
   {
-    name: "New Arrivals Alert",
-    status: "scheduled",
-    sent: "Tomorrow 9:00 AM",
-    recipients: 2108,
-    conversions: 0
+    name: 'Mid-Week Coffee Boost',
+    sent: 'Sent on Aug 05, 2025',
+    recipients: 950,
+    conversions: '45',
+    status: 'sent',
   },
-  {
-    name: "Birthday Rewards",
-    status: "sent",
-    sent: "Yesterday",
-    recipients: 89,
-    conversions: 12
-  }
-];
-
-export const englishTemplates: Template[] = [
-  {
-    id: 1,
-    title: "Weekend Flash Sale",
-    category: "Fashion Stores",
-    message: "🎉 FLASH SALE! 50% off everything this weekend only! Use code WEEKEND50. Shop now: [link]",
-    tags: ["sale", "weekend", "fashion"],
-    conversionRate: "32.1%",
-    testimonial: "Our best performing urgency template for flash sales",
-    rating: 4.9,
-    highlight: false,
-  },
-  {
-    id: 2,
-    title: "New Member Welcome",
-    category: "Gyms",
-    message: "Welcome to FitLife! 💪 Your first personal training session is FREE. Book now: [link]",
-    tags: ["welcome", "fitness", "free"],
-    conversionRate: "24.5%",
-    testimonial: "This template increased our new customer retention by 40%",
-    rating: 4.8,
-    highlight: false,
-  },
-  {
-    id: 3,
-    title: "Daily Coffee Special",
-    category: "Coffee Shops",
-    message: "☕ Today's special: Buy any large coffee, get a pastry FREE! Valid until 3 PM.",
-    tags: ["coffee", "special", "free"],
-    conversionRate: "21.3%",
-    testimonial: "Great for introducing new menu items to customers",
-    rating: 4.5,
-    highlight: false,
-  },
-  {
-    id: 4,
-    title: "Appointment Reminder",
-    category: "Beauty",
-    message: "Hi [Name]! Reminder: Your appointment is tomorrow at [time]. Reply CONFIRM or call us.",
-    tags: ["reminder", "appointment", "beauty"],
-    conversionRate: "15.8%",
-    testimonial: "Reduces no-shows significantly",
-    rating: 4.4,
-    highlight: false,
-  },
-  {
-    id: 5,
-    title: "Birthday Surprise",
-    category: "All",
-    message: "🎂 Happy Birthday [Name]! Enjoy 30% off your next visit as our gift to you! Code: BDAY30",
-    tags: ["birthday", "discount", "personal"],
-    conversionRate: "28.7%",
-    testimonial: "Customers love personal birthday messages",
-    rating: 4.7,
-    highlight: false,
-  },
-  {
-    id: 6,
-    title: "Lunch Rush Special",
-    category: "Restaurants",
-    message: "🍽️ Lunch Special: Any main dish + drink for $12.99! Available until 3 PM today.",
-    tags: ["lunch", "restaurant", "special"],
-    conversionRate: "26.4%",
-    testimonial: "Perfect for weekend promotions",
-    rating: 4.6,
-    highlight: false,
-  },
-  {
-    id: 7,
-    title: "Class Reminder",
-    category: "Gyms",
-    message: "Don't forget! Your yoga class starts in 1 hour. See you there! 🧘‍♀️",
-    tags: ["reminder", "class", "yoga"],
-    conversionRate: "18.2%",
-    testimonial: "Perfect for keeping members engaged and motivated",
-    rating: 4.6,
-    highlight: false,
-  },
-  {
-    id: 8,
-    title: "Seasonal Promotion",
-    category: "Fashion Stores",
-    message: "🍂 Fall Collection is here! 40% off all sweaters and jackets. Limited time!",
-    tags: ["seasonal", "fashion", "promotion"],
-    conversionRate: "35.2%",
-    testimonial: "Excellent for customer retention",
-    rating: 4.8,
-    highlight: true,
-  }
-];
-
-export const greekTemplates: Template[] = [
-  {
-    id: 9,
-    title: "Καλοκαιρινή Έκπτωση",
-    category: "Fashion Stores",
-    message: "☀️ Καλοκαιρινές Εκπτώσεις! 50% σε όλα τα είδη! Χρησιμοποιήστε τον κωδικό SUMMER50. Αγοράστε τώρα: [link]",
-    tags: ["έκπτωση", "καλοκαίρι", "μόδα"],
-    conversionRate: "35.5%",
-    testimonial: "Αυξήσαμε τις πωλήσεις κατά 150% - Μαρία, ιδιοκτήτρια μπουτίκ",
-    rating: 4.9,
-    highlight: false,
-  },
-  {
-    id: 10,
-    title: "Καλωσόρισμα Νέου Μέλους",
-    category: "Gyms",
-    message: "Καλωσόρισμα στη FitLife! 💪 Η πρώτη σας προπόνηση είναι ΔΩΡΕΑΝ. Κάντε κράτηση τώρα: [link]",
-    tags: ["καλωσόρισμα", "γυμναστήριο", "δωρεάν"],
-    conversionRate: "28.1%",
-    testimonial: "Ιδανικό για την απόκτηση νέων μελών - Γιάννης, manager γυμναστηρίου",
-    rating: 4.8,
-    highlight: false,
-  },
-  {
-    id: 11,
-    title: "Καθημερινή Προσφορά Καφέ",
-    category: "Coffee Shops",
-    message: "☕ Σημερινή προσφορά: Αγοράστε έναν μεγάλο καφέ, και πάρτε ένα γλυκό ΔΩΡΕΑΝ! Ισχύει μέχρι τις 3 μ.μ.",
-    tags: ["καφές", "προσφορά", "γλυκό"],
-    conversionRate: "23.9%",
-    testimonial: "Αυξάνει τις απογευματινές πωλήσεις - Ελένη, ιδιοκτήτρια καφέ",
-    rating: 4.7,
-    highlight: false,
-  },
-  {
-    id: 12,
-    title: "Υπενθύμιση Ραντεβού",
-    category: "Beauty",
-    message: "Γεια σας [Name]! Υπενθύμιση: Το ραντεβού σας είναι αύριο στις [time]. Απαντήστε ΕΠΙΒΕΒΑΙΩΣΗ ή καλέστε μας.",
-    tags: ["υπενθύμιση", "ραντεβού", "ομορφιά"],
-    conversionRate: "17.4%",
-    testimonial: "Μειώνει σημαντικά τις ακυρώσεις - Λίνα, ιδιοκτήτρια κομμωτηρίου",
-    rating: 4.6,
-    highlight: false,
-  },
-  {
-    id: 13,
-    title: "Γενέθλια Έκπληξη",
-    category: "All",
-    message: "� Χρόνια Πολλά [Name]! Απολαύστε 30% έκπτωση στην επόμενη επίσκεψή σας ως δώρο από εμάς! Κωδικός: BDAY30",
-    tags: ["γενέθλια", "έκπτωση", "προσωπική"],
-    conversionRate: "31.2%",
-    testimonial: "Οι πελάτες λατρεύουν τα προσωπικά μηνύματα γενεθλίων",
-    rating: 4.8,
-    highlight: true,
-  }
-];
-
-
-export const creditPacks: CreditPack[] = [
-  {
-    id: "starter",
-    title: "Starter Pack",
-    credits: 100,
-    price: "€3.99",
-    description: "Perfect for small campaigns",
-    features: ["100 SMS messages", "Basic analytics", "24/7 support"],
-    popular: false
-  },
-  {
-    id: "business",
-    title: "Business Pack",
-    credits: 500,
-    price: "€14.99",
-    description: "Best value for growing businesses",
-    features: ["500 SMS messages", "Advanced analytics", "Priority support", "5% bonus credits"],
-    popular: true,
-    originalPrice: "€19.95"
-  },
-  {
-    id: "enterprise",
-    title: "Enterprise Pack",
-    credits: 1000,
-    price: "€27.99",
-    description: "For high-volume campaigns",
-    features: ["1,000 SMS messages", "Premium analytics", "Dedicated support", "10% bonus credits"],
-    popular: false,
-    originalPrice: "€39.99"
-  }
 ];
 
 export const campaigns: Campaign[] = [
   {
     id: 1,
-    name: "Weekend Special - 30% Off",
-    status: "Sent",
-    sent: "2 hours ago",
-    recipients: 1247,
-    conversions: 23,
-    conversionRate: "1.8%",
-    message: "🎉 Weekend Special! Get 30% off all items. Use code WEEKEND30. Limited time offer!",
-    date: "2024-01-15",
-    time: "10:30 AM"
+    name: 'Weekend Cocktail Nights',
+    message: 'Kick off your weekend at The Groove Bar! 🍹 Special 2-for-1 on all cocktails Friday & Saturday after 9 PM. Show this QR to redeem.',
+    status: 'Sent',
+    recipients: 1200,
+    conversions: 78,
+    conversionRate: '6.5%',
+    sent: 'Aug 08, 2025',
+    date: '2025-08-08',
+    time: '18:00',
   },
   {
     id: 2,
-    name: "New Arrivals Alert",
-    status: "Scheduled",
-    sent: "Tomorrow 9:00 AM",
-    recipients: 2108,
+    name: 'September Live Music Event',
+    message: 'Get ready! 🎶 Live acoustic session this Saturday at The Groove Bar. Free entry! Bring your friends for a great night out.',
+    status: 'Scheduled',
+    recipients: 1500,
     conversions: 0,
-    conversionRate: "0%",
-    message: "🆕 New arrivals are here! Check out our latest collection. Shop now for early bird discounts!",
-    date: "2024-01-16",
-    time: "09:00 AM"
+    conversionRate: '0%',
+    sent: 'N/A',
+    date: '2025-09-06',
+    time: '20:00',
+  },
+];
+
+export const mockTemplates: Template[] = [
+  // --- Ελληνικά Πρότυπα ---
+  {
+    lang: 'el',
+    id: 'flash_sale_01_gr',
+    name: 'Flash Sale 24 Ωρών',
+    category: 'Sales',
+    preview: '💥 FLASH SALE για 24 ώρες! 💥 -50% σε ΟΛΑ! Χρησιμοποίησε τον κωδικό FLASH50 στο ταμείο. Μην το χάσεις!',
+    tags: ['προσφορά', 'έκπτωση', 'επείγον']
   },
   {
-    id: 3,
-    name: "Birthday Rewards",
-    status: "Sent",
-    sent: "Yesterday",
-    recipients: 89,
-    conversions: 12,
-    conversionRate: "13.5%",
-    message: "🎂 Happy Birthday! Enjoy a special 25% discount as our gift to you. Code: BIRTHDAY25",
-    date: "2024-01-14",
-    time: "02:00 PM"
+    lang: 'el',
+    id: 'bogo_offer_01_gr',
+    name: 'Προσφορά 1+1 Δώρο',
+    category: 'Sales',
+    preview: '☕️ Αγόρασε έναν καφέ και πάρε άλλον έναν ΔΩΡΟ! Έλα με την παρέα σου και κερδίστε. Ισχύει μέχρι αύριο. Δείξε το QR code.',
+    tags: ['bogo', 'προσφορά', 'καφές']
   },
   {
-    id: 4,
-    name: "Flash Sale Alert",
-    status: "Draft",
-    recipients: 0,
-    conversions: 0,
-    conversionRate: "0%",
-    message: "⚡ FLASH SALE! 50% off everything for the next 2 hours only! Don't miss out!"
+    lang: 'el',
+    id: 'holiday_greeting_01_gr',
+    name: 'Ευχές Γιορτών',
+    category: 'Holidays',
+    preview: '🎄 Χρόνια Πολλά & Καλές Γιορτές από όλη την ομάδα μας! Σας ευχαριστούμε για την προτίμησή σας! ✨',
+    tags: ['χριστούγεννα', 'γιορτές']
+  },
+
+  // --- Αγγλικά Πρότυπα ---
+  {
+    lang: 'en',
+    id: 'flash_sale_01_en',
+    name: '24-Hour Flash Sale',
+    category: 'Sales',
+    preview: '💥 24-HOUR FLASH SALE! 💥 50% off EVERYTHING! Use code: FLASH50 at checkout. Don\'t miss out!',
+    tags: ['sale', 'offer', 'urgent']
+  },
+  {
+    lang: 'en',
+    id: 'new_arrivals_01_en',
+    name: 'New Collection Arrived',
+    category: 'Announcements',
+    preview: '🚀 IT\'S HERE! Our new collection just dropped. Be the first to discover it! Show this QR code in-store.',
+    tags: ['new', 'collection', 'product']
+  },
+  {
+    lang: 'en',
+    id: 'customer_feedback_01_en',
+    name: 'Feedback Request',
+    category: 'Customer Care',
+    preview: 'How was your experience? We\'d love to hear your thoughts! Your feedback helps us improve.',
+    tags: ['feedback', 'review', 'support']
   }
 ];
 
-export const currentUser: User = {
-  id: '1',
-  name: 'John Doe',
-  email: 'john@example.com',
-  phone: '+1 234 567 8900'
-};
 
-export const smsCredits: number = 2847;
+export const mockAutomations: Automation[] = [
+  {
+    lang: 'el',
+    id: "birthday_promo_gr",
+    storeOwnerId: "user-1a2b3c",
+    title: "Κέρασμα Γενεθλίων",
+    description: "Στείλτε αυτόματα μια ειδική προσφορά στα γενέθλια των πελατών σας.",
+    trigger: "Την ημέρα γενεθλίων του πελάτη",
+    message: "Χρόνια Πολλά {{name}}! 🎂 Γιόρτασε μαζί μας και πάρε ένα ποτό κερασμένο! Δείξε αυτό το QR code στο ταμείο.",
+    active: true,
+    icon: "Clock",
+    color: "text-orange-500",
+    bgColor: "bg-orange-500/10",
+    stats: { sent: 430, converted: 95 }
+  },
+  {
+    lang: 'el',
+    id: "nameday_promo_gr",
+    storeOwnerId: "user-1a2b3c",
+    title: "Κέρασμα Γιορτής",
+    description: "Στείλτε ευχές και μία προσφορά στην ονομαστική εορτή των πελατών σας.",
+    trigger: "Την ημέра ονομαστικής εορτής",
+    message: "Χρόνια Πολλά για τη γιορτή σου, {{name}}! Κερνάμε τον καφέ σου σήμερα! Δείξε αυτό το QR code στο ταμείο.",
+    active: true,
+    icon: "Award",
+    color: "text-purple-500",
+    bgColor: "bg-purple-500/10",
+    stats: { sent: 620, converted: 110 }
+  },
+  {
+    lang: 'en',
+    id: "birthday_promo_en",
+    storeOwnerId: "user-1a2b3c",
+    title: "Birthday Treat",
+    description: "Automatically send a special offer on your customers' birthday.",
+    trigger: "On customer's birthday",
+    message: "Happy Birthday {{name}}! 🎂 Come celebrate with us and get a drink on the house! Show this QR code to redeem.",
+    active: true,
+    icon: "Clock",
+    color: "text-orange-500",
+    bgColor: "bg-orange-500/10",
+    stats: { sent: 430, converted: 95 }
+  },
+  {
+    lang: 'en',
+    id: "welcome_new_customer_en",
+    storeOwnerId: "user-1a2b3c",
+    title: "New Member Welcome",
+    description: "Greet new customers and give them a reason to visit for the first time.",
+    trigger: "New contact registration",
+    message: "Hey {{name}}, welcome to the club! Get 15% off your first order with us. Show this QR code to redeem.",
+    active: true,
+    icon: "Zap",
+    color: "text-yellow-500",
+    bgColor: "bg-yellow-500/10",
+    stats: { sent: 1250, converted: 320 }
+  },
+];
+
+export const creditPacks: CreditPack[] = [
+  { 
+    id: 'pack_starter',
+    title: 'Starter Pack',
+    credits: 500,
+    price: 10,
+    description: 'Perfect for getting started and testing out your first few campaigns.',
+    features: ['500 SMS Credits', 'Basic Support', 'Standard Delivery'],
+    popular: false 
+  },
+  { 
+    id: 'pack_growth',
+    title: 'Growth Plan',
+    credits: 2500,
+    price: 45,
+    originalPrice: '€50',
+    description: 'Our most popular choice for growing businesses ready to engage more customers.',
+    features: ['2,500 SMS Credits', 'Priority Support', 'Advanced Analytics'],
+    popular: true 
+  },
+  { 
+    id: 'pack_pro',
+    title: 'Pro Business',
+    credits: 10000,
+    price: 150,
+    originalPrice: '€180',
+    description: 'For established businesses that need to reach a large audience regularly.',
+    features: ['10,000 SMS Credits', 'Dedicated Account Manager', 'Custom Integration Help'],
+    popular: false 
+  },
+];
 
 export const dummyContacts: Contact[] = [
-  { id: '1', name: 'Sarah Johnson', phone: '+1 (555) 123-4567', email: 'sarah.johnson@email.com', gender: 'female', isVip: true, tags: ['Regular Customer'], lastInteraction: 'Last Campaign: Dec 15', conversions: 8, joinDate: '2023-06-15', notes: 'Prefers evening campaigns' },
-  { id: '2', name: 'Mike Chen', phone: '+1 (555) 234-5678', email: 'mike.chen@email.com', gender: 'male', isVip: false, tags: ['New Customer'], lastInteraction: 'Last Campaign: Dec 10', conversions: 2, joinDate: '2023-11-20', notes: 'Interested in tech products' },
-  { id: '3', name: 'Emma Rodriguez', phone: '+1 (555) 345-6789', email: 'emma.rodriguez@email.com', gender: 'female', isVip: true, tags: ['VIP', 'Birthday Club'], lastInteraction: 'Last Campaign: Dec 18', conversions: 12, joinDate: '2023-01-10', notes: 'High-value customer, responds well to personalized offers' },
-  { id: '4', name: 'James Wilson', phone: '+1 (555) 456-7890', email: 'james.wilson@email.com', gender: 'male', isVip: false, tags: ['Gym Member'], lastInteraction: 'Last Campaign: Dec 5', conversions: 3, joinDate: '2023-08-22', notes: 'Fitness enthusiast' },
-  { id: '5', name: 'Lisa Park', phone: '+1 (555) 567-8901', email: 'lisa.park@email.com', gender: 'female', isVip: true, tags: ['VIP', 'Fashion Lover'], lastInteraction: 'Last Campaign: Dec 20', conversions: 15, joinDate: '2023-03-05', notes: 'Fashion trendsetter, loves exclusive deals' },
-  { id: '6', name: 'David Brown', phone: '+1 (555) 678-9012', email: 'david.brown@email.com', gender: 'male', isVip: false, tags: ['Coffee Regular'], lastInteraction: 'Last Campaign: Dec 12', conversions: 4, joinDate: '2023-09-18', notes: 'Coffee lover, morning person' },
-  { id: '7', name: 'Anna Martinez', phone: '+1 (555) 789-0123', email: 'anna.martinez@email.com', gender: 'female', isVip: true, tags: ['VIP', 'Beauty Services'], lastInteraction: 'Last Campaign: Dec 19', conversions: 9, joinDate: '2023-02-28', notes: 'Beauty and wellness focused' },
-  { id: '8', name: 'Tom Anderson', phone: '+1 (555) 890-1234', email: 'tom.anderson@email.com', gender: 'male', isVip: false, tags: ['Seasonal'], lastInteraction: 'Last Campaign: Nov 28', conversions: 1, joinDate: '2023-10-05', notes: 'Seasonal shopper' },
-  { id: '9', name: 'Rachel Green', phone: '+1 (555) 901-2345', email: 'rachel.green@email.com', gender: 'female', isVip: true, tags: ['VIP', 'High Spender'], lastInteraction: 'Last Campaign: Dec 21', conversions: 18, joinDate: '2023-01-15', notes: 'Premium customer, high lifetime value' },
-  { id: '10', name: 'Alex Kim', phone: '+1 (555) 012-3456', email: 'alex.kim@email.com', gender: 'male', isVip: false, tags: ['Tech Enthusiast'], lastInteraction: 'Last Campaign: Dec 8', conversions: 2, joinDate: '2023-11-12', notes: 'Tech savvy, likes gadgets' },
-  { id: '11', name: 'Sofia Gonzalez', phone: '+1 (555) 111-2222', email: 'sofia.gonzalez@email.com', gender: 'female', isVip: true, tags: ['VIP', 'Loyal Customer'], lastInteraction: 'Last Campaign: Dec 22', conversions: 11, joinDate: '2023-04-10', notes: 'Loyal customer, great referrer' },
-  { id: '12', name: 'Ryan O\'Connor', phone: '+1 (555) 222-3333', email: 'ryan.oconnor@email.com', gender: 'male', isVip: false, tags: ['Sports Fan'], lastInteraction: 'Last Campaign: Dec 7', conversions: 3, joinDate: '2023-07-25', notes: 'Sports enthusiast' },
-  { id: '13', name: 'Maya Patel', phone: '+1 (555) 333-4444', email: 'maya.patel@email.com', gender: 'female', isVip: true, tags: ['VIP', 'Wellness'], lastInteraction: 'Last Campaign: Dec 23', conversions: 14, joinDate: '2023-05-08', notes: 'Health and wellness focused' },
-  { id: '14', name: 'Chris Taylor', phone: '+1 (555) 444-5555', email: 'chris.taylor@email.com', gender: 'male', isVip: false, tags: ['Foodie'], lastInteraction: 'Last Campaign: Dec 11', conversions: 4, joinDate: '2023-06-30', notes: 'Food lover, restaurant deals' },
-  { id: '15', name: 'Nicole White', phone: '+1 (555) 555-6666', email: 'nicole.white@email.com', gender: 'female', isVip: true, tags: ['VIP', 'Fashion'], lastInteraction: 'Last Campaign: Dec 24', conversions: 16, joinDate: '2023-02-14', notes: 'Fashion forward, trend setter' },
-  { id: '16', name: 'Daniel Lee', phone: '+1 (555) 666-7777', email: 'daniel.lee@email.com', gender: 'male', isVip: false, tags: ['Student'], lastInteraction: 'Last Campaign: Dec 3', conversions: 1, joinDate: '2023-09-01', notes: 'Student discounts work well' },
-  { id: '17', name: 'Jessica Thompson', phone: '+1 (555) 777-8888', email: 'jessica.thompson@email.com', gender: 'female', isVip: true, tags: ['VIP', 'Premium'], lastInteraction: 'Last Campaign: Dec 25', conversions: 13, joinDate: '2023-03-20', notes: 'Premium service customer' },
-  { id: '18', name: 'Marcus Johnson', phone: '+1 (555) 888-9999', email: 'marcus.johnson@email.com', gender: 'male', isVip: false, tags: ['Casual Shopper'], lastInteraction: 'Last Campaign: Dec 6', conversions: 2, joinDate: '2023-10-15', notes: 'Casual buyer, price sensitive' },
-  { id: '19', name: 'Amanda Davis', phone: '+1 (555) 999-0000', email: 'amanda.davis@email.com', gender: 'female', isVip: true, tags: ['VIP', 'Exclusive'], lastInteraction: 'Last Campaign: Dec 26', conversions: 20, joinDate: '2023-01-05', notes: 'VIP customer, exclusive offers only' },
-  { id: '20', name: 'Kevin Zhang', phone: '+1 (555) 000-1111', email: 'kevin.zhang@email.com', gender: 'male', isVip: false, tags: ['New Member'], lastInteraction: 'Last Campaign: Dec 1', conversions: 1, joinDate: '2023-11-30', notes: 'New member, onboarding phase' }
+  {
+    id: 'contact-01',
+    name: 'Elena Georgiou',
+    phone: '+306987654321',
+    email: 'elena.g@email.com',
+    gender: 'female',
+    isVip: true,
+    tags: ['cocktails', 'live music'],
+    lastInteraction: '2025-08-08',
+    conversions: 5,
+    joinDate: '2024-01-15',
+  },
+  {
+    id: 'contact-02',
+    name: 'Yiannis Smirnis',
+    phone: '+306971234567',
+    gender: 'male',
+    isVip: false,
+    tags: ['coffee', 'afternoon'],
+    lastInteraction: '2025-08-05',
+    conversions: 2,
+    joinDate: '2024-03-22',
+  },
+  {
+    id: 'contact-03',
+    name: 'Maria Dimitriou',
+    phone: '+306945551234',
+    email: 'maria.d@email.com',
+    gender: 'female',
+    isVip: false,
+    tags: ['weekend', 'cocktails'],
+    lastInteraction: '2025-07-21',
+    conversions: 3,
+    joinDate: '2024-02-10',
+  },
 ];
 
 export const customViews: CustomView[] = [
   {
-    id: 'high-conversions',
-    name: 'High Conversions',
-    filters: {}
+    id: 'view-all',
+    name: 'All Contacts',
+    filters: {},
   },
   {
-    id: 'birthday-club',
-    name: 'Birthday Club',
-    filters: {}
-  }
-];
-
-export const mockAutomations: Automation[] = [
-  {
-    id: 'welcome_en',
-    title: 'Welcome Series',
-    description: 'Send a warm welcome message to new subscribers.',
-    trigger: 'New Subscriber',
-    message: "Hey {{name}}! Welcome to our family. Here's 10% off on your first order: WELCOME10",
-    active: true,
-    icon: 'Zap',
-    color: 'text-yellow-500',
-    bgColor: 'bg-yellow-500/10',
-    stats: {
-      sent: 1250,
-      converted: 320,
-    },
+    id: 'view-vip',
+    name: 'VIP Customers',
+    filters: { isVip: true },
   },
   {
-    id: 'abandoned_cart_en',
-    title: 'Abandoned Cart',
-    description: 'Remind customers about items left in their cart.',
-    trigger: 'Cart Abandoned after 1 hour',
-    message: 'Still thinking about it? The items in your cart are waiting for you!',
-    active: true,
-    icon: 'ShoppingBag',
-    color: 'text-pink-500',
-    bgColor: 'bg-pink-500/10',
-    stats: {
-      sent: 850,
-      converted: 150,
-    },
-  },
-  {
-    id: 'birthday_greeting_en',
-    title: 'Birthday Greeting',
-    description: 'Delight customers with a special birthday offer.',
-    trigger: 'Customer\'s Birthday',
-    message: 'Happy Birthday {{name}}! Celebrate with 20% off just for you!',
-    active: false,
-    icon: 'Clock',
-    color: 'text-orange-500',
-    bgColor: 'bg-orange-500/10',
-    stats: {
-      sent: 430,
-      converted: 95,
-    },
-  },
-    {
-    id: 'win_back_campaign_en',
-    title: 'Win-back Campaign',
-    description: 'Re-engage inactive customers with a special offer.',
-    trigger: '90 days since last purchase',
-    message: 'We miss you, {{name}}! Here\'s a special 15% discount to welcome you back.',
-    active: true,
-    icon: 'Repeat',
-    color: 'text-green-500',
-    bgColor: 'bg-green-500/10',
-    stats: {
-      sent: 120,
-      converted: 18,
-    },
-  },
-  {
-    id: 'vip_reward_en',
-    title: 'VIP Reward',
-    description: 'Send an exclusive offer to your most loyal customers.',
-    trigger: 'Total spend exceeds $500',
-    message: 'You\'re a VIP, {{name}}! As a thank you, enjoy free shipping on your next order.',
-    active: true,
-    icon: 'Award',
-    color: 'text-purple-500',
-    bgColor: 'bg-purple-500/10',
-    stats: {
-      sent: 95,
-      converted: 45,
-    },
+    id: 'view-live-music-fans',
+    name: 'Live Music Fans',
+    filters: { tags: ['live music'] },
   },
 ];

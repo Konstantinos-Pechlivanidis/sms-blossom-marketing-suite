@@ -1,4 +1,3 @@
-// src/types/automations.ts
 import { LucideIcon } from 'lucide-react';
 
 export interface AutomationStats {
@@ -7,13 +6,16 @@ export interface AutomationStats {
 }
 
 export interface Automation {
-  id: string; // Changed to string for better compatibility with i18next keys
+  lang: 'en' | 'el';         // Γλώσσα του προτύπου
+  id: string;                // Μοναδικό ID αυτοματισμού
+  storeOwnerId: string;      // ID του ιδιοκτήτη καταστήματος ( έτοιμο για το DB)
   title: string;
   description: string;
   trigger: string;
+  runTime?: string;           // Προαιρετικό πεδίο για την ώρα εκτέλεσης (π.χ. "3:00 PM")
   message: string;
   active: boolean;
-  icon: string; // The name of the icon component as a string
+  icon: string;
   color: string;
   bgColor: string;
   stats: AutomationStats;
