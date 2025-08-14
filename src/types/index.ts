@@ -55,6 +55,7 @@ export interface Template {
   category: 'Restaurants' | 'Gyms' | 'Fashion Stores' | 'Beauty' | 'Coffee Shops' | 'Sales' | 'Holidays' | 'Announcements' | 'Customer Care';
   preview: string;
   tags: string[];
+  conversionRate?: string;
 }
 
 export interface Contact {

@@ -96,7 +96,8 @@ export const greekTemplates: Template[] = [
     name: 'Αποκλειστική Προσφορά',
     category: 'Restaurants',
     preview: 'Μόνο για εσάς! Απολαύστε 20% έκπτωση στο επόμενο γεύμα σας. Δείξτε αυτό το μήνυμα για να εξαργυρώσετε την προσφορά σας!',
-    tags: ['προσφορά', 'έκπτωση', 'εστιατόριο']
+    tags: ['προσφορά', 'έκπτωση', 'εστιατόριο'],
+    conversionRate: '8.2%'
   },
   {
     lang: 'gr',
@@ -104,7 +105,8 @@ export const greekTemplates: Template[] = [
     name: 'Πρόκληση Fitness',
     category: 'Gyms',
     preview: 'Είστε έτοιμοι για την πρόκληση; Ελάτε στο γυμναστήριο αυτή την εβδομάδα και κερδίστε ένα δωρεάν ρόφημα πρωτεΐνης!',
-    tags: ['πρόκληση', 'γυμναστήριο', 'προσφορά']
+    tags: ['πρόκληση', 'γυμναστήριο', 'προσφορά'],
+    conversionRate: '12.5%'
   },
 ];
 
@@ -115,7 +117,8 @@ export const englishTemplates: Template[] = [
     name: 'Exclusive Offer',
     category: 'Restaurants',
     preview: 'Just for you! Enjoy a 20% discount on your next meal. Show this message to redeem your offer!',
-    tags: ['offer', 'discount', 'restaurant']
+    tags: ['offer', 'discount', 'restaurant'],
+    conversionRate: '9.1%'
   },
   {
     lang: 'en',
@@ -123,7 +126,8 @@ export const englishTemplates: Template[] = [
     name: 'Fitness Challenge',
     category: 'Gyms',
     preview: 'Are you up for the challenge? Come to the gym this week and get a free protein shake!',
-    tags: ['challenge', 'gym', 'offer']
+    tags: ['challenge', 'gym', 'offer'],
+    conversionRate: '11.8%'
   },
 ];
 

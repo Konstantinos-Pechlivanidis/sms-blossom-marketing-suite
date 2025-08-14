@@ -65,7 +65,9 @@
       "title": "No templates found",
       "description": "Try adjusting your search or category filters to find templates",
       "ctaText": "View All Templates"
-    }
+    },
+    "previewDescription": "See how your message will look on a customer's device.",
+    "performanceTitle": "Template Performance"
   },
   "campaigns": {
     "title": "SMS Campaigns",
