@@ -326,7 +326,8 @@
     "inactive": "Inactive",
     "use": "Use",
     "preview": "Preview",
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "logout":"Logout"
   },
   "recurring": {
     "title": "Make this a recurring campaign",
