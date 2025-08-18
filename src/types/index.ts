@@ -3,6 +3,8 @@ export interface User {
   name: string;
   email: string;
   businessName?: string;
+  phone?: string;
+  credits?: number;
 }
 
 export interface CreditPack {
@@ -92,4 +94,21 @@ export interface SearchInputProps {
 export interface StatusBadgeProps {
   status: string;
   className?: string;
+}
+
+export interface PasswordUpdatePayload {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface UserCredentials {
+  email: string;
+  password: string;
+}
+
+export interface UserRegistrationInfo {
+  name: string;
+  email: string;
+  password: string;
+  businessName?: string;
 }

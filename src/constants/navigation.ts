@@ -12,27 +12,25 @@ import {
 
 /**
  * Type definition for a single navigation item.
- * This ensures consistency and type safety across the application.
  */
 export type NavItem = {
-  name: string; // The translation key for the display name.
-  href: string; // The destination route.
+  label: string; // The translation key for the display name.
+  to: string; // The destination route.
   icon: LucideIcon; // The Lucide icon component.
   highlight?: boolean; // Optional flag to visually highlight the item.
 };
 
 /**
- * Centralized array of navigation items used by the Sidebar component.
- * Storing this data here decouples the component logic from the application's
- * navigation structure, making it easier to add, remove, or reorder links.
+ * Centralized array of navigation links used throughout the application,
+ * primarily by the Sidebar component.
  */
-export const navItems: NavItem[] = [
-  { name: "navigation.dashboard", href: "/", icon: LayoutDashboard },
-  { name: "navigation.templates", href: "/templates", icon: FileText },
-  { name: "navigation.createCampaign", href: "/campaigns/create", icon: PlusCircle },
-  { name: "navigation.campaigns", href: "/campaigns", icon: Send },
-  { name: "navigation.contacts", href: "/contacts", icon: Users },
-  { name: "navigation.automations", href: "/automations", icon: Zap },
-  { name: "navigation.buyCredits", href: "/credits", icon: CreditCard, highlight: true },
-  { name: "navigation.settings", href: "/settings", icon: Settings },
+export const navigationLinks: NavItem[] = [
+  { label: "navigation.dashboard", to: "/", icon: LayoutDashboard },
+  { label: "navigation.templates", to: "/templates", icon: FileText },
+  { label: "navigation.createCampaign", to: "/campaigns/create", icon: PlusCircle },
+  { label: "navigation.campaigns", to: "/campaigns", icon: Send },
+  { label: "navigation.contacts", to: "/contacts", icon: Users },
+  { label: "navigation.automations", to: "/automations", icon: Zap },
+  { label: "navigation.buyCredits", to: "/buy-credits", icon: CreditCard, highlight: true }, // Corrected route
+  { label: "navigation.settings", to: "/settings", icon: Settings },
 ];

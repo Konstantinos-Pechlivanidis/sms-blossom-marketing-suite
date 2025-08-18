@@ -14,42 +14,51 @@ import {
   useSidebar,
   SidebarHeader,
 } from "@/components/ui/sidebar";
-import { navItems } from "@/constants/navigation";
+import { navigationLinks } from "@/constants/navigation"; // Corrected import name
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useCurrentUser } from "@/hooks/api/useUser";
+import { useCurrentUser, useLogout } from "@/hooks/api/useUser"; // Import useLogout
+import { useAppDispatch } from "@/store/hooks";
+import { logout } from "@/store/slices/authSlice"; // Import logout action
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 
 /**
  * Renders the main application sidebar with modern styling and enhanced responsiveness.
- * The sidebar dynamically adjusts its appearance based on the `state` (expanded/collapsed),
- * providing a polished user experience for both desktop and mobile views.
  */
 export const Sidebar = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const { state } = useSidebar();
+  const dispatch = useAppDispatch();
+
   const { data: user, isLoading: userLoading } = useCurrentUser();
+  const logoutMutation = useLogout();
+
+  const handleLogout = () => {
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        dispatch(logout());
+        // User will be redirected to the login page via ProtectedRoute logic
+      },
+    });
+  };
 
   const isActive = (href: string) => {
-    // Correctly checks for the active route, handling the root path ("/") specially.
-    if (href === "/") {
-      return location.pathname === "/";
-    }
+    if (href === "/") return location.pathname === "/";
     return location.pathname.startsWith(href);
   };
+
+  const userInitials = user?.name.split(' ').map(n => n[0]).join('').toUpperCase() || 'U';
 
   return (
     <SidebarPrimitive
       className="border-r border-border"
-      collapsible="icon" // Use "icon" for a space-saving collapsed state.
+      collapsible="icon"
     >
       <SidebarHeader className="border-b border-border p-6">
         <div className="flex items-center space-x-2">
-          {/* Logo is always visible. */}
           <MessageSquare className="h-8 w-8 text-primary flex-shrink-0" />
-          {/* App name only appears when the sidebar is expanded. */}
           {state === "expanded" && (
             <span className="text-xl font-bold text-foreground">
               {t('app.name')}
@@ -60,28 +69,25 @@ export const Sidebar = () => {
 
       <SidebarContent>
         <SidebarGroup>
-          {/* Menu label is hidden in collapsed state for a cleaner look. */}
           {state === "expanded" && (
             <SidebarGroupLabel>{t('navigation.menu')}</SidebarGroupLabel>
           )}
           <SidebarGroupContent>
             <SidebarMenu>
-              {navItems.map((item) => (
-                <SidebarMenuItem key={item.name}>
+              {navigationLinks.map((item) => ( // Correctly use navigationLinks
+                <SidebarMenuItem key={item.label}>
                   <SidebarMenuButton
                     asChild
-                    isActive={isActive(item.href)}
-                    // Custom styling for active and highlighted items.
+                    isActive={isActive(item.to)}
                     className={cn({
-                      "bg-sidebar-accent border border-sidebar-border text-sidebar-accent-foreground": isActive(item.href),
+                      "bg-primary/10 text-primary font-semibold": isActive(item.to),
                       "bg-primary text-primary-foreground hover:bg-primary/90": item.highlight,
                     })}
-                    // Tooltips provide crucial context for icons in the collapsed state.
-                    tooltip={t(item.name)}
+                    tooltip={t(item.label)}
                   >
-                    <NavLink to={item.href}>
+                    <NavLink to={item.to}>
                       <item.icon className="h-5 w-5" />
-                      <span>{t(item.name)}</span>
+                      <span>{t(item.label)}</span>
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -108,8 +114,8 @@ export const Sidebar = () => {
               {state === "expanded" && (
                 <>
                   <Avatar className="size-10">
-                    <AvatarFallback className="bg-primary text-primary-foreground text-sm">
-                      {user?.name.split(' ').map(n => n[0]).join('') || 'U'}
+                    <AvatarFallback className="bg-primary text-primary-foreground text-sm font-semibold">
+                      {userInitials}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col min-w-0">
@@ -121,17 +127,15 @@ export const Sidebar = () => {
             </>
           )}
 
-          {/* Logout button adapts its size for collapsed state. */}
           <Button
             variant="ghost"
             size={state === "expanded" ? "default" : "icon"}
-            className={cn("ml-auto", state === "collapsed" && "h-8 w-8")}
-            onClick={() => {
-              // TODO: Add actual logout logic here
-            }}
+            className={cn("ml-auto text-muted-foreground hover:text-destructive", state === "collapsed" && "h-8 w-8")}
+            onClick={handleLogout}
+            disabled={logoutMutation.isPending} // Disable on click
           >
             <LogOut className="h-5 w-5" />
-            {state === "expanded" && <span className="ml-2">Logout</span>}
+            {state === "expanded" && <span className="ml-2">{t('common.logout', 'Logout')}</span>}
           </Button>
         </div>
       </SidebarFooter>

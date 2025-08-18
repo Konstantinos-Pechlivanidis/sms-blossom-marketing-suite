@@ -193,35 +193,47 @@ export const mockAutomations: Automation[] = [
 ];
 
 export const creditPacks: CreditPack[] = [
-  { 
-    id: 'pack_starter',
-    title: 'Starter Pack',
+  {
+    id: 'starter',
+    title: 'credits.packages.starter_pack', // KEY
     credits: 500,
     price: 10,
-    description: 'Perfect for getting started and testing out your first few campaigns.',
-    features: ['500 SMS Credits', 'Basic Support', 'Standard Delivery'],
-    popular: false 
+    description: 'credits.packageDescriptions.starter', // KEY
+    features: [
+      'credits.features.sms_credits', // KEY
+      'credits.features.basic_support',
+      'credits.features.standard_delivery'
+    ],
+    popular: false,
   },
-  { 
-    id: 'pack_growth',
-    title: 'Growth Plan',
+  {
+    id: 'professional',
+    title: 'credits.packages.growth_plan', // KEY
     credits: 2500,
     price: 45,
-    originalPrice: '€50',
-    description: 'Our most popular choice for growing businesses ready to engage more customers.',
-    features: ['2,500 SMS Credits', 'Priority Support', 'Advanced Analytics'],
-    popular: true 
+    originalPrice: "50",
+    description: 'credits.packageDescriptions.growth', // KEY
+    features: [
+        'credits.features.sms_credits',
+        'credits.features.priority_support',
+        'credits.features.fast_delivery'
+    ],
+    popular: true,
   },
-  { 
-    id: 'pack_pro',
-    title: 'Pro Business',
+  {
+    id: 'enterprise',
+    title: 'credits.packages.pro_business', // KEY
     credits: 10000,
     price: 150,
-    originalPrice: '€180',
-    description: 'For established businesses that need to reach a large audience regularly.',
-    features: ['10,000 SMS Credits', 'Dedicated Account Manager', 'Custom Integration Help'],
-    popular: false 
-  },
+    originalPrice: "200",
+    description: 'credits.packageDescriptions.pro', // KEY
+    features: [
+        'credits.features.sms_credits',
+        'credits.features.dedicated_support',
+        'credits.features.fast_delivery'
+    ],
+    popular: false,
+  }
 ];
 
 export const dummyContacts: Contact[] = [

@@ -24,7 +24,7 @@ export const ROUTES = {
   CREATE_CAMPAIGN: '/campaigns/create',
   CONTACTS: '/contacts',
   AUTOMATIONS: '/automations',
-  CREDITS: '/credits',
+  CREDITS: '/buy-credits',
   SETTINGS: '/settings',
   QR_SCAN: '/scan',
   UNSUBSCRIBE: '/unsubscribe',

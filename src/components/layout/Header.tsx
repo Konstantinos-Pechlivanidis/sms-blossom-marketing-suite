@@ -1,4 +1,4 @@
-import { Bell, User, MessageSquare, LogOut, Settings } from "lucide-react";
+import { Bell, User, MessageSquare, LogOut, Settings, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/common/LanguageSwitcher";
@@ -13,97 +13,101 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { useCurrentUser } from "@/hooks/api/useUser";
-import { useSMSCredits } from "@/hooks/api/useCredits";
+import { useCurrentUser, useLogout } from "@/hooks/api/useUser";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "@/store/hooks";
+import { logout } from "@/store/slices/authSlice";
 
 /**
  * Renders the main application header.
- * The header includes the logo, SMS credits display, notifications,
- * and a user profile dropdown, all designed to be fully responsive.
+ * The header is self-contained and fetches its own data.
  */
 export const Header = () => {
   const { t } = useTranslation();
-  const { data: user } = useCurrentUser();
-  const { data: smsCredits, isLoading: creditsLoading } = useSMSCredits();
+  const dispatch = useAppDispatch();
+  
+  // This component now fetches its own user data.
+  const { data: user, isLoading: isUserLoading } = useCurrentUser();
+  const logoutMutation = useLogout();
+
+  const handleLogout = () => {
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        dispatch(logout());
+      },
+    });
+  };
+  
+  const userInitials = user?.name.split(' ').map(n => n[0]).join('').toUpperCase() || 'U';
 
   return (
-    <header className="bg-card border-b border-border px-4 py-3 md:px-6 flex items-center justify-between shadow-sm">
-      {/* Left side: Logo/Sidebar Toggle and Credits */}
+    <header className="bg-card border-b border-border px-4 py-3 md:px-6 flex items-center justify-between shadow-soft-sm sticky top-0 z-40">
+      {/* Left side */}
       <div className="flex items-center space-x-2 md:space-x-4">
-        {/* Sidebar trigger is only visible on large screens when the sidebar is collapsed */}
         <SidebarTrigger className="lg:hidden" />
         
-        {/* App name/logo on mobile */}
         <div className="md:hidden flex items-center space-x-2">
           <MessageSquare className="h-6 w-6 text-primary" />
           <span className="text-lg font-bold text-foreground">{t('app.name')}</span>
         </div>
 
-        {/* SMS Credits Display. It's more prominent now and responsive. */}
-        <div className="hidden sm:flex items-center space-x-2 bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
-          <span className="text-sm font-medium text-primary/80">{t('header.smsCredits')}:</span>
-          {creditsLoading ? (
-            <Skeleton className="h-4 w-12 bg-primary/20" />
+        <Link to="/buy-credits" className="hidden sm:flex items-center space-x-2 bg-muted/50 hover:bg-muted px-3 py-1.5 rounded-full border border-border transition-colors cursor-pointer">
+          <Wallet className="h-4 w-4 text-primary" />
+          <span className="text-sm font-medium text-muted-foreground">{t('header.smsCredits')}:</span>
+          {isUserLoading ? (
+            <Skeleton className="h-5 w-12" />
           ) : (
             <span className="text-sm font-bold text-foreground">
-              {smsCredits?.toLocaleString() || '0'}
+              {user?.credits?.toLocaleString() ?? '0'}
             </span>
           )}
-        </div>
+        </Link>
       </div>
 
-      {/* Right side: Language, Notifications, User Menu */}
-      <div className="flex items-center space-x-2 md:space-x-4">
+      {/* Right side */}
+      <div className="flex items-center space-x-2 md:space-x-3">
         <LanguageSwitcher />
 
-        <Button variant="ghost" size="icon" className="relative h-8 w-8">
+        <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-full">
           <Bell className="h-5 w-5" />
-          {/* Notification badge */}
-          <span className="absolute top-0 right-0 h-2 w-2 bg-destructive rounded-full" />
+          <span className="absolute top-1.5 right-1.5 h-2 w-2 bg-destructive rounded-full border-2 border-card" />
         </Button>
 
-        {/* User Profile Dropdown Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full border border-border">
-              <Avatar className="h-8 w-8">
-                {/* Fallback with user's initials */}
-                <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                  {user?.name.split(' ').map(n => n[0]).join('') || 'U'}
+            <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
+              <Avatar className="h-9 w-9">
+                <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
+                  {isUserLoading ? <Skeleton className="h-full w-full rounded-full" /> : userInitials}
                 </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="w-56 rounded-2xl shadow-soft-xl">
             <DropdownMenuLabel>
-              {user ? (
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{user.name}</p>
-                  <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+              {isUserLoading ? (
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-3 w-40" />
                 </div>
               ) : (
-                <Skeleton className="h-4 w-32" />
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">{user?.name}</p>
+                  <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                </div>
               )}
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link to="/profile">
-                <User className="mr-2 h-4 w-4" />
-                <span>{t('navigation.profile')}</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem asChild className="cursor-pointer rounded-lg">
               <Link to="/settings">
                 <Settings className="mr-2 h-4 w-4" />
                 <span>{t('navigation.settings')}</span>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => {/* handle logout */}}>
+            <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer rounded-lg">
               <LogOut className="mr-2 h-4 w-4" />
-              <span>Logout</span>
+              <span>{t('common.logout', 'Logout')}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -172,7 +172,8 @@
   "errors": {
     "pageNotFound": "Oops! Page not found",
     "returnHome": "Return to Home",
-    "genericError": "Something went wrong"
+    "genericError": "Something went wrong",
+    "creditsFetchError": "Could not fetch credit packs. Please try again later."
   },
   "language": {
     "english": "English",
@@ -324,7 +325,8 @@
     "active": "Active",
     "inactive": "Inactive",
     "use": "Use",
-    "preview": "Preview"
+    "preview": "Preview",
+    "processing": "Processing..."
   },
   "recurring": {
     "title": "Make this a recurring campaign",
@@ -342,5 +344,44 @@
     "forever": "Leave empty to run forever",
     "selectDayError": "Please select at least one day for recurring campaigns",
     "scheduleRecurringButton": "Schedule Recurring"
+  },
+  "credits": {
+    "mainTitle": "Supercharge Your Outreach",
+    "mainDescription": "Choose a credit pack that fits your needs. Reach your customers instantly and drive results.",
+    "currentBalanceTitle": "Current Balance",
+    "balanceSubtitle": "Ready to use for any campaign.",
+    "priceSubtitle": "One-time payment",
+    "mostPopular": "Most Popular",
+    "packages": {
+      "starter": "Starter Pack",
+      "professional": "Professional",
+      "enterprise": "Enterprise"
+    },
+    "packageDescriptions": {
+      "starter": "Perfect for getting started and testing out your first few campaigns.",
+      "professional": "Best value for growing businesses with regular campaigns.",
+      "enterprise": "The ultimate solution for large-scale marketing and automation."
+    },
+    "features": {
+      "sms_credits": "{{count}} SMS Credits",
+      "basic_support": "Basic Support",
+      "priority_support": "Priority Support",
+      "dedicated_support": "Dedicated Account Manager",
+      "standard_delivery": "Standard Delivery",
+      "fast_delivery": "Fast-Track Delivery"
+    },
+    "actions": {
+      "buy": "Buy Now"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Have questions? We've got answers. If you need more help, feel free to contact our support team.",
+      "q1": "Do my credits expire?",
+      "a1": "Never! Your credits are valid forever and will be in your account as long as you need them.",
+      "q2": "What payment methods are accepted?",
+      "a2": "We accept all major credit and debit cards, including Visa, Mastercard, and American Express, processed securely through Stripe.",
+      "q3": "Can I upgrade my plan later?",
+      "a3": "Absolutely. You can purchase any credit pack at any time. Your new credits will simply be added to your existing balance."
+    }
   }
 }

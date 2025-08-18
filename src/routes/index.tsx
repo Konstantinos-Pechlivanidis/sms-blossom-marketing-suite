@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Suspense } from "react";
-import { AppLayout } from "@/layouts/AppLayout";
+import AppLayout from "@/layouts/AppLayout";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { PublicLayout } from "@/layouts/PublicLayout";
 import { ProtectedRoute } from "@/routes/ProtectedRoute";
@@ -27,10 +27,17 @@ export const AppRoutes = () => {
         <Route path="/scan/:trackingId" element={<PublicLayout><QRScan /></PublicLayout>} />
         <Route path="/unsubscribe" element={<PublicLayout><Unsubscribe /></PublicLayout>} />
         
+        {/* TODO: Add Auth Routes for Login/Register here */}
+        {/*
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
+        */}
+
         {/* Protected Routes with App Layout */}
         <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
           <Route index element={<Dashboard />} />
-          <Route path="dashboard" element={<Dashboard />} />
           <Route path="templates" element={<Templates />} />
           <Route path="campaigns">
             <Route index element={<Campaigns />} />
@@ -42,8 +49,8 @@ export const AppRoutes = () => {
           <Route path="settings" element={<Settings />} />
         </Route>
 
-        {/* 404 */}
-        <Route path="*" element={<PublicLayout><NotFound /></PublicLayout>} />
+        {/* 404 Not Found */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

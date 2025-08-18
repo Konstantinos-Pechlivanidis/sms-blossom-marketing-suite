@@ -1,48 +1,56 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiService } from '@/lib/api';
+import { creditPacks as mockCreditPacks } from '@/data/mock-data';
+import type { CreditPack } from '@/types';
+import { api } from '@/lib/api'; // Import the api instance
 import { toast } from 'sonner';
 
-export const useCreditPacks = () => {
+// --- Λειτουργία ανάκτησης ( παραμένει ως έχει ) ---
+const fetchCreditsFromAPI = async (): Promise<CreditPack[]> => {
+  console.log("Fetching credit packs from the 'API'...");
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  // Real implementation: return (await api.get('/credit-packs')).data;
+  return mockCreditPacks;
+};
+
+export const useCredits = () => {
   return useQuery({
-    queryKey: ['credit-packs'],
-    queryFn: apiService.getCreditPacks,
-    staleTime: 10 * 60 * 1000, // 10 minutes
+    queryKey: ['credits'],
+    queryFn: fetchCreditsFromAPI,
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };
 
-export const useSMSCredits = () => {
-  return useQuery({
-    queryKey: ['sms-credits'],
-    queryFn: apiService.getSMSCredits,
-    staleTime: 1 * 60 * 1000, // 1 minute
-  });
+
+// --- ΝΕΟ: Mutation για την αγορά ---
+const purchaseCreditsAPI = async (packId: string): Promise<{ success: boolean }> => {
+  console.log(`Sending purchase request to the 'API' for pack ID: ${packId}`);
+  await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API call delay
+
+  // Real implementation:
+  // const response = await api.post('/purchase-credits', { packId });
+  // return response.data;
+  
+  // For now, we simulate a successful response
+  if (packId) {
+    return { success: true };
+  } else {
+    throw new Error("Invalid Pack ID");
+  }
 };
 
 export const usePurchaseCredits = () => {
   const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: apiService.purchaseCredits,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['sms-credits'] });
-      toast.success(data.message);
-    },
-    onError: () => {
-      toast.error('Failed to purchase credits');
-    },
-  });
-};
 
-export const useUpdateSMSCredits = () => {
-  const queryClient = useQueryClient();
-  
   return useMutation({
-    mutationFn: apiService.updateSMSCredits,
+    mutationFn: purchaseCreditsAPI,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['sms-credits'] });
+      toast.success("Purchase successful! Your credits have been updated.");
+      // Invalidate user and credits queries to refetch the latest data
+      queryClient.invalidateQueries({ queryKey: ['currentUser'] });
+      queryClient.invalidateQueries({ queryKey: ['credits'] });
     },
-    onError: () => {
-      toast.error('Failed to update credits');
+    onError: (error) => {
+      toast.error(`Purchase failed: ${error.message}`);
     },
   });
 };
