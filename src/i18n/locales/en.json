@@ -353,14 +353,14 @@
     "priceSubtitle": "One-time payment",
     "mostPopular": "Most Popular",
     "packages": {
-      "starter": "Starter Pack",
-      "professional": "Professional",
-      "enterprise": "Enterprise"
+      "starter_pack": "Starter Pack",
+      "growth_plan": "Growth Plan",
+      "pro_business": "Pro Business"
     },
     "packageDescriptions": {
       "starter": "Perfect for getting started and testing out your first few campaigns.",
-      "professional": "Best value for growing businesses with regular campaigns.",
-      "enterprise": "The ultimate solution for large-scale marketing and automation."
+      "growth": "Best value for growing businesses with regular campaigns.",
+      "pro": "The ultimate solution for large-scale marketing and automation."
     },
     "features": {
       "sms_credits": "{{count}} SMS Credits",
