@@ -14,7 +14,8 @@ interface ViewContactDetailsProps {
 const ViewContactDetails: React.FC<ViewContactDetailsProps> = ({ contact }) => {
   const { t } = useTranslation();
   
-  const translateGender = (gender: 'male' | 'female') => {
+  const translateGender = (gender: 'male' | 'female' | 'other') => {
+    if (gender === 'other') return t('contacts.form.genderOther');
     return t(`contacts.form.gender${gender.charAt(0).toUpperCase() + gender.slice(1)}`);
   };
 

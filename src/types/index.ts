@@ -99,6 +99,7 @@ export interface StatusBadgeProps {
 export interface PasswordUpdatePayload {
   currentPassword: string;
   newPassword: string;
+  oldPassword?: string; // For compatibility
 }
 
 export interface UserCredentials {

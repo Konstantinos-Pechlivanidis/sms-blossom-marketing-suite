@@ -26,8 +26,5 @@ export {
 
 export { 
   setCampaignData, 
-  setCurrentStep, 
-  addCampaign, 
-  updateCampaign, 
-  deleteCampaign
-} from './slices/campaignSlice';
+  setCurrentStep
+} from './slices/createCampaignSlice';

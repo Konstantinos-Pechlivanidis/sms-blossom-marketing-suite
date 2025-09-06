@@ -8,6 +8,7 @@ export * from './common/PageLoader';
 export * from './common/PageHeader';
 export * from './common/LanguageSwitcher';
 export * from './common/EmptyState';
+export * from './common/ErrorState';
 
 // Dashboard components
 export * from './dashboard/WelcomeSection';

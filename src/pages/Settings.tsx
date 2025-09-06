@@ -81,7 +81,7 @@ const Settings = () => {
 
     updatePasswordMutation.mutate(
       {
-        oldPassword: passwordData.oldPassword,
+        currentPassword: passwordData.oldPassword,
         newPassword: passwordData.newPassword,
       },
       {

@@ -15,25 +15,26 @@ import Contacts from "@/pages/Contacts";
 import Automations from "@/pages/Automations";
 import BuyCredits from "@/pages/BuyCredits";
 import Settings from "@/pages/Settings";
-import QRScan from "@/pages/QRScan";
+import RedeemOffer from "@/pages/RedeemOffer";
 import Unsubscribe from "@/pages/Unsubscribe";
 import NotFound from "@/pages/NotFound";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
+import Subscribe from "@/pages/Subscribe";
+import Scan from "@/pages/Scan";
 
 export const AppRoutes = () => {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
         {/* Public Routes */}
-        <Route path="/scan/:trackingId" element={<PublicLayout><QRScan /></PublicLayout>} />
+        <Route path="/scan/:trackingId" element={<PublicLayout><RedeemOffer /></PublicLayout>} />
+        <Route path="/subscribe/:storeId" element={<PublicLayout><Subscribe /></PublicLayout>} />
         <Route path="/unsubscribe" element={<PublicLayout><Unsubscribe /></PublicLayout>} />
         
-        {/* TODO: Add Auth Routes for Login/Register here */}
-        {/*
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Route>
-        */}
+        {/* Auth Routes */}
+        <Route path="/login" element={<AuthLayout><Login /></AuthLayout>} />
+        <Route path="/register" element={<AuthLayout><Register /></AuthLayout>} />
 
         {/* Protected Routes with App Layout */}
         <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
@@ -47,6 +48,7 @@ export const AppRoutes = () => {
           <Route path="automations" element={<Automations />} />
           <Route path="credits" element={<BuyCredits />} />
           <Route path="settings" element={<Settings />} />
+          <Route path="scan" element={<Scan />} />
         </Route>
 
         {/* 404 Not Found */}

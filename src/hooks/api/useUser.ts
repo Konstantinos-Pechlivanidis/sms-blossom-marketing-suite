@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { apiService } from '@/lib/apiService';
+import { apiService } from '@/lib/api';
 import { toast } from 'sonner';
 import type { User, PasswordUpdatePayload, UserCredentials, UserRegistrationInfo } from '@/types';
 

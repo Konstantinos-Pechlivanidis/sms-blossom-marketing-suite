@@ -31,6 +31,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
+import { ErrorState } from "@/components/common/ErrorState";
 import { PageHeader } from "@/components/common/PageHeader";
 import { useTranslation } from "react-i18next";
 import { useFilterAndSearch } from "@/hooks/useFilterAndSearch";
@@ -40,7 +41,7 @@ import { cn } from "@/lib/utils";
 const Campaigns = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { data: campaigns, isLoading } = useCampaigns();
+  const { data: campaigns, isLoading, isError, refetch } = useCampaigns();
   const deleteCampaignMutation = useDeleteCampaign();
   const searchTerm = useAppSelector((state) => state.ui.searchTerms.campaigns);
   const statusFilter = useAppSelector(
@@ -131,7 +132,9 @@ const Campaigns = () => {
           ? Array.from({ length: 3 }).map((_, index) => (
               <Skeleton key={index} className="h-48 w-full rounded-3xl shadow-soft-sm" />
             ))
-          : filteredCampaigns.length > 0 ? (
+          : isError ? (
+            <ErrorState onRetry={refetch} title="Failed to load campaigns" />
+          ) : filteredCampaigns.length > 0 ? (
             filteredCampaigns.map((campaign) => (
               <Card
                 key={String(campaign.id)}

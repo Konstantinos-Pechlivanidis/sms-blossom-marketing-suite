@@ -54,3 +54,17 @@ export const usePurchaseCredits = () => {
     },
   });
 };
+
+// Export aliases for compatibility
+export const useCreditPacks = useCredits;
+export const useSMSCredits = () => {
+  return useQuery({
+    queryKey: ['sms-credits'],
+    queryFn: async () => 1000, // Mock SMS credits
+  });
+};
+export const useUpdateSMSCredits = () => {
+  return useMutation({
+    mutationFn: async (credits: number) => credits,
+  });
+};

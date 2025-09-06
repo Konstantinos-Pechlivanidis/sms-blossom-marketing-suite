@@ -27,8 +27,7 @@ interface CampaignFormData {
   recurringEndDate: string;
 }
 
-interface CampaignState {
-  campaigns: Campaign[];
+interface CreateCampaignState {
   currentCampaign: CampaignFormData;
   currentStep: number;
   loading: boolean;
@@ -58,75 +57,7 @@ const initialCampaignData: CampaignFormData = {
   recurringEndDate: ""
 };
 
-const initialState: CampaignState = {
-  campaigns: [
-    {
-      id: 1,
-      name: "Weekend Flash Sale",
-      status: "Sent",
-      date: "2024-01-15",
-      time: "10:30 AM",
-      recipients: 1247,
-      conversions: 23,
-      conversionRate: "18.4%",
-      message: "🎉 FLASH SALE! 50% off everything this weekend only!"
-    },
-    {
-      id: 2,
-      name: "New Arrivals Alert",
-      status: "Scheduled",
-      date: "2024-01-16",
-      time: "9:00 AM",
-      recipients: 2108,
-      conversions: 0,
-      conversionRate: "0%",
-      message: "✨ New arrivals just dropped! Check out our latest collection"
-    },
-    {
-      id: 3,
-      name: "Birthday Rewards",
-      status: "Sent",
-      date: "2024-01-14",
-      time: "2:15 PM",
-      recipients: 89,
-      conversions: 12,
-      conversionRate: "13.5%",
-      message: "🎂 Happy Birthday! Enjoy 30% off as our gift to you!"
-    },
-    {
-      id: 4,
-      name: "Loyalty Program Update",
-      status: "Draft",
-      date: "",
-      time: "",
-      recipients: 284,
-      conversions: 0,
-      conversionRate: "0%",
-      message: "💎 You're now a VIP member! Enjoy exclusive benefits"
-    },
-    {
-      id: 5,
-      name: "Back in Stock",
-      status: "Sent",
-      date: "2024-01-13",
-      time: "11:45 AM",
-      recipients: 156,
-      conversions: 8,
-      conversionRate: "5.1%",
-      message: "📦 Good news! Your favorite item is back in stock"
-    },
-    {
-      id: 6,
-      name: "Winter Collection",
-      status: "Scheduled",
-      date: "2024-01-18",
-      time: "3:00 PM",
-      recipients: 1890,
-      conversions: 0,
-      conversionRate: "0%",
-      message: "❄️ Winter Collection: Stay warm and stylish! 40% off"
-    }
-  ],
+const initialState: CreateCampaignState = {
   currentCampaign: initialCampaignData,
   currentStep: 1,
   loading: false,
@@ -141,8 +72,8 @@ const initialState: CampaignState = {
   }
 };
 
-const campaignSlice = createSlice({
-  name: 'campaigns',
+const createCampaignSlice = createSlice({
+  name: 'createCampaign',
   initialState,
   reducers: {
     setCampaignData: (state, action: PayloadAction<Partial<CampaignFormData>>) => {
@@ -160,18 +91,6 @@ const campaignSlice = createSlice({
       state.currentCampaign.category = action.payload.category;
       state.currentCampaign.message = action.payload.message;
       state.currentStep = 2;
-    },
-    addCampaign: (state, action: PayloadAction<Campaign>) => {
-      state.campaigns.unshift(action.payload);
-    },
-    updateCampaign: (state, action: PayloadAction<{ id: number; updates: Partial<Campaign> }>) => {
-      const index = state.campaigns.findIndex(c => c.id === action.payload.id);
-      if (index !== -1) {
-        state.campaigns[index] = { ...state.campaigns[index], ...action.payload.updates };
-      }
-    },
-    deleteCampaign: (state, action: PayloadAction<number>) => {
-      state.campaigns = state.campaigns.filter(c => c.id !== action.payload);
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -203,13 +122,10 @@ export const {
   setCurrentStep,
   resetCampaignForm,
   loadTemplate,
-  addCampaign,
-  updateCampaign,
-  deleteCampaign,
   setLoading,
   setError,
   setRecurringDays,
   generateAiMessage
-} = campaignSlice.actions;
+} = createCampaignSlice.actions;
 
-export default campaignSlice.reducer;
+export default createCampaignSlice.reducer;

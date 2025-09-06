@@ -10,7 +10,7 @@ import {
 } from '@/data/mock-data';
 
 // Import all necessary types from the centralized types file.
-import type { KPIData, Campaign, RecentCampaign, Template, CreditPack, User } from '@/types';
+import type { KPIData, Campaign, RecentCampaign, Template, CreditPack, User, UserCredentials, UserRegistrationInfo } from '@/types';
 
 // Create axios instance
 export const api = axios.create({
@@ -18,8 +18,29 @@ export const api = axios.create({
   timeout: 10000,
 });
 
+// Add request interceptor to attach JWT token
+api.interceptors.request.use(
+  (config) => {
+    // Get token from Redux store
+    const state = (window as any).__REDUX_STORE__?.getState?.();
+    const token = state?.auth?.token;
+    
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 // Simulate API delay
 const delay = (ms: number = 1000) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Export types
+export type { KPIData, Campaign, RecentCampaign, Template, CreditPack, User } from '@/types';
 
 // Mock API functions that simulate backend calls
 export const apiService = {
@@ -99,9 +120,24 @@ export const apiService = {
     return { ...mockCurrentUser, ...updates };
   },
 
-  async updatePassword(data: { oldPassword: string; newPassword: string }): Promise<{ success: boolean }> {
+  async updatePassword(data: { oldPassword?: string; currentPassword: string; newPassword: string }): Promise<{ success: boolean }> {
     await delay();
     return { success: true };
+  },
+
+  // Auth functions
+  async loginUser(credentials: UserCredentials): Promise<User> {
+    await delay();
+    return currentUser;
+  },
+
+  async registerUser(userInfo: UserRegistrationInfo): Promise<User> {
+    await delay();
+    return { ...currentUser, ...userInfo };
+  },
+
+  async logoutUser(): Promise<void> {
+    await delay();
   },
 
   // SMS Credits
